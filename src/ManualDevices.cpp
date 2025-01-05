@@ -1,3 +1,4 @@
+//DAVIDE MEROTTO
 
 #include "../include/ManualDevices.h"
 

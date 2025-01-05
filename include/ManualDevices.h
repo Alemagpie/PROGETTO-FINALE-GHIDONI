@@ -1,3 +1,4 @@
+//DAVIDE MEROTTO
 
 //SOTTOCLASSE
 class ManualDevices : public Devices{
