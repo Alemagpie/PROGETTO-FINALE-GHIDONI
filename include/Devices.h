@@ -4,11 +4,11 @@ class Devices{
 
     //funzioni membro
     public: 
-        stopDevice();
-        startDevice()
-        getName();
-        getID();
-        getStatus();
+        void stopDevice();
+        void startDevice()
+        String getName();
+        const int getID();
+        bool getStatus();
 
     //Data membri
     private:

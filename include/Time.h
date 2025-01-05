@@ -5,8 +5,8 @@ class Time{
     //Costruttore e funzioni membro 
     public:
         Time(unsigned int ora, unsigned int minuti);
-        getHour();
-        getMinutes();
+        unsigned int getHour();
+        unsigned int getMinutes();
     
     //Data Membri
     private:
