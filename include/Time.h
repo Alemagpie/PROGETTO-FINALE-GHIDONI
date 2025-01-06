@@ -35,6 +35,10 @@ double operator* (double value,Time& time);
 
 bool operator== (Time& a, Time& b);
 
+bool operator<(Time& a, Time& b);
+
+bool operator>(Time& a, Time& b);
+
 std::ostream& operator<<(std::ostream& os, Time a);
 
 #endif

@@ -44,12 +44,33 @@ Time operator+ (Time& time1, Time& time2){
     return return_time;
 }
 
-Time operator- (Time& finish_time, Time& start_time) { }
+Time operator- (Time& finish_time, Time& start_time) { 
+    int newHour = finish_time.getHour() - start_time.getHour();
+    int newMinute = finish_time.getMinutes() - start_time.getMinutes();
+    if(newMinute <0) {
+        newMinute += 60;
+        newHour--;
+    }
+    Time newTime(newHour, newMinute);
+    return newTime;
+}
 
 double operator* (double value,Time& time) { }
 
 bool operator==(Time& a, Time& b) {
     return (a.getHour() == b.getHour() && a.getMinutes() == b.getMinutes());
+}
+
+bool operator>(Time& a, Time& b) {
+    if(a.getHour() > b.getHour() ) {return true;}
+    if(a.getHour() == b.getHour() && a.getMinutes() > b.getMinutes()) {return true;}
+    return false;
+}
+
+bool operator<(Time& a, Time& b) {
+    if(a.getHour() < b.getHour() ) {return true;}
+    if(a.getHour() == b.getHour() && a.getMinutes() < b.getMinutes()) {return true;}
+    return false;
 }
 
 std::ostream& operator<<(std::ostream& os, Time& a)
