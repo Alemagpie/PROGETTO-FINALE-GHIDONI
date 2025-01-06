@@ -3,18 +3,15 @@
 #include "../include/AutomaticDevice.h"
 #include "../include/Time.h"
 
-AutomaticDevice::AutomaticDevice(std::string nome, const int ID, double en) 
-: Device(nome, ID, en) {}
+AutomaticDevice::AutomaticDevice(std::string nome, const int ID, double power, Time duration) 
+: name{nome}, id{ID}, powerUse{power}, status{false}, time_duration{duration} {
 
-void AutomaticDevice:: setTimer(Time& start_t, Time& stop_t){
-
-    start_time=start_t;
-    stop_time=stop_t;
+    start_time.setTime(0,0);
+    end_time.setTime(0,0);
 }
 
-void AutomaticDevice:: resetTimer() {
+void AutomaticDevice:: setTimer(Time& start_t){
 
-    //reset timer
-    start_time.setTime(0,0);
-    stop_time.setTime(0,0);
+    start_time=start_t;
+    end_time=start_t + time_duration;
 }

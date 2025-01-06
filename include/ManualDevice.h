@@ -11,9 +11,8 @@ class ManualDevice : public Device{
 
     //Costruttore e funzioni membro
     public:
-        ManualDevice(std::string nome, const int ID, double en);
-        void setTimer(Time& start_time);
-        void resetTimer();
+        ManualDevice(std::string nome, const int ID, double power);
+        void setTimer(Time& start_t, Time& end_t);
 };
 
 #endif
