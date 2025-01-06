@@ -8,6 +8,9 @@ class Time{
         Time(unsigned int ora, unsigned int minuti);
         unsigned int getHour();
         unsigned int getMinutes();
+        void setTime(unsigned int ora, unsigned int minuti);
+        void resetTime();
+        void addTime(unsigned int ora, unsigned int minuti);
 
     //Data Membri
     private:
@@ -39,4 +42,16 @@ Time& operator +(Time& time1, Time& time2){
     Time return_time(finalHour,finalMinute);
 
     return return_time;
+}
+
+Time& operator - (Time& finish_time, Time& start_time){
+
+}
+
+double operator * (double value,Time& time){
+
+}
+
+Time& operator = (Time& time1, Time& time2){
+
 }
