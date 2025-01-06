@@ -1,19 +1,19 @@
 //DAVIDE MEROTTO
 
-#include "../include/ManualDevices.h"
+#include "../include/ManualDevice.h"
 #include "../include/Time.h"
 
 //Implementazione classe ManualDevices
-ManualDevices:: ManualDevices(String name, const int id, double wattProduction, bool status)
-    : this.name{name}, this.id{id}, this.wattProduction{wattProduction}, this.status{status}, this.start_time{0,0}{
+ManualDevice:: ManualDevice(std::string nome, const int ID, double en)
+    : Device(nome, ID, en) {
 }
 
-void ManualDevices:: setTimer(Time& start_time){
+void ManualDevice:: setTimer(Time& start_t){
 
-    this.start_time=start_time;
+    start_time = start_t;
 }
 
-void ManualDevices:: resetTimer() override{
+void ManualDevice::resetTimer() {
 
     //reset timer
     start_time.setTime(0,0);
