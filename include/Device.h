@@ -9,10 +9,12 @@
 //CLASSE BASE 
 class Device{
 
+    protected: 
+        //non permetto la creazione di oggetti di tipo Device
+        Device(std::string nome, const int ID, double power);
+
     //funzioni membro
     public: 
-        Device() = delete;    //non permetto la creazione di oggetti di tipo Device
-        Device(std::string nome, const int ID, double power);
         //evito slicing
         Device(const Device&) = delete;
         Device& operator= (const Device&) = delete;
