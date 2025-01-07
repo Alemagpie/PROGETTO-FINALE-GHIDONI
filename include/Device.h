@@ -12,8 +12,12 @@ class Device{
     //funzioni membro
     public: 
         Device() = delete;    //non permetto la creazione di oggetti di tipo Device
+        Device(std::string nome, const int ID, double power);
+        //evito splicing
+        Device(const Device&) = delete;
+        Device& operator= (const Device&) = delete;
         void stopDevice();
-        void startDevice();
+        void startDevice(Time& s_time, Time& e_time);
         std::string getName();
         const int getID();
         bool getStatus();

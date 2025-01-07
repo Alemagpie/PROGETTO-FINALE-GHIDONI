@@ -21,6 +21,11 @@ void Time::resetTime() {
     hour = minutes = 0;
 }
 
+Time& Time::operator= (Time& a) {
+    hour = a.getHour();
+    minutes = a.getMinutes();
+}
+
 Time operator+ (Time& time1, Time& time2){
 
     unsigned int finalHour = time1.getHour() + time2.getHour();
@@ -33,7 +38,30 @@ Time operator+ (Time& time1, Time& time2){
 
     //caso termine giornata
     if(finalHour >=24){
+        finalHour = 0;
+        finalMinute = 0;
+    }
 
+    //creo oggetto time
+    Time return_time(finalHour,finalMinute);
+
+    return return_time;
+}
+
+Time operator+ (Time& time, int min) {
+    if(min<0) {return;}
+
+    unsigned int finalHour = time.getHour();
+    unsigned int finalMinute = time.getMinutes() + min;
+
+    if(finalMinute>=60){
+        int hoursToAdd = finalMinute / 60;
+        finalMinute = finalMinute % 60;
+        finalHour += hoursToAdd;
+    }
+
+    //caso termine giornata
+    if(finalHour >=24){
         finalHour = 0;
         finalMinute = 0;
     }
@@ -47,15 +75,46 @@ Time operator+ (Time& time1, Time& time2){
 Time operator- (Time& finish_time, Time& start_time) { 
     int newHour = finish_time.getHour() - start_time.getHour();
     int newMinute = finish_time.getMinutes() - start_time.getMinutes();
+
     if(newMinute <0) {
-        newMinute += 60;
-        newHour--;
+        int hoursToSubtract = abs(newMinute) / 60;
+        newMinute = 60 - (abs(newMinute) % 60);
+        newHour -= hoursToSubtract;    
+
+        if(newHour < 0) {
+            return;
+        }
     }
+
     Time newTime(newHour, newMinute);
     return newTime;
 }
 
-double operator* (double value,Time& time) { }
+Time operator- (Time& time, int min) {
+    if(min<0) {return;}
+
+    int finalHour = time.getHour();
+    int finalMinute = time.getMinutes() - min;
+
+    if(finalMinute < 0) {
+        int hoursToSubtract = abs(finalMinute) / 60;
+        finalMinute = 60 - (abs(finalMinute) % 60);
+        finalHour -= hoursToSubtract;    
+
+        if(finalHour < 0) {
+            return;
+        }
+    }
+
+    //creo oggetto time
+    Time return_time(finalHour,finalMinute);
+
+    return return_time;
+}
+
+double operator* (double value,Time& time) { 
+    return (value*(time.getHour() + (time.getMinutes()/60)));
+}
 
 bool operator==(Time& a, Time& b) {
     return (a.getHour() == b.getHour() && a.getMinutes() == b.getMinutes());
@@ -76,4 +135,12 @@ bool operator<(Time& a, Time& b) {
 std::ostream& operator<<(std::ostream& os, Time& a)
 {
     return os << "[" << a.getHour()<<":"<<a.getMinutes()<<"]";
+}
+
+int getHoursDeltaTime(Time& a, Time& b) {
+
+}
+
+int getMinutesDeltaTime(Time& a, Time& b) {
+
 }

@@ -2,13 +2,18 @@
 
 #include "../include/Device.h"
 
+Device::Device(std::string nome, const int ID, double power) 
+: name{nome}, id{ID}, powerUse{power}, status{false} {}
+
 //Implementazione classe Devices
 void Device:: stopDevice(){ 
     status=false;
 }
 
-void Device:: startDevice(){                
+void Device:: startDevice(Time& s_time, Time& e_time){                
     status=true;
+    start_time = s_time;
+    end_time = e_time;
 }
 
 std::string Device:: getName(){ 
@@ -21,10 +26,6 @@ const int Device:: getID(){
 
 bool Device:: getStatus(){ 
     return status;
-}
-
-Time Device:: getEndTime() {
-    return end_time;
 }
 
 double Device:: getPowerUseByTime(Time& current_time){

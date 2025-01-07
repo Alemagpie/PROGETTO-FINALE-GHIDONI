@@ -2,15 +2,20 @@
 
 DeviceManager::DeviceManager(){
     currentTime.setTime(0,0);
+    currentDeviceEndTime.setTime(0,0);
 }
 
 void DeviceManager::addDevice(Device& d) {
-    Time key = d.getEndTime();
+    Time s_time = currentTime;
+    Time e_time = currentDeviceEndTime;
 
+    d.startDevice(s_time, e_time);
+    //activeDevices.insert(std::pair<Time, Device>(e_time, d));
     //aggiungi entry con (chiave key e valore d) alla multimappa dei device attivi
 }
 
 void DeviceManager::parseInput(std::string command){
+    currentDeviceEndTime = currentTime;
     //stream per fare il parsing del comando
     std::istringstream iss(command);
     std::string word;
@@ -70,4 +75,8 @@ void DeviceManager::parseInput(std::string command){
         std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;
     }    
 
+}
+
+void DeviceManager::setTime(Time& newTime) {
+    currentTime = newTime;
 }

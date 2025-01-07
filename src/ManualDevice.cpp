@@ -5,7 +5,7 @@
 
 //Implementazione classe ManualDevices
 ManualDevice:: ManualDevice(std::string nome, const int ID, double power)
-    :  name{nome}, id{ID}, powerUse{power}, status{false}{
+    :  Device(nome, ID, power) {
     
     start_time.setTime(0,0);
     end_time.setTime(0,0);

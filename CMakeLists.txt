@@ -1,4 +1,25 @@
-# Versione minima richiesta di CMake
-cmake_minimum_required(VERSION 3.10)
+#Minimum CMake version required
+cmake_minimum_required(VERSION 3.1)
 
-# Nome del progetto
+#Project name
+project(ProgettoFinale)
+
+#C++ minimum version require
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+#Include directory
+include_directories(include)
+
+#Source files
+set(SOURCES
+ src/main.cpp
+ src/AutomaticDevice.cpp
+ src/ManualDevice.cpp
+ src/Device.cpp 
+ src/DeviceManager.cpp
+ src/Time.cpp
+)
+
+# Add the executable target
+add_executable(ProgettoFinale ${SOURCES})
