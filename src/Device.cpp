@@ -29,6 +29,6 @@ bool Device:: getStatus(){
 double Device:: getPowerUseByTime(Time& current_time){
     
     //si da per scontato che il dispositvo sia acceso
-    return ((powerUse*current_time)-(powerUse*start_time));
+    return powerUse * (current_time - start_time);
 }
 

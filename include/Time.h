@@ -28,11 +28,11 @@ class Time{
 
 //HELPER FUNCTION
 
-Time operator+ (Time& time1, Time& time2);
-Time operator+ (Time& time, int min);
+Time& operator+ (Time& time1, Time& time2);
+Time& operator+ (Time& time, int min);
 
-Time operator- (Time& finish_time, Time& start_time);
-Time operator- (Time& time, int min);
+Time& operator- (Time& finish_time, Time& start_time);
+Time& operator- (Time& time, int min);
 
 double operator* (double value,Time& time);
 

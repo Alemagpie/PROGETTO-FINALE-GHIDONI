@@ -24,9 +24,11 @@ void Time::resetTime() {
 Time& Time::operator= (Time& a) {
     hour = a.getHour();
     minutes = a.getMinutes();
+
+    return *this;
 }
 
-Time operator+ (Time& time1, Time& time2){
+Time& operator+ (Time& time1, Time& time2){
 
     unsigned int finalHour = time1.getHour() + time2.getHour();
     unsigned int finalMinute = time1.getMinutes() + time2.getMinutes();
@@ -48,7 +50,7 @@ Time operator+ (Time& time1, Time& time2){
     return return_time;
 }
 
-Time operator+ (Time& time, int min) {
+Time& operator+ (Time& time, int min) {
     if(min<0) {return;}
 
     unsigned int finalHour = time.getHour();
@@ -72,7 +74,7 @@ Time operator+ (Time& time, int min) {
     return return_time;
 }
 
-Time operator- (Time& finish_time, Time& start_time) { 
+Time& operator- (Time& finish_time, Time& start_time) { 
     int newHour = finish_time.getHour() - start_time.getHour();
     int newMinute = finish_time.getMinutes() - start_time.getMinutes();
 
@@ -90,7 +92,7 @@ Time operator- (Time& finish_time, Time& start_time) {
     return newTime;
 }
 
-Time operator- (Time& time, int min) {
+Time& operator- (Time& time, int min) {
     if(min<0) {return;}
 
     int finalHour = time.getHour();
