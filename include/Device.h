@@ -10,7 +10,7 @@
 class Device{
 
     protected: 
-        //non permetto la creazione di oggetti di tipo Device
+        //non permetto la creazione di oggetti di tipo Device (la classe è comunque astratta )
         Device(std::string nome, const int ID, double power);
 
     //funzioni membro
@@ -24,7 +24,8 @@ class Device{
         const int getID();
         bool getStatus();
         Time getEndTime();
-        double getPowerUseByTime(Time& current_time);        
+        double getPowerUseByTime(Time& current_time); 
+        virtual void setTimer(Time& start_t, Time& end_t) = 0;  //rende la classe astratta    
 
     //Data membri
     protected:
