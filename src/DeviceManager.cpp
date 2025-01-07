@@ -9,32 +9,32 @@ void DeviceManager::addDevice(Device& d) {
     Time s_time = currentTime;
     Time e_time = currentDeviceEndTime;
 
-    d.startDevice(s_time, e_time);
+    //d.startDevice(s_time, e_time);
     //activeDevices.insert(std::pair<Time, Device>(e_time, d));
     //aggiungi entry con (chiave key e valore d) alla multimappa dei device attivi
 }
 
 enum firstCommand{
-    baseValue = 0,set, rm, show, reset
+    baseFirst = 0,set, rm, show, reset
 };
 
-firstCommand firstToSwitch(std::string& const command){
+firstCommand firstToSwitch(std::string& command){
     if( command == "set") return firstCommand::set;
     if( command == "rm") return firstCommand::rm;
     if( command == "show") return firstCommand::show;
     if( command == "reset") return firstCommand::reset;
-    return firstCommand::baseValue;
+    return firstCommand::baseFirst;
 }
 
 enum resetCommand{
-    baseValue=0, time, timers, all
+    baseReset=0, timeReset, timersReset, allReset
 };
 
-resetCommand resetToSwitch(std::string& const command){
-    if( command == "time") return resetCommand::time;
-    if( command == "timers") return resetCommand::timers;
-    if( command == "all") return resetCommand::all;
-    return resetCommand::baseValue;
+resetCommand resetToSwitch(std::string& command){
+    if( command == "time") return resetCommand::timeReset;
+    if( command == "timers") return resetCommand::timersReset;
+    if( command == "all") return resetCommand::allReset;
+    return resetCommand::baseReset;
 }
 
 
@@ -47,6 +47,8 @@ void DeviceManager::parseInput(std::string command){
     //controllo della prima parola
     switch(firstToSwitch(word)){
         case firstCommand::set:
+            std::getline(iss, word, ' ');
+
             break;
 
         case firstCommand::rm:
@@ -58,11 +60,11 @@ void DeviceManager::parseInput(std::string command){
         case firstCommand::reset:
              if(std::getline(iss, word, ' ')){
                 switch(resetToSwitch(word)){
-                    case firstCommand::set:
+                    case resetCommand::timeReset:
                         break;
-                    case firstCommand::rm:
+                    case resetCommand::timersReset:
                         break;
-                    case firstCommand::show:
+                    case resetCommand::allReset:
                         break;
                     default:
                         std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;

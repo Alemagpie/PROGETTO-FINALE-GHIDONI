@@ -27,6 +27,14 @@ Time& Time::operator= (Time& a) {
 
     return *this;
 }
+/*
+Time& Time::operator= (Time a){
+    hour = a.getHour();
+    minutes = a.getMinutes();
+
+    return *this;
+}
+*/
 
 Time& operator+ (Time& time1, Time& time2){
 
@@ -51,7 +59,7 @@ Time& operator+ (Time& time1, Time& time2){
 }
 
 Time& operator+ (Time& time, int min) {
-    if(min<0) {return;}
+    if(min<0) {return (time - (min * -1));}
 
     unsigned int finalHour = time.getHour();
     unsigned int finalMinute = time.getMinutes() + min;
@@ -84,7 +92,8 @@ Time& operator- (Time& finish_time, Time& start_time) {
         newHour -= hoursToSubtract;    
 
         if(newHour < 0) {
-            return;
+            newMinute = 0;
+            newHour = 0;
         }
     }
 
@@ -93,7 +102,7 @@ Time& operator- (Time& finish_time, Time& start_time) {
 }
 
 Time& operator- (Time& time, int min) {
-    if(min<0) {return;}
+    if(min<0) {return(time + (min * -1));}
 
     int finalHour = time.getHour();
     int finalMinute = time.getMinutes() - min;
@@ -104,7 +113,8 @@ Time& operator- (Time& time, int min) {
         finalHour -= hoursToSubtract;    
 
         if(finalHour < 0) {
-            return;
+            finalMinute = 0;
+            finalHour = 0;
         }
     }
 

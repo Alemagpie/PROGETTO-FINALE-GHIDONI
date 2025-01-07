@@ -19,6 +19,8 @@ class Time{
         void resetTime();
 
         Time& operator= (Time& a);
+        //Idk, mi da errori compilando
+        //Time& operator= (Time a);
 
     //Data Membri
     private:

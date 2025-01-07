@@ -37,4 +37,4 @@ class Device{
         bool status;
 };
 
-#endif DEV_H
+#endif
