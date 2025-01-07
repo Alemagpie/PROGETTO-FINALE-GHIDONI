@@ -34,7 +34,6 @@ Time operator+ (Time& time, int min);
 Time operator- (Time& finish_time, Time& start_time);
 Time operator- (Time& time, int min);
 
-//fa il return in minuti, piuttosto che in formato Time
 double operator* (double value,Time& time);
 
 bool operator== (Time& a, Time& b);

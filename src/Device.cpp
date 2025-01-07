@@ -10,10 +10,8 @@ void Device:: stopDevice(){
     status=false;
 }
 
-void Device:: startDevice(Time& s_time, Time& e_time){                
+void Device:: startDevice(){                
     status=true;
-    start_time = s_time;
-    end_time = e_time;
 }
 
 std::string Device:: getName(){ 
@@ -31,6 +29,6 @@ bool Device:: getStatus(){
 double Device:: getPowerUseByTime(Time& current_time){
     
     //si da per scontato che il dispositvo sia acceso
-    return (powerUse*(current_time-start_time));
+    return ((powerUse*current_time)-(powerUse*start_time));
 }
 

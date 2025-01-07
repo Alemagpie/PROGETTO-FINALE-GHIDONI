@@ -11,6 +11,6 @@ AutomaticDevice::AutomaticDevice(std::string nome, const int ID, double power, T
 }
 
 void AutomaticDevice:: setTimer(Time& start_t){
-    start_time=start_t;
-    end_time=start_t + time_duration;
+    start_time = start_t;
+    end_time = start_t + time_duration;
 }
