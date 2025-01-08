@@ -14,21 +14,23 @@ void Device:: startDevice(){
     status=true;
 }
 
-std::string Device:: getName(){ 
+std::string Device:: getName() const { 
     return name;
 }
 
-const int Device:: getID(){ 
+int Device:: getID() const { 
     return id;
 }
 
-bool Device:: getStatus(){ 
+bool Device:: getStatus() const { 
     return status;
 }
 
-double Device:: getPowerUseByTime(Time& current_time){
-    
+const double Device:: getPowerUseByTime(Time& current_time){
     //si da per scontato che il dispositvo sia acceso
     return powerUse * (current_time - start_time);
 }
 
+bool operator==(const Device& a, const Device& b) {
+    return (a.getName() == b.getName() && a.getID() == b.getID());
+}

@@ -20,11 +20,11 @@ class Device{
         Device& operator= (const Device&) = delete;
         void stopDevice();
         void startDevice();
-        std::string getName();
-        const int getID();
-        bool getStatus();
-        Time getEndTime();
-        double getPowerUseByTime(Time& current_time); 
+        std::string getName() const;
+        int getID() const;
+        bool getStatus() const;
+        Time getEndTime() const;
+        const double getPowerUseByTime(Time& current_time); 
         virtual void setTimer(Time& start_t, Time& end_t) = 0;  //rende la classe astratta    
 
     //Data membri
@@ -36,5 +36,7 @@ class Device{
         double powerUse;  
         bool status;
 };
+
+bool operator==(const Device& a, const Device& b);
 
 #endif
