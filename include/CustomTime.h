@@ -13,8 +13,8 @@ class CustomTime{
     public:
         CustomTime();
         CustomTime(unsigned int ora, unsigned int minuti);
-        unsigned int getHour();
-        unsigned int getMinutes();
+        unsigned int getHour() const;
+        unsigned int getMinutes() const;
         void setTime(unsigned int ora, unsigned int minuti);
         void resetTime();
 
@@ -40,9 +40,9 @@ double operator* (double value,CustomTime time);
 
 bool operator== (CustomTime& a, CustomTime& b);
 
-bool operator<(CustomTime& a, CustomTime& b);
+bool operator<(const CustomTime&  a ,const CustomTime&  b ) ;
 
-bool operator>(CustomTime& a, CustomTime& b);
+bool operator>(const CustomTime&  a ,const CustomTime&  b ) ;
 
 std::ostream& operator<<(std::ostream& os, CustomTime a);
 

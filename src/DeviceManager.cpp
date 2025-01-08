@@ -47,7 +47,7 @@ std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByID(int I
     return activeDevices.end();
 }
 
-std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByName(std::string& s) {
+std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByNameActive(std::string& s) {
     //std::multimap<CustomTime, Device*>::iterator it;
     for(auto it = activeDevices.begin(); it != activeDevices.end(); ++it) {
         if(it->second->getName() == s) {    //it->first restituisce il CustomTime, it->second restituisce Device*
@@ -57,6 +57,15 @@ std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByName(std
     return activeDevices.end();
 }
 
+std::vector<Device*>::iterator DeviceManager::findDeviceByNameAll(std::string& s) {
+    //std::vector<Device*>::iterator it;
+    for(auto it = deviceList.begin(); it != deviceList.end(); ++it) {
+        if((*it)->getName() == s) {  
+            return it;
+        }
+    }
+    return deviceList.end();
+}
 
 //--------------------------------------------------------------------------
 
@@ -100,15 +109,20 @@ void DeviceManager::parseInput(std::string command){
             break;
 
         case firstCommand::show:
-            if(!std::getline(iss, word, ' ')){  //"show"
+            word = "";
+            if(std::getline(iss, word, ' ')){  //"show ${devicename}"
+                 auto iter = findDeviceByNameAll(word);
+                if(iter == deviceList.end()) {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
+                else {std::cout<< *iter << std::endl;}
+            } else {    //"show"
+                std::cout << word << std::endl;
                 double totalPowerUsed=0;
                 for(int i=0; i<deviceCount; i++){
                     std::cout << *deviceList[i] << std::endl;
                     totalPowerUsed += deviceList[i]->getPowerUsed();
                 }
                 std::cout << "Consumo energetico totale del sistema dalle 00:00 : " << totalPowerUsed << "kWh" << std::endl;
-            } else {    //"show ${devicename}"
-
+               
             }
             break;
 
@@ -138,6 +152,7 @@ void DeviceManager::parseInput(std::string command){
             break;
 
         default:
+            std::cout << "prova" << std::endl;
             std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;
             break;
     }

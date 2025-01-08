@@ -4,11 +4,11 @@ CustomTime::CustomTime() : hour{0}, minutes{0} {}
 
 CustomTime::CustomTime(unsigned int ora, unsigned int minuti) : hour{ora}, minutes{minuti} {}
 
-unsigned int CustomTime::getHour() {
+unsigned int CustomTime::getHour() const{
     return hour;
 }
 
-unsigned int CustomTime::getMinutes() {
+unsigned int CustomTime::getMinutes() const{
     return minutes;
 }
 
@@ -132,13 +132,13 @@ bool operator==(CustomTime& a, CustomTime& b) {
     return (a.getHour() == b.getHour() && a.getMinutes() == b.getMinutes());
 }
 
-bool operator>(CustomTime& a, CustomTime& b) {
+bool operator>(const CustomTime&  a,const CustomTime&  b) {
     if(a.getHour() > b.getHour() ) {return true;}
     if(a.getHour() == b.getHour() && a.getMinutes() > b.getMinutes()) {return true;}
     return false;
 }
 
-bool operator<(CustomTime& a, CustomTime& b) {
+bool operator<(const CustomTime&  a,const CustomTime&  b)  {
     if(a.getHour() < b.getHour() ) {return true;}
     if(a.getHour() == b.getHour() && a.getMinutes() < b.getMinutes()) {return true;}
     return false;

@@ -41,7 +41,8 @@ class DeviceManager {
     
     std::multimap<CustomTime, Device*>::iterator findDevice(Device& d);
     std::multimap<CustomTime, Device*>::iterator findDeviceByID(int ID);
-    std::multimap<CustomTime, Device*>::iterator findDeviceByName(std::string& s);
+    std::multimap<CustomTime, Device*>::iterator findDeviceByNameActive(std::string& s);
+    std::vector<Device*>::iterator findDeviceByNameAll(std::string& s);
 
 };
 
