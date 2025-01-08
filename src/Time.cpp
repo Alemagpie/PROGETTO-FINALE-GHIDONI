@@ -21,7 +21,7 @@ void Time::resetTime() {
     hour = minutes = 0;
 }
 
-Time& Time::operator= (Time& a) {
+Time& Time::operator= (Time a) {
     hour = a.getHour();
     minutes = a.getMinutes();
 

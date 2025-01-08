@@ -9,14 +9,14 @@ DeviceManager::DeviceManager()
 
 void DeviceManager::addDevice(Device& newDev){
     deviceList.push_back(&newDev);
-    deviceCount = deviceList.max_size();
+    deviceCount++;
 }
 
 void DeviceManager::setDeviceStartTime() {  //rimosso parametro "Device* d" perchè è più semplice lavorare con la variabile currentDevice, settandola in parseInput()
     Time s_time = currentTime;
     Time e_time = currentDeviceEndTime;
-
-    activeDevices.insert(std::pair<Time, Device*>(e_time, currentDevice)); //aggiungi entry con (chiave end_time e valore puntatore a d) alla multimappa dei device attivi
+    //TOLGO PER COMPILAZIONE
+    //activeDevices.insert(std::pair<Time, Device*>(e_time, currentDevice)); //aggiungi entry con (chiave end_time e valore puntatore a d) alla multimappa dei device attivi
 }
 
 //metodo per comando "set ${devicename} off"
@@ -100,6 +100,16 @@ void DeviceManager::parseInput(std::string command){
             break;
 
         case firstCommand::show:
+            if(std::getline(iss, word, ' ')){
+                
+            }else{
+                double totalPowerUsed=0;
+                for(int i=0; i<deviceCount; i++){
+                    std::cout << *deviceList[i] << std::endl;
+                    totalPowerUsed += deviceList[i]->getPowerUsed();
+                }
+                std::cout << "Consumo energetico totale del sistema dalle 00:00 : " << totalPowerUsed << "kWh" << std::endl;
+            }
             break;
 
         case firstCommand::reset:
@@ -137,4 +147,8 @@ void DeviceManager::parseInput(std::string command){
 void DeviceManager::setTime(Time& newTime) {
     currentTime = newTime;
     checkOnHourChange();
+}
+
+void DeviceManager::checkOnHourChange(){
+
 }

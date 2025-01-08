@@ -18,7 +18,7 @@ class Time{
         void setTime(unsigned int ora, unsigned int minuti);
         void resetTime();
 
-        Time& operator= (Time& a);
+        Time& operator= (Time a);
         //Idk, mi da errori compilando
         //Time& operator= (Time a);
 

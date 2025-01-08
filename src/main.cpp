@@ -32,6 +32,12 @@ int main() {
     DevMan.addDevice(Asciugatrice);
     DevMan.addDevice(Televisore);
 
+    for (string s; cin >> s;){
+        DevMan.parseInput(s);
+    }
+
+
+    /*
     vector<Device*> container(10);
     container[0] = &Impianto_Fotovoltaico;
     container[1] = &Pompa_di_calore_termostato;
@@ -47,6 +53,6 @@ int main() {
     for(int i=0; i<container.size(); i++){
         cout << container[i]->getName() << " " << container[i]->getStatus() << " " << container[i]->getID() << endl;
     }
-
+    */
     return 0;
 }
