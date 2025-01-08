@@ -18,7 +18,7 @@ class DeviceManager {
 
     private:
     std::multimap<Time, Device*> activeDevices; //multimappa dei dispositivi attivi
-    std::multimap<Time, Device*> asyncDevices;  //multimappa dei dispositivi in attesa dell'attivazione
+    std::multimap<Time, std::pair<Time, Device*>> asyncDevices;  //multimappa dei dispositivi in attesa dell'attivazione (hanno come chiave il tempo di inizio, come valore il tempo di fine e il ptr al device)
     std::vector<Device> deviceList; //vettore di Device ordinato per (ID/nome)
     Time currentTime;   
     Time currentDeviceEndTime;
