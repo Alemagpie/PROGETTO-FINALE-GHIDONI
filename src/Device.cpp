@@ -3,7 +3,9 @@
 #include "../include/Device.h"
 
 Device::Device(std::string nome, const int ID, double power) 
-: name{nome}, id{ID}, powerUse{power}, status{false} {}
+: name{nome}, id{ID}, Consumption{power}, status{false}, powerUsed{0} 
+{
+}
 
 //Implementazione classe Devices
 void Device:: stopDevice(){ 
@@ -26,11 +28,16 @@ bool Device:: getStatus() const {
     return status;
 }
 
-const double Device:: getPowerUseByTime(Time& current_time){
+const double Device::getPowerUsed(){
     //si da per scontato che il dispositvo sia acceso
-    return powerUse * (current_time - start_time);
+    return powerUsed;
 }
 
 bool operator==(const Device& a, const Device& b) {
     return (a.getName() == b.getName() && a.getID() == b.getID());
+}
+
+std::ostream& operator<<(std::ostream& os, Device& dev){
+    if(dev.getStatus()) {return os << dev.getName() << " on " << dev.getPowerUsed() ;}
+    return os << dev.getName() << " off " << dev.getPowerUsed() ;
 }

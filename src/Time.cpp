@@ -12,7 +12,7 @@ unsigned int Time::getMinutes() {
     return minutes;
 }
 
-void Time::setTime(unsigned int ora, unsigned int minuti) {
+void Time::setTime(unsigned int const ora, unsigned int const minuti) {
     hour = ora;
     minutes = minuti;
 }
@@ -36,7 +36,7 @@ Time& Time::operator= (Time a){
 }
 */
 
-Time& operator+ (Time& time1, Time& time2){
+Time operator+ (Time&  time1, Time&  time2){
 
     unsigned int finalHour = time1.getHour() + time2.getHour();
     unsigned int finalMinute = time1.getMinutes() + time2.getMinutes();
@@ -58,7 +58,7 @@ Time& operator+ (Time& time1, Time& time2){
     return return_time;
 }
 
-Time& operator+ (Time& time, int min) {
+Time operator+ (Time&  time, int  min) {
     if(min<0) {return (time - (min * -1));}
 
     unsigned int finalHour = time.getHour();
@@ -82,7 +82,7 @@ Time& operator+ (Time& time, int min) {
     return return_time;
 }
 
-Time& operator- (Time& finish_time, Time& start_time) { 
+Time operator- (Time&  finish_time, Time&   start_time) { 
     int newHour = finish_time.getHour() - start_time.getHour();
     int newMinute = finish_time.getMinutes() - start_time.getMinutes();
 
@@ -101,7 +101,7 @@ Time& operator- (Time& finish_time, Time& start_time) {
     return newTime;
 }
 
-Time& operator- (Time& time, int min) {
+Time operator- (Time&  time , int  min) {
     if(min<0) {return(time + (min * -1));}
 
     int finalHour = time.getHour();
@@ -124,7 +124,7 @@ Time& operator- (Time& time, int min) {
     return return_time;
 }
 
-double operator* (double value,Time& time) { 
+double operator* (double value,Time time) { 
     return (value*(time.getHour() + (time.getMinutes()/60)));
 }
 
@@ -149,10 +149,11 @@ std::ostream& operator<<(std::ostream& os, Time& a)
     return os << "[" << a.getHour()<<":"<<a.getMinutes()<<"]";
 }
 
+/*
 int getHoursDeltaTime(Time& a, Time& b) {
 
 }
 
 int getMinutesDeltaTime(Time& a, Time& b) {
 
-}
+}*/

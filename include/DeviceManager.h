@@ -15,18 +15,8 @@
 class DeviceManager {
     public:
     DeviceManager();
-
-    private:
-    std::multimap<Time, Device*> activeDevices; //multimappa dei dispositivi attivi
-    std::multimap<Time, std::pair<Time, Device*>> asyncDevices;  //multimappa dei dispositivi in attesa dell'attivazione (hanno come chiave il tempo di inizio, come valore il tempo di fine e il ptr al device)
-    std::vector<Device> deviceList; //vettore di Device ordinato per (ID/nome)
-    Time currentTime;   
-    Time currentDeviceEndTime;
-
-    int deviceCount;    //lunghezza del vettore di Device
-    Device* currentDevice;  //puntatore al Device su cui si sta lavorando
-
-    void addDevice();  //aggiungi a multimappa degli attivi
+    void addDevice(Device& newDev);  //aggiungi a multimappa degli attivi
+    void setDeviceStartTime();
     void addDeviceAsync(Device& d); //aggiungi a multimappa dei "pending"
     Device getDevice(Time t);   //trova dispositivo in base a tempo
     Device* removeDevice(std::multimap<Time, Device*>::iterator it); //rimuovi dispositivo in base al nome, fa il return del dispositivo
@@ -37,6 +27,16 @@ class DeviceManager {
     void setTime(Time& newTime);    //cambia orario
 
     void parseInput(std::string command);   //valuta input
+
+    private:
+    std::multimap<Time, Device*> activeDevices; //multimappa dei dispositivi attivi
+    std::multimap<Time, std::pair<Time, Device*>> asyncDevices;  //multimappa dei dispositivi in attesa dell'attivazione (hanno come chiave il tempo di inizio, come valore il tempo di fine e il ptr al device)
+    std::vector<Device*> deviceList; //vettore di Device ordinato per (ID/nome)
+    Time currentTime;   
+    Time currentDeviceEndTime;
+
+    int deviceCount;    //lunghezza del vettore di Device
+    Device* currentDevice;  //puntatore al Device su cui si sta lavorando
     
     std::multimap<Time, Device*>::iterator findDevice(Device& d);
     std::multimap<Time, Device*>::iterator findDeviceByID(int ID);

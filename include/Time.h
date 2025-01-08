@@ -30,13 +30,13 @@ class Time{
 
 //HELPER FUNCTION
 
-Time& operator+ (Time& time1, Time& time2);
-Time& operator+ (Time& time, int min);
+Time operator+ (Time&  time1, Time&  time2);
+Time operator+ (Time&  time, int  min);
 
-Time& operator- (Time& finish_time, Time& start_time);
-Time& operator- (Time& time, int min);
+Time operator- (Time&  finish_time, Time&  start_time);
+Time operator- (Time&  time, int  min);
 
-double operator* (double value,Time& time);
+double operator* (double value,Time time);
 
 bool operator== (Time& a, Time& b);
 
@@ -46,7 +46,8 @@ bool operator>(Time& a, Time& b);
 
 std::ostream& operator<<(std::ostream& os, Time a);
 
-int getHoursDeltaTime(Time& a, Time& b);
-int getMinutesDeltaTime(Time& a, Time& b);
+//A COSA SERVONO??
+//int getHoursDeltaTime(Time& a, Time& b);
+//int getMinutesDeltaTime(Time& a, Time& b);
 
 #endif

@@ -20,6 +20,18 @@ int main() {
     AutomaticDevice Asciugatrice("Asciugatrice", 8, -0.5, Time(1,0));
     AutomaticDevice Televisore("Televisore", 9, -0.2, Time(1,0));
 
+    DeviceManager DevMan;
+    DevMan.addDevice(Impianto_Fotovoltaico);
+    DevMan.addDevice(Pompa_di_calore_termostato);
+    DevMan.addDevice(Scaldabagno);
+    DevMan.addDevice(Frigorifero);
+    DevMan.addDevice(Lavatrice);
+    DevMan.addDevice(Lavastoviglie);
+    DevMan.addDevice(Tapparelle_elettriche);
+    DevMan.addDevice(Forno_a_microone);
+    DevMan.addDevice(Asciugatrice);
+    DevMan.addDevice(Televisore);
+
     vector<Device*> container(10);
     container[0] = &Impianto_Fotovoltaico;
     container[1] = &Pompa_di_calore_termostato;

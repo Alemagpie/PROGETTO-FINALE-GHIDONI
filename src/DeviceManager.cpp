@@ -1,12 +1,18 @@
 #include "../include/DeviceManager.h"
 
-DeviceManager::DeviceManager(){
+DeviceManager::DeviceManager()
+    : deviceCount{0}, currentDevice{nullptr}, deviceList(), activeDevices(), asyncDevices()
+{
     currentTime.setTime(0,0);
     currentDeviceEndTime.setTime(0,0);
 }
 
+void DeviceManager::addDevice(Device& newDev){
+    deviceList.push_back(&newDev);
+    deviceCount = deviceList.max_size();
+}
 
-void DeviceManager::addDevice() {  //rimosso parametro "Device* d" perchè è più semplice lavorare con la variabile currentDevice, settandola in parseInput()
+void DeviceManager::setDeviceStartTime() {  //rimosso parametro "Device* d" perchè è più semplice lavorare con la variabile currentDevice, settandola in parseInput()
     Time s_time = currentTime;
     Time e_time = currentDeviceEndTime;
 
@@ -29,6 +35,7 @@ std::multimap<Time, Device*>::iterator DeviceManager::findDevice(Device& d) {
             return it;
         }
     }
+    return activeDevices.end();
 }
 
 std::multimap<Time, Device*>::iterator DeviceManager::findDeviceByID(int ID) {
@@ -37,6 +44,7 @@ std::multimap<Time, Device*>::iterator DeviceManager::findDeviceByID(int ID) {
             return it;
         }
     }
+    return activeDevices.end();
 }
 
 std::multimap<Time, Device*>::iterator DeviceManager::findDeviceByName(std::string& s) {
@@ -46,6 +54,7 @@ std::multimap<Time, Device*>::iterator DeviceManager::findDeviceByName(std::stri
             return it;
         }
     }
+    return activeDevices.end();
 }
 
 

@@ -24,7 +24,7 @@ class Device{
         int getID() const;
         bool getStatus() const;
         Time getEndTime() const;
-        const double getPowerUseByTime(Time& current_time); 
+        const double getPowerUsed(); 
         virtual void setTimer(Time& start_t, Time& end_t) = 0;  //rende la classe astratta    
 
     //Data membri
@@ -33,10 +33,13 @@ class Device{
         Time end_time;
         std::string name;
         const int id;
-        double powerUse;  
+        double Consumption;
+        double powerUsed;  
         bool status;
 };
 
 bool operator==(const Device& a, const Device& b);
+
+std::ostream& operator<<(std::ostream& os, Device& dev);
 
 #endif
