@@ -4,7 +4,7 @@
 #define DEV_H
 
 #include <string>
-#include "Time.h"
+#include "CustomTime.h"
 
 //CLASSE BASE 
 class Device{
@@ -23,14 +23,14 @@ class Device{
         std::string getName() const;
         int getID() const;
         bool getStatus() const;
-        Time getEndTime() const;
+        CustomTime getEndTime() const;
         const double getPowerUsed(); 
-        virtual void setTimer(Time& start_t, Time& end_t) = 0;  //rende la classe astratta    
+        virtual void setTimer(CustomTime& start_t, CustomTime& end_t) = 0;  //rende la classe astratta    
 
     //Data membri
     protected:
-        Time start_time;
-        Time end_time;
+        CustomTime start_time;
+        CustomTime end_time;
         std::string name;
         const int id;
         double Consumption;

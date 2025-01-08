@@ -1,34 +1,34 @@
-#include "../include/Time.h"
+#include "../include/CustomTime.h"
 
-Time::Time() : hour{0}, minutes{0} {}
+CustomTime::CustomTime() : hour{0}, minutes{0} {}
 
-Time::Time(unsigned int ora, unsigned int minuti) : hour{ora}, minutes{minuti} {}
+CustomTime::CustomTime(unsigned int ora, unsigned int minuti) : hour{ora}, minutes{minuti} {}
 
-unsigned int Time::getHour() {
+unsigned int CustomTime::getHour() {
     return hour;
 }
 
-unsigned int Time::getMinutes() {
+unsigned int CustomTime::getMinutes() {
     return minutes;
 }
 
-void Time::setTime(unsigned int const ora, unsigned int const minuti) {
+void CustomTime::setTime(unsigned int const ora, unsigned int const minuti) {
     hour = ora;
     minutes = minuti;
 }
 
-void Time::resetTime() {
+void CustomTime::resetTime() {
     hour = minutes = 0;
 }
 
-Time& Time::operator= (Time a) {
+CustomTime& CustomTime::operator= (CustomTime a) {
     hour = a.getHour();
     minutes = a.getMinutes();
 
     return *this;
 }
 /*
-Time& Time::operator= (Time a){
+CustomTime& CustomTime::operator= (CustomTime a){
     hour = a.getHour();
     minutes = a.getMinutes();
 
@@ -36,7 +36,7 @@ Time& Time::operator= (Time a){
 }
 */
 
-Time operator+ (Time&  time1, Time&  time2){
+CustomTime operator+ (CustomTime&  time1, CustomTime&  time2){
 
     unsigned int finalHour = time1.getHour() + time2.getHour();
     unsigned int finalMinute = time1.getMinutes() + time2.getMinutes();
@@ -53,12 +53,12 @@ Time operator+ (Time&  time1, Time&  time2){
     }
 
     //creo oggetto time
-    Time return_time(finalHour,finalMinute);
+    CustomTime return_time(finalHour,finalMinute);
 
     return return_time;
 }
 
-Time operator+ (Time&  time, int  min) {
+CustomTime operator+ (CustomTime&  time, int  min) {
     if(min<0) {return (time - (min * -1));}
 
     unsigned int finalHour = time.getHour();
@@ -77,12 +77,12 @@ Time operator+ (Time&  time, int  min) {
     }
 
     //creo oggetto time
-    Time return_time(finalHour,finalMinute);
+    CustomTime return_time(finalHour,finalMinute);
 
     return return_time;
 }
 
-Time operator- (Time&  finish_time, Time&   start_time) { 
+CustomTime operator- (CustomTime&  finish_time, CustomTime&   start_time) { 
     int newHour = finish_time.getHour() - start_time.getHour();
     int newMinute = finish_time.getMinutes() - start_time.getMinutes();
 
@@ -97,11 +97,11 @@ Time operator- (Time&  finish_time, Time&   start_time) {
         }
     }
 
-    Time newTime(newHour, newMinute);
+    CustomTime newTime(newHour, newMinute);
     return newTime;
 }
 
-Time operator- (Time&  time , int  min) {
+CustomTime operator- (CustomTime&  time , int  min) {
     if(min<0) {return(time + (min * -1));}
 
     int finalHour = time.getHour();
@@ -119,41 +119,41 @@ Time operator- (Time&  time , int  min) {
     }
 
     //creo oggetto time
-    Time return_time(finalHour,finalMinute);
+    CustomTime return_time(finalHour,finalMinute);
 
     return return_time;
 }
 
-double operator* (double value,Time time) { 
+double operator* (double value,CustomTime time) { 
     return (value*(time.getHour() + (time.getMinutes()/60)));
 }
 
-bool operator==(Time& a, Time& b) {
+bool operator==(CustomTime& a, CustomTime& b) {
     return (a.getHour() == b.getHour() && a.getMinutes() == b.getMinutes());
 }
 
-bool operator>(Time& a, Time& b) {
+bool operator>(CustomTime& a, CustomTime& b) {
     if(a.getHour() > b.getHour() ) {return true;}
     if(a.getHour() == b.getHour() && a.getMinutes() > b.getMinutes()) {return true;}
     return false;
 }
 
-bool operator<(Time& a, Time& b) {
+bool operator<(CustomTime& a, CustomTime& b) {
     if(a.getHour() < b.getHour() ) {return true;}
     if(a.getHour() == b.getHour() && a.getMinutes() < b.getMinutes()) {return true;}
     return false;
 }
 
-std::ostream& operator<<(std::ostream& os, Time& a)
+std::ostream& operator<<(std::ostream& os, CustomTime& a)
 {
     return os << "[" << a.getHour()<<":"<<a.getMinutes()<<"]";
 }
 
 /*
-int getHoursDeltaTime(Time& a, Time& b) {
+int getHoursDeltaTime(CustomTime& a, CustomTime& b) {
 
 }
 
-int getMinutesDeltaTime(Time& a, Time& b) {
+int getMinutesDeltaTime(CustomTime& a, CustomTime& b) {
 
 }*/

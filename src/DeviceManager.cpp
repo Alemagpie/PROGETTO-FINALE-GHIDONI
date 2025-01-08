@@ -7,50 +7,50 @@ DeviceManager::DeviceManager()
     currentDeviceEndTime.setTime(0,0);
 }
 
-void DeviceManager::addDevice(Device& newDev){
+void DeviceManager::addDevice(){
+    CustomTime e_time = currentDeviceEndTime;
+    activeDevices.insert(std::pair<CustomTime, Device*>(e_time, currentDevice)); //aggiungi entry con (chiave end_time e valore puntatore a d) alla multimappa dei device attivi
+}
+
+void DeviceManager::addDeviceToList(Device& newDev) {
     deviceList.push_back(&newDev);
     deviceCount++;
 }
 
 void DeviceManager::setDeviceStartTime() {  //rimosso parametro "Device* d" perchè è più semplice lavorare con la variabile currentDevice, settandola in parseInput()
-    Time s_time = currentTime;
-    Time e_time = currentDeviceEndTime;
-    //TOLGO PER COMPILAZIONE
-    //activeDevices.insert(std::pair<Time, Device*>(e_time, currentDevice)); //aggiungi entry con (chiave end_time e valore puntatore a d) alla multimappa dei device attivi
+    currentDevice->setTimer(currentTime, currentDeviceEndTime);
 }
 
 //metodo per comando "set ${devicename} off"
-Device* DeviceManager::removeDevice(std::multimap<Time, Device*>::iterator it) {
+Device* DeviceManager::removeDevice(std::multimap<CustomTime, Device*>::iterator it) {
     Device* d = it->second;
     activeDevices.erase(it);
-
     return d;
 } 
 
 
-
-std::multimap<Time, Device*>::iterator DeviceManager::findDevice(Device& d) {
+std::multimap<CustomTime, Device*>::iterator DeviceManager::findDevice(Device& d) {
     for(auto it = activeDevices.begin(); it != activeDevices.end(); ++it) {
-        if(it->second == &d) {    //it->first restituisce il Time, it->second restituisce Device*
+        if(it->second == &d) {    //it->first restituisce il CustomTime, it->second restituisce Device*
             return it;
         }
     }
     return activeDevices.end();
 }
 
-std::multimap<Time, Device*>::iterator DeviceManager::findDeviceByID(int ID) {
+std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByID(int ID) {
     for(auto it = activeDevices.begin(); it != activeDevices.end(); ++it) {
-        if(it->second->getID() == ID) {    //it->first restituisce il Time, it->second restituisce Device*
+        if(it->second->getID() == ID) {    //it->first restituisce il CustomTime, it->second restituisce Device*
             return it;
         }
     }
     return activeDevices.end();
 }
 
-std::multimap<Time, Device*>::iterator DeviceManager::findDeviceByName(std::string& s) {
-    //std::multimap<Time, Device*>::iterator it;
+std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByName(std::string& s) {
+    //std::multimap<CustomTime, Device*>::iterator it;
     for(auto it = activeDevices.begin(); it != activeDevices.end(); ++it) {
-        if(it->second->getName() == s) {    //it->first restituisce il Time, it->second restituisce Device*
+        if(it->second->getName() == s) {    //it->first restituisce il CustomTime, it->second restituisce Device*
             return it;
         }
     }
@@ -100,30 +100,30 @@ void DeviceManager::parseInput(std::string command){
             break;
 
         case firstCommand::show:
-            if(std::getline(iss, word, ' ')){
-                
-            }else{
+            if(!std::getline(iss, word, ' ')){  //"show"
                 double totalPowerUsed=0;
                 for(int i=0; i<deviceCount; i++){
                     std::cout << *deviceList[i] << std::endl;
                     totalPowerUsed += deviceList[i]->getPowerUsed();
                 }
                 std::cout << "Consumo energetico totale del sistema dalle 00:00 : " << totalPowerUsed << "kWh" << std::endl;
+            } else {    //"show ${devicename}"
+
             }
             break;
 
         case firstCommand::reset:
              if(std::getline(iss, word, ' ')){
                 switch(resetToSwitch(word)){
-                    case resetCommand::timeReset:
+                    case resetCommand::timeReset:   //"reset time"
                         activeDevices.clear();
                         currentTime.setTime(0,0);
                         break;
-                    case resetCommand::timersReset:
+                    case resetCommand::timersReset: //"reset timers"
                         //Rimuovi timer
                         asyncDevices.clear();
                         break;
-                    case resetCommand::allReset:
+                    case resetCommand::allReset:    //"reset all"
                         //Spegni dispositivi attivi
                         activeDevices.clear();
                         //Rimuovi timer
@@ -144,7 +144,7 @@ void DeviceManager::parseInput(std::string command){
     
 }
 
-void DeviceManager::setTime(Time& newTime) {
+void DeviceManager::setTime(CustomTime& newTime) {
     currentTime = newTime;
     checkOnHourChange();
 }

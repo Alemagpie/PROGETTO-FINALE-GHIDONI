@@ -12,7 +12,7 @@ class ManualDevice : public Device{
     //Costruttore e funzioni membro
     public:
         ManualDevice(std::string nome, const int ID, double power);
-        void setTimer(Time& start_t, Time& end_t) override;
+        void setTimer(CustomTime& start_t, CustomTime& end_t) override;
 };
 
 #endif

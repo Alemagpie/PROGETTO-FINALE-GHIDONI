@@ -1,0 +1,10 @@
+^A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\CMAKELISTS.TXT
+setlocal
+A:\C++\OpenGL\CMake\bin\cmake.exe -SA:/C++/UNIPD/PROGETTO-FINALE-GHIDONI -BA:/C++/UNIPD/PROGETTO-FINALE-GHIDONI/build --check-stamp-file A:/C++/UNIPD/PROGETTO-FINALE-GHIDONI/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

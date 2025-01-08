@@ -1,7 +1,7 @@
 //DAVIDE MEROTTO
 
 #include "../include/ManualDevice.h"
-#include "../include/Time.h"
+#include "../include/CustomTime.h"
 
 //Implementazione classe ManualDevices
 ManualDevice:: ManualDevice(std::string nome, const int ID, double power)
@@ -11,8 +11,7 @@ ManualDevice:: ManualDevice(std::string nome, const int ID, double power)
     end_time.setTime(0,0);
 }
 
-void ManualDevice:: setTimer(Time& start_t, Time& end_t){
-
+void ManualDevice:: setTimer(CustomTime& start_t, CustomTime& end_t){
     start_time = start_t;
     end_time = end_t;
 }
