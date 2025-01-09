@@ -4,9 +4,9 @@
 #include <iterator>
 #include <utility> //per usare std::pair nella multimappa
 #include <map>
-#include "Device.h"
+#include "ManualDevice.h"
+#include "AutomaticDevice.h"
 #include "CustomTime.h"
-#include <sstream>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -42,8 +42,8 @@ class DeviceManager {
     std::multimap<CustomTime, Device*>::iterator findDevice(Device& d);
     std::multimap<CustomTime, Device*>::iterator findDeviceByID(int ID);
     std::multimap<CustomTime, Device*>::iterator findDeviceByNameActive(std::string& s);
+    std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator findDeviceByNameAsync(std::string& s);
     std::vector<Device*>::iterator findDeviceByNameAll(std::string& s);
-    
 
 };
 

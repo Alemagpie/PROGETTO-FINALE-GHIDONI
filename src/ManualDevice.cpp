@@ -11,7 +11,11 @@ ManualDevice:: ManualDevice(std::string nome, const int ID, double power)
     end_time.setTime(0,0);
 }
 
-void ManualDevice:: setTimer(CustomTime& start_t, CustomTime& end_t){
+void ManualDevice:: setTimer(CustomTime& start_t, CustomTime end_t){
     start_time = start_t;
     end_time = end_t;
+}
+
+void ManualDevice::removeTimer(){
+    end_time.setTime(0,0);
 }

@@ -28,6 +28,14 @@ bool Device:: getStatus() const {
     return status;
 }
 
+CustomTime Device::getStartTime() const{
+    return start_time;
+}
+
+CustomTime Device::getEndTime() const{
+    return end_time;
+}
+
 const double Device::getPowerUsed(){
     //si da per scontato che il dispositvo sia acceso
     return powerUsed;

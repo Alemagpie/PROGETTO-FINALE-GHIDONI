@@ -8,11 +8,6 @@
 
 //CLASSE BASE 
 class Device{
-
-    protected: 
-        //non permetto la creazione di oggetti di tipo Device (la classe è comunque astratta )
-        Device(std::string nome, const int ID, double power);
-
     //funzioni membro
     public: 
         //evito slicing
@@ -23,9 +18,11 @@ class Device{
         std::string getName() const;
         int getID() const;
         bool getStatus() const;
+        CustomTime getStartTime() const;
         CustomTime getEndTime() const;
         const double getPowerUsed(); 
-        virtual void setTimer(CustomTime& start_t, CustomTime& end_t) = 0;  //rende la classe astratta    
+        virtual void setTimer(CustomTime& start_t, CustomTime end_t ) = 0;  //rende la classe astratta    
+        virtual void removeTimer() =0;
 
     //Data membri
     protected:
@@ -36,6 +33,9 @@ class Device{
         double Consumption;
         double powerUsed;  
         bool status;
+
+        //non permetto la creazione di oggetti di tipo Device (la classe è comunque astratta )
+        Device(std::string nome, const int ID, double power);
 };
 
 bool operator==(const Device& a, const Device& b);

@@ -57,6 +57,16 @@ std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByNameActi
     return activeDevices.end();
 }
 
+std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator DeviceManager::findDeviceByNameAsync(std::string& s) {
+    //std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator it;
+    for(auto it = asyncDevices.begin(); it != asyncDevices.end(); ++it) {
+        if(it->second.second->getName() == s) {    //it->first restituisce il CustomTime, it->second restituisce Device*
+            return it;
+        }
+    }
+    return asyncDevices.end();
+}
+
 std::vector<Device*>::iterator DeviceManager::findDeviceByNameAll(std::string& s) {
     //std::vector<Device*>::iterator it;
     for(auto it = deviceList.begin(); it != deviceList.end(); ++it) {
@@ -107,16 +117,9 @@ resetCommand resetToSwitch(std::string& command){
 void DeviceManager::parseInput(std::string command){
     currentDeviceEndTime = currentTime;
     //stream per fare il parsing del comando
-    std::istringstream iss(command);
     std::vector<std::string> words;
     SentenceIntoWords(words, command);
-    //for(int i=0; i<words.size(); i++){
-     //   std::cout << words[i] << std::endl;
-    //}
-        
-    //std::string word;
-    //std::getline(iss, word, ' ');
-    //controllo della prima parola
+    //controllo della prima parola                  
     switch(firstToSwitch(words[0])){
         case firstCommand::set:
             
@@ -127,7 +130,9 @@ void DeviceManager::parseInput(std::string command){
                 auto iter = findDeviceByNameAll(words[1]);
                 if(iter == deviceList.end()) {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
                 else {
-                    //(**iter).             //WIP, working on it :) -Ric
+                    auto iterAsync = findDeviceByNameAsync(words[1]);
+                    iterAsync->second.second->removeTimer();                //DA CONTROLLARE QUANDO VIENE MESSO L'ADD
+                    asyncDevices.erase(iterAsync);
                 }              
             } else {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
             break;
