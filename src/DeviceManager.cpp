@@ -67,6 +67,17 @@ std::vector<Device*>::iterator DeviceManager::findDeviceByNameAll(std::string& s
     return deviceList.end();
 }
 
+void SentenceIntoWords(std::vector<std::string>& ret, std::string sentence){
+    int initpos=0, endpos=0;
+    for(endpos; endpos<sentence.size(); endpos++){
+        if(sentence[endpos] == ' '){
+            ret.push_back(sentence.substr(initpos, endpos-initpos));
+            initpos = endpos+1;
+        } 
+    }
+    ret.push_back(sentence.substr(initpos));
+}
+
 //--------------------------------------------------------------------------
 
 enum firstCommand{
@@ -97,64 +108,63 @@ void DeviceManager::parseInput(std::string command){
     currentDeviceEndTime = currentTime;
     //stream per fare il parsing del comando
     std::istringstream iss(command);
-    std::string word;
-    std::getline(iss, word, ' ');
+    std::vector<std::string> words;
+    SentenceIntoWords(words, command);
+    //for(int i=0; i<words.size(); i++){
+     //   std::cout << words[i] << std::endl;
+    //}
+        
+    //std::string word;
+    //std::getline(iss, word, ' ');
     //controllo della prima parola
-    switch(firstToSwitch(word)){
+    switch(firstToSwitch(words[0])){
         case firstCommand::set:
-            std::getline(iss, word, ' ');
+            
             break;
 
         case firstCommand::rm:
             break;
 
         case firstCommand::show:
-            word = "";
-            if(std::getline(iss, word, ' ')){  //"show ${devicename}"
-                 auto iter = findDeviceByNameAll(word);
-                if(iter == deviceList.end()) {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
-                else {std::cout<< *iter << std::endl;}
-            } else {    //"show"
-                std::cout << word << std::endl;
+            if(words.size() == 1){  //"show ${devicename}"
                 double totalPowerUsed=0;
                 for(int i=0; i<deviceCount; i++){
                     std::cout << *deviceList[i] << std::endl;
                     totalPowerUsed += deviceList[i]->getPowerUsed();
                 }
                 std::cout << "Consumo energetico totale del sistema dalle 00:00 : " << totalPowerUsed << "kWh" << std::endl;
-               
-            }
+            } else if (words.size() == 2){    //"show"
+                auto iter = findDeviceByNameAll(words[1]);
+                if(iter == deviceList.end()) {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
+                else {std::cout<< **iter << std::endl;}              
+            } else {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
             break;
 
         case firstCommand::reset:
-             if(std::getline(iss, word, ' ')){
-                switch(resetToSwitch(word)){
-                    case resetCommand::timeReset:   //"reset time"
-                        activeDevices.clear();
-                        currentTime.setTime(0,0);
-                        break;
-                    case resetCommand::timersReset: //"reset timers"
-                        //Rimuovi timer
-                        asyncDevices.clear();
-                        break;
-                    case resetCommand::allReset:    //"reset all"
-                        //Spegni dispositivi attivi
-                        activeDevices.clear();
-                        //Rimuovi timer
-                        asyncDevices.clear();
-                        currentTime.setTime(0,0);
-                        break;
-                    default:
-                        std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;
-                        break;
+            switch(resetToSwitch(words[1])){
+                case resetCommand::timeReset:   //"reset time"
+                    activeDevices.clear();
+                    currentTime.setTime(0,0);
+                    break;
+                case resetCommand::timersReset: //"reset timers"
+                    //Rimuovi timer
+                    asyncDevices.clear();
+                    break;
+                case resetCommand::allReset:    //"reset all"
+                    //Spegni dispositivi attivi
+                    activeDevices.clear();
+                    //Rimuovi timer
+                    asyncDevices.clear();
+                    currentTime.setTime(0,0);
+                    break;
+                default:
+                    std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;
+                    break;
                 }
-             }
             break;
 
         default:
-            std::cout << "prova" << std::endl;
             std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;
-            break;
     }
     
 }

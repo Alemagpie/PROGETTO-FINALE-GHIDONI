@@ -43,9 +43,10 @@ class DeviceManager {
     std::multimap<CustomTime, Device*>::iterator findDeviceByID(int ID);
     std::multimap<CustomTime, Device*>::iterator findDeviceByNameActive(std::string& s);
     std::vector<Device*>::iterator findDeviceByNameAll(std::string& s);
+    
 
 };
 
-
+void SentenceIntoWords(std::vector<std::string>& ret, std::string sentence);
 
 #endif

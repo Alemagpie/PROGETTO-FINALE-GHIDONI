@@ -32,10 +32,12 @@ int main() {
     DevMan.addDeviceToList(Asciugatrice);
     DevMan.addDeviceToList(Televisore);
 
-    for (string s; cin >> s;){
+
+    
+    for (string s; getline(cin, s);){
         DevMan.parseInput(s);
     }
-
+    
 
     /*
     vector<Device*> container(10);
