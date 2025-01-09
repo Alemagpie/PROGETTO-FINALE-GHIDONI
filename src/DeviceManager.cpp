@@ -123,6 +123,13 @@ void DeviceManager::parseInput(std::string command){
             break;
 
         case firstCommand::rm:
+        if (words.size() == 2){    //"rm ${DEVICE}"      Rimuovere i timer associati ad un dispositivo.
+                auto iter = findDeviceByNameAll(words[1]);
+                if(iter == deviceList.end()) {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
+                else {
+                    //(**iter).             //WIP, working on it :) -Ric
+                }              
+            } else {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
             break;
 
         case firstCommand::show:
@@ -143,7 +150,7 @@ void DeviceManager::parseInput(std::string command){
         case firstCommand::reset:
             switch(resetToSwitch(words[1])){
                 case resetCommand::timeReset:   //"reset time"
-                    activeDevices.clear();
+                    activeDevices.clear();                              //TO DO: Aggiornare PowerUsed and Status, anche per altri reset.
                     currentTime.setTime(0,0);
                     break;
                 case resetCommand::timersReset: //"reset timers"
