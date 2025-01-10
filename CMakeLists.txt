@@ -18,7 +18,7 @@ set(SOURCES
  src/ManualDevice.cpp
  src/Device.cpp 
  src/DeviceManager.cpp
- src/Time.cpp
+ src/CustomTime.cpp
 )
 
 # Add the executable target
