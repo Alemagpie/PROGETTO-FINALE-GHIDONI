@@ -17,7 +17,11 @@ void DeviceManager::addDeviceToList(Device& newDev) {
 }
 
 void DeviceManager::addDeviceAsync(Device* dev, CustomTime Start, CustomTime End){
-    asyncDevices.insert(std::pair<CustomTime, std::pair<CustomTime, Device*>>(Start, std::pair<CustomTime, Device*>(End, dev))); //
+    if(Start < currentTime) {
+    asyncDevices.insert(std::pair<CustomTime, std::pair<CustomTime, Device*>>(Start, std::pair<CustomTime, Device*>(End, dev))); 
+    } else {
+        std::cout<<"Orario di inizio non valido";
+    }
 }
 
 void DeviceManager::moveDevice(std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator it) {
@@ -89,8 +93,8 @@ std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByNameActi
 
 std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator DeviceManager::findDeviceByNameAsync(std::string& s) {
     return std::find_if(asyncDevices.begin(), asyncDevices.end(),
-        [&s](const std::pair<CustomTime, Device*>& element) -> bool {
-            return element.second->getName() == s;
+        [&s](const std::pair<CustomTime, std::pair<CustomTime, Device*>>& element) -> bool {
+            return element.second.second->getName() == s;
         });
 
     /*
@@ -106,8 +110,8 @@ std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator DeviceManage
 
 std::vector<Device*>::iterator DeviceManager::findDeviceByNameAll(std::string& s) {
     return std::find_if(deviceList.begin(), deviceList.end(),
-        [&s](const std::pair<CustomTime, Device*>& element) -> bool {
-            return element.second->getName() == s;
+        [&s](Device* d) -> bool {
+            return d->getName() == s;
         });
 
     /*
@@ -317,33 +321,16 @@ void DeviceManager::checkOnHourChange(){
 
     while (asyncIt != asyncDevices.end() || activeIt != activeDevices.end())
     {
-        if(asyncIt->first <= currentTime) {
-            if(activeIt->first <= currentTime) {
-                if(asyncIt->first <= activeIt->first) {
+        if(asyncIt->first <= currentTime || activeIt->first <= currentTime) {
+                if(asyncIt->first <= activeIt->first && asyncIt->first <= currentTime) {
                     moveDevice(asyncIt);
-                    removeDevice(activeIt);
-
                     asyncIt++;
+                }
+
+                if(activeIt != activeDevices.end() && activeIt->first <= currentTime && activeIt->first <= asyncIt-> first) {
+                    removeDevice(activeIt);
                     activeIt++;
                 }
-            }
-        }
-
-
-        /* code */
-    }
-    
-
-    /*
-    //controlla prima i device da 
-    for(auto asyncIt = asyncDevices.begin(); asyncIt != asyncDevices.end(); ++asyncIt) {
-        if(asyncIt->first <= currentTime) {
-            moveDevice(asyncIt);
         }
     }
-    
-    for(auto activeIt = activeDevices.begin(); activeIt != activeDevices.end(); ++activeIt) {
-
-    }
-    */
 }

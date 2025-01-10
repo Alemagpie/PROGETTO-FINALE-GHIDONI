@@ -16,7 +16,7 @@
     <ClCompile Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\src\DeviceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\src\Time.cpp">
+    <ClCompile Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\src\CustomTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
