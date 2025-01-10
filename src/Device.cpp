@@ -41,6 +41,10 @@ const double Device::getPowerUsed(){
     return powerUsed;
 }
 
+void Device:: setStatus(bool value){
+    status = value;
+}
+
 void Device::updatePowerUsed(CustomTime& currTime){
     powerUsed += Consumption*(currTime - start_time);
 }

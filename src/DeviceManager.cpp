@@ -9,6 +9,7 @@ DeviceManager::DeviceManager()
 
 void DeviceManager::addDevice(Device* dev){
     activeDevices.insert(std::pair<CustomTime, Device*>(dev->getEndTime(), dev)); //aggiungi entry con (chiave end_time e valore puntatore a d) alla multimappa dei device attivi
+    dev->setStatus(true);
 }
 
 void DeviceManager::addDeviceToList(Device& newDev) {
