@@ -315,7 +315,17 @@ void DeviceManager::setTime(CustomTime newTime) {
     checkOnHourChange();
 }
 
-//da finire
+void DeviceManager::checkPowerConsumption(Device* d) {
+    //controlla se aggiungendo l'ultimo device supera la potenza massima, se sì toglie ultimo device aggiunto
+}
+
+double DeviceManager::checkPowerConsumptionGeneral() {
+    double currentPower = 0;
+    for(auto it = activeDevices.begin(); it != activeDevices.end(); ++it) {
+        currentPower += it->second->getCurrentPowerConsumption();
+    }
+}
+
 void DeviceManager::checkOnHourChange(){
     auto asyncIt = asyncDevices.begin();
     auto activeIt = activeDevices.begin();

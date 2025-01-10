@@ -3,7 +3,7 @@
 #include "../include/Device.h"
 
 Device::Device(std::string nome, const int ID, double power) 
-: name{nome}, id{ID}, Consumption{power}, status{false}, powerUsed{0} 
+: name{nome}, id{ID}, powerConsumption{power}, status{false}, powerUsed{0} 
 {
 }
 
@@ -36,6 +36,10 @@ CustomTime Device::getEndTime() const{
     return end_time;
 }
 
+const double Device::getCurrentPowerConsumption() {
+    return powerConsumption;
+}
+
 const double Device::getPowerUsed(){
     //si da per scontato che il dispositvo sia acceso
     return powerUsed;
@@ -46,7 +50,7 @@ void Device:: setStatus(bool value){
 }
 
 void Device::updatePowerUsed(CustomTime& currTime){
-    powerUsed += Consumption*(currTime - start_time);
+    powerUsed += powerConsumption*(currTime - start_time);
 }
 
 bool operator==(const Device& a, const Device& b) {

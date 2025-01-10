@@ -21,6 +21,7 @@ class Device{
         bool getStatus() const;
         CustomTime getStartTime() const;
         CustomTime getEndTime() const;
+        const double getCurrentPowerConsumption();
         const double getPowerUsed();
         void setStatus(bool value);
         void updatePowerUsed(CustomTime& currTime);
@@ -37,7 +38,7 @@ class Device{
         CustomTime end_time;
         std::string name;
         const int id;
-        double Consumption;
+        double powerConsumption;
         double powerUsed;  
         bool status;
 
