@@ -20,6 +20,12 @@ void DeviceManager::addDeviceAsync(Device* dev, CustomTime Start, CustomTime End
     asyncDevices.insert(std::pair<CustomTime, std::pair<CustomTime, Device*>>(Start, std::pair<CustomTime, Device*>(End, dev))); //
 }
 
+void DeviceManager::moveDevice(std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator it) {
+    std::pair<CustomTime, Device*> deviceToMove = it->second;
+    asyncDevices.erase(it);
+    activeDevices.insert(deviceToMove);
+}
+
 void DeviceManager::setDeviceStartTime() {  //rimosso parametro "Device* d" perchè è più semplice lavorare con la variabile currentDevice, settandola in parseInput()
     currentDevice->setTimer(currentTime, currentDeviceEndTime);
 }
@@ -33,24 +39,44 @@ Device* DeviceManager::removeDevice(std::multimap<CustomTime, Device*>::iterator
 
 
 std::multimap<CustomTime, Device*>::iterator DeviceManager::findDevice(Device& d) {
+    return std::find_if(activeDevices.begin(), activeDevices.end(),
+        [&d](const std::pair<CustomTime, Device*>& element) -> bool {
+            return *(element.second) == d;
+        });
+
+    /*
     for(auto it = activeDevices.begin(); it != activeDevices.end(); ++it) {
         if(it->second == &d) {    //it->first restituisce il CustomTime, it->second restituisce Device*
             return it;
         }
     }
     return activeDevices.end();
+    */
 }
 
 std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByID(int ID) {
+    return std::find_if(activeDevices.begin(), activeDevices.end(),
+        [&ID](const std::pair<CustomTime, Device*>& element) -> bool {
+            return element.second->getID() == ID;
+        });
+    
+    /*
     for(auto it = activeDevices.begin(); it != activeDevices.end(); ++it) {
         if(it->second->getID() == ID) {    //it->first restituisce il CustomTime, it->second restituisce Device*
             return it;
         }
     }
     return activeDevices.end();
+    */
 }
 
 std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByNameActive(std::string& s) {
+    return std::find_if(activeDevices.begin(), activeDevices.end(),
+        [&s](const std::pair<CustomTime, Device*>& element) -> bool {
+            return element.second->getName() == s;
+        });
+    
+    /*
     //std::multimap<CustomTime, Device*>::iterator it;
     for(auto it = activeDevices.begin(); it != activeDevices.end(); ++it) {
         if(it->second->getName() == s) {    //it->first restituisce il CustomTime, it->second restituisce Device*
@@ -58,9 +84,16 @@ std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByNameActi
         }
     }
     return activeDevices.end();
+    */
 }
 
 std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator DeviceManager::findDeviceByNameAsync(std::string& s) {
+    return std::find_if(asyncDevices.begin(), asyncDevices.end(),
+        [&s](const std::pair<CustomTime, Device*>& element) -> bool {
+            return element.second->getName() == s;
+        });
+
+    /*
     //std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator it;
     for(auto it = asyncDevices.begin(); it != asyncDevices.end(); ++it) {
         if(it->second.second->getName() == s) {    //it->first restituisce il CustomTime, it->second restituisce Device*
@@ -68,9 +101,16 @@ std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator DeviceManage
         }
     }
     return asyncDevices.end();
+    */
 }
 
 std::vector<Device*>::iterator DeviceManager::findDeviceByNameAll(std::string& s) {
+    return std::find_if(deviceList.begin(), deviceList.end(),
+        [&s](const std::pair<CustomTime, Device*>& element) -> bool {
+            return element.second->getName() == s;
+        });
+
+    /*
     //std::vector<Device*>::iterator it;
     for(auto it = deviceList.begin(); it != deviceList.end(); ++it) {
         if((*it)->getName() == s) {  
@@ -78,6 +118,7 @@ std::vector<Device*>::iterator DeviceManager::findDeviceByNameAll(std::string& s
         }
     }
     return deviceList.end();
+    */
 }
 
 void SentenceIntoWords(std::vector<std::string>& ret, std::string sentence){
@@ -269,6 +310,40 @@ void DeviceManager::setTime(CustomTime newTime) {
     checkOnHourChange();
 }
 
+//da finire
 void DeviceManager::checkOnHourChange(){
+    auto asyncIt = asyncDevices.begin();
+    auto activeIt = activeDevices.begin();
 
+    while (asyncIt != asyncDevices.end() || activeIt != activeDevices.end())
+    {
+        if(asyncIt->first <= currentTime) {
+            if(activeIt->first <= currentTime) {
+                if(asyncIt->first <= activeIt->first) {
+                    moveDevice(asyncIt);
+                    removeDevice(activeIt);
+
+                    asyncIt++;
+                    activeIt++;
+                }
+            }
+        }
+
+
+        /* code */
+    }
+    
+
+    /*
+    //controlla prima i device da 
+    for(auto asyncIt = asyncDevices.begin(); asyncIt != asyncDevices.end(); ++asyncIt) {
+        if(asyncIt->first <= currentTime) {
+            moveDevice(asyncIt);
+        }
+    }
+    
+    for(auto activeIt = activeDevices.begin(); activeIt != activeDevices.end(); ++activeIt) {
+
+    }
+    */
 }

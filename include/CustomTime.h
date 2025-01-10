@@ -40,9 +40,10 @@ double operator* (double value,CustomTime time);
 
 bool operator== (CustomTime& a, CustomTime& b);
 
-bool operator<(const CustomTime&  a ,const CustomTime&  b ) ;
-
-bool operator>(const CustomTime&  a ,const CustomTime&  b ) ;
+bool operator<(const CustomTime&  a ,const CustomTime&  b );
+bool operator<=(const CustomTime&  a ,const CustomTime&  b );
+bool operator>(const CustomTime&  a ,const CustomTime&  b );
+bool operator<=(const CustomTime&  a ,const CustomTime&  b );
 
 std::ostream& operator<<(std::ostream& os, CustomTime a);
 

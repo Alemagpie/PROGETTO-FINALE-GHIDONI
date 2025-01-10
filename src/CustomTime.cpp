@@ -138,9 +138,21 @@ bool operator>(const CustomTime&  a,const CustomTime&  b) {
     return false;
 }
 
+bool operator>=(const CustomTime&  a,const CustomTime&  b) {
+    if(a.getHour() > b.getHour() ) {return true;}
+    if(a.getHour() == b.getHour() && a.getMinutes() >= b.getMinutes()) {return true;}
+    return false;
+}
+
 bool operator<(const CustomTime&  a,const CustomTime&  b)  {
     if(a.getHour() < b.getHour() ) {return true;}
     if(a.getHour() == b.getHour() && a.getMinutes() < b.getMinutes()) {return true;}
+    return false;
+}
+
+bool operator<=(const CustomTime&  a,const CustomTime&  b) {
+    if(a.getHour() < b.getHour() ) {return true;}
+    if(a.getHour() == b.getHour() && a.getMinutes() <= b.getMinutes()) {return true;}
     return false;
 }
 

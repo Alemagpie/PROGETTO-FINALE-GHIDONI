@@ -2,7 +2,7 @@
 #define DEV_MANAGER_H
 
 #include <iterator>
-#include <utility> //per usare std::pair nella multimappa
+#include <utility> //per std::pair
 #include <map>
 #include "ManualDevice.h"
 #include "AutomaticDevice.h"
@@ -10,6 +10,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 //albero dei dispositivi
 class DeviceManager {
@@ -19,6 +20,7 @@ class DeviceManager {
     void addDeviceToList(Device& newDev);
     void setDeviceStartTime();
     void addDeviceAsync(Device* dev, CustomTime Start, CustomTime End); //aggiungi a multimappa dei "pending"
+    void moveDevice(std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator it);
     Device getDevice(CustomTime t);   //trova dispositivo in base a tempo
     Device* removeDevice(std::multimap<CustomTime, Device*>::iterator it); //rimuovi dispositivo in base al nome, fa il return del dispositivo
     Device* removeDevicesByTime(CustomTime t); //rimuovi uno o più dispositivi con orario uguale o passato rispetto a quello corrente, fa il return del primo dispositivo
