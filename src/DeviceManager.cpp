@@ -7,9 +7,8 @@ DeviceManager::DeviceManager()
     currentDeviceEndTime.setTime(0,0);
 }
 
-void DeviceManager::addDevice(){
-    CustomTime e_time = currentDeviceEndTime;
-    activeDevices.insert(std::pair<CustomTime, Device*>(e_time, currentDevice)); //aggiungi entry con (chiave end_time e valore puntatore a d) alla multimappa dei device attivi
+void DeviceManager::addDevice(Device* dev){
+    activeDevices.insert(std::pair<CustomTime, Device*>(dev->getEndTime(), dev)); //aggiungi entry con (chiave end_time e valore puntatore a d) alla multimappa dei device attivi
 }
 
 void DeviceManager::addDeviceToList(Device& newDev) {
@@ -88,6 +87,16 @@ void SentenceIntoWords(std::vector<std::string>& ret, std::string sentence){
     ret.push_back(sentence.substr(initpos));
 }
 
+//DA MODIFICARE
+void DeviceManager::print_infoAll(std::string_view rem)
+{
+    std::cout << rem << "{ ";
+    for (const auto& [key, value] : activeDevices)
+        std::cout << key << value << ", ";
+    std::cout << "}\n";
+    std::cout << "Size=" << activeDevices.size() << '\n';
+}
+
 //--------------------------------------------------------------------------
 
 enum firstCommand{
@@ -122,13 +131,58 @@ void DeviceManager::parseInput(std::string command){
     //controllo della prima parola                  
     switch(firstToSwitch(words[0])){
         case firstCommand::set:
-            
+            if(words.size() >= 3 && words.size() < 5){      //Controllo che ci sia il giusto numero di parole nel comando
+                try{
+                    if(words[1] == "time"){
+                        int newHour = std::stoi(words[2].substr(0, words[2].find(":")));        //Trasformo da string a int con la funzione stoi
+                        int newMin = std::stoi(words[2].substr(words[2].find(":")+1));
+                        CustomTime newTime(newHour, newMin);
+                        std::cout<< newTime << std::endl;                       //TO DO: fare controllo dell'orario
+                        setTime(newTime);
+                    }else{
+                        if(words[2] == "on"){                   //set ${DEVICE} on
+                            auto iterAll = findDeviceByNameAll(words[1]);
+                            auto iterActive = findDeviceByNameActive(words[1]);
+                            if(iterAll != deviceList.end() && iterActive == activeDevices.end() ){
+                                (*iterAll)->updateStartTime(currentTime);
+                                (*iterAll)->updateEndTime();
+                                addDevice(*iterAll);
+                                print_infoAll("Multimappa attivi: ");
+                            }else if(iterActive != activeDevices.end()){
+                                std::cout << "Device gia attivo. Se si vuole modificare i suoi orari, spegnerlo e rirpovare."<< std::endl;
+                            } else{
+                                std::cout << "Device non riconosciuto. Fare attenzione al nome riportato." << std::endl;
+                            }
+                        }else if(words[2] == "off"){            //set ${DEVICE} off
+                            auto iterAll = findDeviceByNameAll(words[1]);
+                            auto iterActive = findDeviceByNameActive(words[1]);
+                            if(iterAll != deviceList.end() && iterActive != activeDevices.end() ){
+                                iterActive->second->updatePowerUsed(currentTime);
+                                iterActive->second->stopDevice();
+                                activeDevices.erase(iterActive);
+                                print_infoAll("Multimappa attivi: ");
+                            }else if(iterActive == activeDevices.end()){
+                                std::cout << "Device non attivo. Prima di spegnere il dispositivo, e' necessario attivarlo."<< std::endl;
+                            } else{
+                                std::cout << "Device non riconosciuto. Fare attenzione al nome riportato." << std::endl;
+                            }
+                        }else{                                  //set ${DEVICE} ${START_TIME} ${END_TIME}
+                            //TO DO
+                        }
+                    }
+                }catch(std::exception e){
+                    std::cerr<<e.what() << std::endl;
+                }
+            }else{
+                std::cout<< "Comando non riconosciuto. Riprovare." << std::endl;
+            }
             break;
+
 
         case firstCommand::rm:
         if (words.size() == 2){    //"rm ${DEVICE}"      Rimuovere i timer associati ad un dispositivo.
-                auto iter = findDeviceByNameAll(words[1]);
-                if(iter == deviceList.end()) {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
+                auto iterAll = findDeviceByNameAll(words[1]);
+                if(iterAll == deviceList.end()) {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
                 else {
                     auto iterAsync = findDeviceByNameAsync(words[1]);
                     iterAsync->second.second->removeTimer();                //DA CONTROLLARE QUANDO VIENE MESSO L'ADD
@@ -136,6 +190,7 @@ void DeviceManager::parseInput(std::string command){
                 }              
             } else {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
             break;
+
 
         case firstCommand::show:
             if(words.size() == 1){  //"show ${devicename}"
@@ -151,6 +206,7 @@ void DeviceManager::parseInput(std::string command){
                 else {std::cout<< **iter << std::endl;}              
             } else {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
             break;
+        
 
         case firstCommand::reset:
             switch(resetToSwitch(words[1])){
@@ -181,7 +237,7 @@ void DeviceManager::parseInput(std::string command){
     
 }
 
-void DeviceManager::setTime(CustomTime& newTime) {
+void DeviceManager::setTime(CustomTime newTime) {
     currentTime = newTime;
     checkOnHourChange();
 }

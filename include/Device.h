@@ -20,7 +20,10 @@ class Device{
         bool getStatus() const;
         CustomTime getStartTime() const;
         CustomTime getEndTime() const;
+        virtual void updateStartTime(CustomTime newStartTime) =0;
+        virtual void updateEndTime(CustomTime newEndTime = CustomTime(23,59)) =0;
         const double getPowerUsed(); 
+        void updatePowerUsed(CustomTime& currTime);
         virtual void setTimer(CustomTime& start_t, CustomTime end_t ) = 0;  //rende la classe astratta    
         virtual void removeTimer() =0;
 

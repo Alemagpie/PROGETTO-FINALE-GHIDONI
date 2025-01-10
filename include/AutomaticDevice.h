@@ -14,6 +14,8 @@ class AutomaticDevice : public Device{
         AutomaticDevice(std::string nome, const int ID, double power, CustomTime duration);
         void setTimer(CustomTime& start_t , CustomTime end_t) override;
         virtual void removeTimer() override;
+        void updateEndTime(CustomTime newEndTime = CustomTime(23,59)) override;
+        void updateStartTime(CustomTime newStartTime) override;
 
     private:
         CustomTime time_duration;

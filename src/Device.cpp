@@ -41,6 +41,10 @@ const double Device::getPowerUsed(){
     return powerUsed;
 }
 
+void Device::updatePowerUsed(CustomTime& currTime){
+    powerUsed += Consumption*(currTime - start_time);
+}
+
 bool operator==(const Device& a, const Device& b) {
     return (a.getName() == b.getName() && a.getID() == b.getID());
 }

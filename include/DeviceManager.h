@@ -15,7 +15,7 @@
 class DeviceManager {
     public:
     DeviceManager();
-    void addDevice();  //aggiungi a multimappa degli attivi
+    void addDevice(Device* dev);  //aggiungi a multimappa degli attivi
     void addDeviceToList(Device& newDev);
     void setDeviceStartTime();
     void addDeviceAsync(Device& d); //aggiungi a multimappa dei "pending"
@@ -25,7 +25,7 @@ class DeviceManager {
 
     void checkOnHourChange();   //controlla multimappa async e nel caso aggiunge, controlla multimappa attivi e nel caso rimuove
 
-    void setTime(CustomTime& newTime);    //cambia orario
+    void setTime(CustomTime newTime);    //cambia orario
 
     void parseInput(std::string command);   //valuta input
 
@@ -44,6 +44,7 @@ class DeviceManager {
     std::multimap<CustomTime, Device*>::iterator findDeviceByNameActive(std::string& s);
     std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator findDeviceByNameAsync(std::string& s);
     std::vector<Device*>::iterator findDeviceByNameAll(std::string& s);
+    void print_infoAll(std::string_view rem);
 
 };
 

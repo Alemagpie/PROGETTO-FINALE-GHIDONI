@@ -19,3 +19,11 @@ void AutomaticDevice:: setTimer(CustomTime& start_t , CustomTime end_t){
 void AutomaticDevice::removeTimer(){
     return;
 }
+
+void AutomaticDevice::updateStartTime(CustomTime newStartTime){
+    start_time = newStartTime;
+}
+
+void AutomaticDevice::updateEndTime(CustomTime newEndTime){
+    end_time = start_time + time_duration;
+}

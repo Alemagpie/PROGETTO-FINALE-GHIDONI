@@ -144,7 +144,7 @@ bool operator<(const CustomTime&  a,const CustomTime&  b)  {
     return false;
 }
 
-std::ostream& operator<<(std::ostream& os, CustomTime& a)
+std::ostream& operator<<(std::ostream& os, CustomTime a)
 {
     return os << "[" << a.getHour()<<":"<<a.getMinutes()<<"]";
 }
