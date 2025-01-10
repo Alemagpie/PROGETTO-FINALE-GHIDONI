@@ -13,6 +13,7 @@ class Device{
         //evito slicing
         Device(const Device&) = delete;
         Device& operator= (const Device&) = delete;
+
         void stopDevice();
         void startDevice();
         std::string getName() const;
@@ -20,13 +21,16 @@ class Device{
         bool getStatus() const;
         CustomTime getStartTime() const;
         CustomTime getEndTime() const;
+        const double getPowerUsed();
+        void setStatus(bool value);
+        void updatePowerUsed(CustomTime& currTime);
+
+        //funzioni virtuali, rendono la classe astratta-> funzioni da sovrascrivere nelle sottoclassi
         virtual void updateStartTime(CustomTime newStartTime) =0;
         virtual void updateEndTime(CustomTime newEndTime = CustomTime(23,59)) =0;
-        const double getPowerUsed(); 
-        void updatePowerUsed(CustomTime& currTime);
-        virtual void setTimer(CustomTime& start_t, CustomTime end_t ) = 0;  //rende la classe astratta    
+        virtual void setTimer(CustomTime& start_t, CustomTime end_t ) = 0;     
         virtual void removeTimer() =0;
-
+        
     //Data membri
     protected:
         CustomTime start_time;
