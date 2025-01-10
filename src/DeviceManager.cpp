@@ -16,6 +16,10 @@ void DeviceManager::addDeviceToList(Device& newDev) {
     deviceCount++;
 }
 
+void DeviceManager::addDeviceAsync(Device* dev, CustomTime Start, CustomTime End){
+    asyncDevices.insert(std::pair<CustomTime, std::pair<CustomTime, Device*>>(Start, std::pair<CustomTime, Device*>(End, dev))); //
+}
+
 void DeviceManager::setDeviceStartTime() {  //rimosso parametro "Device* d" perchè è più semplice lavorare con la variabile currentDevice, settandola in parseInput()
     currentDevice->setTimer(currentTime, currentDeviceEndTime);
 }
@@ -92,9 +96,18 @@ void DeviceManager::print_infoAll(std::string_view rem)
 {
     std::cout << rem << "{ ";
     for (const auto& [key, value] : activeDevices)
-        std::cout << key << value << ", ";
+        std::cout << key << *value << ", ";
     std::cout << "}\n";
     std::cout << "Size=" << activeDevices.size() << '\n';
+}
+
+void DeviceManager::print_infoAsync(std::string_view rem)
+{
+    std::cout << rem << "{ ";
+    for (const auto& [key, value] : asyncDevices)
+        std::cout << key << value.first << *(value.second) <<", ";
+    std::cout << "}\n";
+    std::cout << "Size=" << asyncDevices.size() << '\n';
 }
 
 //--------------------------------------------------------------------------
@@ -156,7 +169,7 @@ void DeviceManager::parseInput(std::string command){
                         }else if(words[2] == "off"){            //set ${DEVICE} off
                             auto iterAll = findDeviceByNameAll(words[1]);
                             auto iterActive = findDeviceByNameActive(words[1]);
-                            if(iterAll != deviceList.end() && iterActive != activeDevices.end() ){
+                            if(iterAll != deviceList.end() && iterActive != activeDevices.end() ){  
                                 iterActive->second->updatePowerUsed(currentTime);
                                 iterActive->second->stopDevice();
                                 activeDevices.erase(iterActive);
@@ -167,7 +180,21 @@ void DeviceManager::parseInput(std::string command){
                                 std::cout << "Device non riconosciuto. Fare attenzione al nome riportato." << std::endl;
                             }
                         }else{                                  //set ${DEVICE} ${START_TIME} ${END_TIME}
-                            //TO DO
+                            auto iterAll = findDeviceByNameAll(words[1]);
+                            auto iterActive = findDeviceByNameActive(words[1]);
+                            auto iterAsync = findDeviceByNameAsync(words[1]);
+                            if(iterAll != deviceList.end()){
+                                int startHour = std::stoi(words[2].substr(0, words[2].find(":")));        //Trasformo da string a int con la funzione stoi
+                                int startMin = std::stoi(words[2].substr(words[2].find(":")+1));
+                                int endHour = std::stoi(words[3].substr(0, words[3].find(":")));
+                                int endMin = std::stoi(words[3].substr(words[3].find(":")+1));
+                                CustomTime timeStart(startHour,startMin);
+                                CustomTime timeEnd(endHour, endMin);
+                                addDeviceAsync(*iterAll, timeStart, timeEnd);                                                       
+                                print_infoAsync("Async attivi: ");
+                            }else{
+                                std::cout << "Device non riconosciuto. Fare attenzione al nome riportato." << std::endl;
+                            }
                         }
                     }
                 }catch(std::exception e){
@@ -193,16 +220,16 @@ void DeviceManager::parseInput(std::string command){
 
 
         case firstCommand::show:
-            if(words.size() == 1){  //"show ${devicename}"
+            if(words.size() == 1){  //"show "
                 double totalPowerUsed=0;
                 for(int i=0; i<deviceCount; i++){
                     std::cout << *deviceList[i] << std::endl;
                     totalPowerUsed += deviceList[i]->getPowerUsed();
                 }
                 std::cout << "Consumo energetico totale del sistema dalle 00:00 : " << totalPowerUsed << "kWh" << std::endl;
-            } else if (words.size() == 2){    //"show"
+            } else if (words.size() == 2){    //"show ${devicename}"
                 auto iter = findDeviceByNameAll(words[1]);
-                if(iter == deviceList.end()) {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
+                if(iter == deviceList.end()) {std::cout<<"Device non riconosciuto. Riprovare." << std::endl;}
                 else {std::cout<< **iter << std::endl;}              
             } else {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
             break;
@@ -238,7 +265,7 @@ void DeviceManager::parseInput(std::string command){
 }
 
 void DeviceManager::setTime(CustomTime newTime) {
-    currentTime = newTime;
+    currentTime = newTime;                  //Controllo tempi di start, end , e che non ci siano conflitti
     checkOnHourChange();
 }
 
