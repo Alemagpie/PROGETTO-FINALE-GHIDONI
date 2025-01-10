@@ -8,8 +8,13 @@ DeviceManager::DeviceManager()
 }
 
 void DeviceManager::addDevice(Device* dev){
-    activeDevices.insert(std::pair<CustomTime, Device*>(dev->getEndTime(), dev)); //aggiungi entry con (chiave end_time e valore puntatore a d) alla multimappa dei device attivi
-    dev->setStatus(true);
+    if(checkPowerConsumption(dev)) {
+        activeDevices.insert(std::pair<CustomTime, Device*>(dev->getEndTime(), dev)); //aggiungi entry con (chiave end_time e valore puntatore a d) alla multimappa dei device attivi
+        dev->setStatus(true);  
+    } else {
+        std::cout<<"Superata soglia di consumo. E' stato spento il dispositivo: "<<dev->getName()<<std::endl;
+    }
+    
 }
 
 void DeviceManager::addDeviceToList(Device& newDev) {
@@ -39,6 +44,8 @@ void DeviceManager::setDeviceStartTime() {  //rimosso parametro "Device* d" perc
 Device* DeviceManager::removeDevice(std::multimap<CustomTime, Device*>::iterator it) {
     Device* d = it->second;
     activeDevices.erase(it);
+
+    powerUse -= it->second->getCurrentPowerConsumption();
     return d;
 } 
 
@@ -315,8 +322,11 @@ void DeviceManager::setTime(CustomTime newTime) {
     checkOnHourChange();
 }
 
-void DeviceManager::checkPowerConsumption(Device* d) {
-    //controlla se aggiungendo l'ultimo device supera la potenza massima, se sì toglie ultimo device aggiunto
+bool DeviceManager::checkPowerConsumption(Device* d) {
+    double currentDeviceConsumption = currentDevice->getCurrentPowerConsumption();
+    
+    //usiamo il > perchè il consumo è pensato in negativo
+    return (currentDeviceConsumption + powerUse > maxPower);
 }
 
 double DeviceManager::checkPowerConsumptionGeneral() {

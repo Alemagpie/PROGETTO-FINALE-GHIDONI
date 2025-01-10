@@ -25,7 +25,7 @@ class DeviceManager {
     Device* removeDevice(std::multimap<CustomTime, Device*>::iterator it); //rimuovi dispositivo in base al nome, fa il return del dispositivo
     Device* removeDevicesByTime(CustomTime t); //rimuovi uno o più dispositivi con orario uguale o passato rispetto a quello corrente, fa il return del primo dispositivo
 
-    void checkPowerConsumption(Device* d);
+    bool checkPowerConsumption(Device* d);
     double checkPowerConsumptionGeneral();
     void checkOnHourChange();   //controlla multimappa async e nel caso aggiunge, controlla multimappa attivi e nel caso rimuove
 
@@ -34,7 +34,7 @@ class DeviceManager {
     void parseInput(std::string command);   //valuta input
 
     private:
-    double maxPower = 3500;
+    double maxPower = -3.5; //in kW
     double powerUse;
     std::multimap<CustomTime, Device*> activeDevices; //multimappa dei dispositivi attivi
     std::multimap<CustomTime, std::pair<CustomTime, Device*>> asyncDevices;  //multimappa dei dispositivi in attesa dell'attivazione (hanno come chiave il tempo di inizio, come valore il tempo di fine e il ptr al device)
