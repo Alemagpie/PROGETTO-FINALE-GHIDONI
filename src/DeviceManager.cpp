@@ -296,6 +296,10 @@ void DeviceManager::parseInput(std::string command){
 
 
         case firstCommand::show:
+            //aggiorno il consumo
+            for(auto it = activeDevices.begin();it != activeDevices.end(); ++it){
+                    it->second->updatePowerUsed(currentTime);
+            }
             if(words.size() == 1){  //"show "
                 double totalPowerUsed=0;
                 for(int i=0; i<deviceCount; i++){
