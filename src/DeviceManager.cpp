@@ -10,7 +10,7 @@ void DeviceManager::addDevice(Device* dev){
     if(checkPowerConsumption(dev)) {
         activeDevices.insert(std::pair<CustomTime, Device*>(dev->getEndTime(), dev)); //aggiungi entry con (chiave end_time e valore puntatore a d) alla multimappa dei device attivi
         dev->setStatus(true);
-        std::cout << "[" << currentTime << "] Il dispositivo " << dev->getName() << "si è acceso" << std::endl;  
+        std::cout << "[" << currentTime << "] Il dispositivo \"" << dev->getName() << "\" si è acceso" << std::endl;  
     } else {
         std::cout<<"Superata soglia di consumo. E' stato spento il dispositivo: "<<dev->getName()<<std::endl;
     }
@@ -42,7 +42,7 @@ Device* DeviceManager::removeDevice(std::multimap<CustomTime, Device*>::iterator
     activeDevices.erase(it);
     d->updatePowerUsed(currentTime);
     d->setStatus(false);
-    std::cout << "[" << currentTime << "] Il dispositivo " << d->getName() << "si è spento" << std::endl;
+    std::cout << "[" << currentTime << "] Il dispositivo \"" << d->getName() << "\" si è spento" << std::endl;
 
     powerUse -= d->getCurrentPowerConsumption();
     return d;
@@ -133,8 +133,8 @@ std::vector<Device*>::iterator DeviceManager::findDeviceByNameAll(std::string& s
 }
 
 void SentenceIntoWords(std::vector<std::string>& ret, std::string sentence){
-    int initpos=0, endpos=0;
-    for(endpos; endpos<sentence.size(); endpos++){
+    int initpos=0;
+    for(int endpos=0; endpos<sentence.size(); endpos++){
         if(sentence[endpos] == ' '){
             ret.push_back(sentence.substr(initpos, endpos-initpos));
             initpos = endpos+1;
@@ -202,7 +202,7 @@ void DeviceManager::parseInput(std::string command){
                         int newHour = std::stoi(words[2].substr(0, words[2].find(":")));        //Trasformo da string a int con la funzione stoi
                         int newMin = std::stoi(words[2].substr(words[2].find(":")+1));
                         CustomTime newTime(newHour, newMin);
-                        std::cout<< newTime << std::endl;                       //TO DO: fare controllo dell'orario
+                        //std::cout<< newTime << std::endl;                       //TO DO: fare controllo dell'orario
                         setTime(newTime);
                     }else{
                         if(words[2] == "on"){                   //set ${DEVICE} on
