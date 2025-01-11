@@ -158,10 +158,10 @@ bool operator<=(const CustomTime&  a,const CustomTime&  b) {
 
 std::ostream& operator<<(std::ostream& os, CustomTime a)
 {   
-    if(a.getHour()<10 && a.getMinutes()<10){return os << "[0" << a.getHour()<<":0"<<a.getMinutes()<<"]";}
-    else if(a.getHour()<10){return os << "[0" << a.getHour()<<":"<<a.getMinutes()<<"]";}
-    else if(a.getMinutes()<10){return os << "[" << a.getHour()<<":0"<<a.getMinutes()<<"]";}
-    return os << "[" << a.getHour()<<":"<<a.getMinutes()<<"]";
+    if(a.getHour()<10 && a.getMinutes()<10){return os << "0" << a.getHour()<<":0"<<a.getMinutes();}
+    else if(a.getHour()<10){return os << "0" << a.getHour()<<":"<<a.getMinutes();}
+    else if(a.getMinutes()<10){return os << a.getHour()<<":0"<<a.getMinutes();}
+    return os << a.getHour()<<":"<<a.getMinutes();
 }
 
 void CustomTime::checkTime(int badHours,int  badMinutes){

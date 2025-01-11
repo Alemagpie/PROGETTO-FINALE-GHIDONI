@@ -53,6 +53,11 @@ void Device::updatePowerUsed(CustomTime& currTime){
     powerUsed += powerConsumption*(currTime - start_time);
 }
 
+void Device::reset(){
+    powerUsed=0;
+    status = false;
+}
+
 bool operator==(const Device& a, const Device& b) {
     return (a.getName() == b.getName() && a.getID() == b.getID());
 }

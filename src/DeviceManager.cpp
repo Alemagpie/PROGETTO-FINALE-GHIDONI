@@ -9,7 +9,8 @@ DeviceManager::DeviceManager()
 void DeviceManager::addDevice(Device* dev){
     if(checkPowerConsumption(dev)) {
         activeDevices.insert(std::pair<CustomTime, Device*>(dev->getEndTime(), dev)); //aggiungi entry con (chiave end_time e valore puntatore a d) alla multimappa dei device attivi
-        dev->setStatus(true);  
+        dev->setStatus(true);
+        std::cout << "[" << currentTime << "] Il dispositivo " << dev->getName() << "si è acceso" << std::endl;  
     } else {
         std::cout<<"Superata soglia di consumo. E' stato spento il dispositivo: "<<dev->getName()<<std::endl;
     }
@@ -22,7 +23,7 @@ void DeviceManager::addDeviceToList(Device& newDev) {
 }
 
 void DeviceManager::addDeviceAsync(Device* dev, CustomTime Start, CustomTime End){
-    if(Start < currentTime) {
+    if(Start > currentTime) {
     asyncDevices.insert(std::pair<CustomTime, std::pair<CustomTime, Device*>>(Start, std::pair<CustomTime, Device*>(End, dev))); 
     } else {
         std::cout<<"Orario di inizio non valido";
@@ -41,6 +42,7 @@ Device* DeviceManager::removeDevice(std::multimap<CustomTime, Device*>::iterator
     activeDevices.erase(it);
     d->updatePowerUsed(currentTime);
     d->setStatus(false);
+    std::cout << "[" << currentTime << "] Il dispositivo " << d->getName() << "si è spento" << std::endl;
 
     powerUse -= d->getCurrentPowerConsumption();
     return d;
@@ -187,7 +189,7 @@ resetCommand resetToSwitch(std::string& command){
 
 
 void DeviceManager::parseInput(std::string command){
-    std::cout<< currentTime << " L'orario attuale e' " << currentTime.getHour() << ":" << currentTime.getMinutes() << std::endl;
+    std::cout<< "["<< currentTime << "] L'orario attuale e' " << currentTime << std::endl;
     //stream per fare il parsing del comando
     std::vector<std::string> words;
     SentenceIntoWords(words, command);
@@ -212,7 +214,7 @@ void DeviceManager::parseInput(std::string command){
                                     (*iterAll)->updateStartTime(currentTime);
                                     (*iterAll)->updateEndTime();
                                     addDevice(*iterAll);
-                                    print_infoAll("Multimappa attivi: ");
+                                    //print_infoAll("Multimappa attivi: ");
                                 } else {
                                     std::cout << "Device già attivo. Se si vuole modificare i suoi orari, spegnerlo e riprovare." << std::endl;
                                 }
@@ -240,7 +242,7 @@ void DeviceManager::parseInput(std::string command){
                                 iterActive->second->updatePowerUsed(currentTime);
                                 iterActive->second->stopDevice();
                                 activeDevices.erase(iterActive);
-                                print_infoAll("Multimappa attivi: ");
+                                //print_infoAll("Multimappa attivi: ");
                             }else if(iterActive == activeDevices.end()){
                                 std::cout << "Device non attivo. Prima di spegnere il dispositivo, e' necessario attivarlo."<< std::endl;
                             } else{
@@ -253,12 +255,15 @@ void DeviceManager::parseInput(std::string command){
                             if(iterAll != deviceList.end()){
                                 int startHour = std::stoi(words[2].substr(0, words[2].find(":")));        //Trasformo da string a int con la funzione stoi
                                 int startMin = std::stoi(words[2].substr(words[2].find(":")+1));
-                                int endHour = std::stoi(words[3].substr(0, words[3].find(":")));
-                                int endMin = std::stoi(words[3].substr(words[3].find(":")+1));
                                 CustomTime timeStart(startHour,startMin);
-                                CustomTime timeEnd(endHour, endMin);
-                                addDeviceAsync(*iterAll, timeStart, timeEnd);                                                       
-                                print_infoAsync("Async attivi: ");
+                                if(words.size()==4){                                              //Se c'è il parametro END_TIME
+                                     int endHour = std::stoi(words[3].substr(0, words[3].find(":")));
+                                    int endMin = std::stoi(words[3].substr(words[3].find(":")+1));
+                                    CustomTime timeEnd(endHour, endMin);
+                                    addDeviceAsync(*iterAll, timeStart, timeEnd);
+                                }
+                                addDeviceAsync(*iterAll, timeStart, (*iterAll)->getEndTime());                                                       
+                                //print_infoAsync("Async attivi: ");
                             }else{
                                 std::cout << "Device non riconosciuto. Fare attenzione al nome riportato." << std::endl;
                             }
@@ -306,7 +311,9 @@ void DeviceManager::parseInput(std::string command){
             switch(resetToSwitch(words[1])){
                 case resetCommand::timeReset:   //"reset time"
                     activeDevices.clear();                              //TO DO: Aggiornare PowerUsed and Status, anche per altri reset.
-                    currentTime.setTime(0,0);
+                    setTime(CustomTime(0,0));
+                    for(int i=0; i<deviceCount; i++){deviceList[i]->reset();}
+
                     break;
                 case resetCommand::timersReset: //"reset timers"
                     //Rimuovi timer
@@ -336,20 +343,20 @@ void DeviceManager::setTime(CustomTime newTime) {                 //Controllo te
     auto activeIt = activeDevices.begin();
     while (asyncIt != asyncDevices.end() || activeIt != activeDevices.end())
     {
-        std::cout << "ProvaGen" << std::endl;
+        //std::cout << "ProvaGen" << std::endl;
         if(asyncIt == asyncDevices.end()){      //Guardo solo gli attivi
             if(activeIt->first <= newTime) {
                 std::cout << currentTime <<newTime << activeIt->first<<std::endl;
                 currentTime = activeIt->first;
                 removeDevice(activeIt);
-                print_infoAll("Dopo rimozione: ");
+                //print_infoAll("Dopo rimozione: ");
                 activeIt++;
             }else{
                 activeIt = activeDevices.end();
             }
         } else if (activeIt == activeDevices.end()){ //Guardo solo gli asincroni
             if(asyncIt->first <= newTime) {
-                std::cout << "ProvaAsyn" << std::endl;
+                //std::cout << "ProvaAsyn" << std::endl;
                 currentTime = asyncIt->first;
                 moveDevice(asyncIt);
                 asyncIt++;
@@ -357,7 +364,7 @@ void DeviceManager::setTime(CustomTime newTime) {                 //Controllo te
                 asyncIt = asyncDevices.end();
             }
         } else {        //guardo entrambi
-            std::cout << "ProvaEntrambi" << std::endl;
+            //std::cout << "ProvaEntrambi" << std::endl;
             if(asyncIt->first <= activeIt->first && asyncIt->first <= newTime){
                 currentTime = asyncIt->first;
                 moveDevice(asyncIt);
@@ -372,8 +379,9 @@ void DeviceManager::setTime(CustomTime newTime) {                 //Controllo te
             }
         }
     }
-    std::cout << "ProvaFinale" << std::endl;
+    //std::cout << "ProvaFinale" << std::endl;
     currentTime = newTime;
+    std::cout<< "["<< currentTime << "] L'orario attuale e' " << currentTime << std::endl;
 }
 
 bool DeviceManager::checkPowerConsumption(Device* d) {

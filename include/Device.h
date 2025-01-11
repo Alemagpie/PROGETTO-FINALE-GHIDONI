@@ -25,6 +25,7 @@ class Device{
         const double getPowerUsed();
         void setStatus(bool value);
         void updatePowerUsed(CustomTime& currTime);
+        void reset();
 
         //funzioni virtuali, rendono la classe astratta-> funzioni da sovrascrivere nelle sottoclassi
         virtual void updateStartTime(CustomTime newStartTime) =0;
