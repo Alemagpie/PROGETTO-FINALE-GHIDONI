@@ -39,8 +39,10 @@ void DeviceManager::moveDevice(std::multimap<CustomTime, std::pair<CustomTime, D
 Device* DeviceManager::removeDevice(std::multimap<CustomTime, Device*>::iterator it) {
     Device* d = it->second;
     activeDevices.erase(it);
+    d->updatePowerUsed(currentTime);
+    d->setStatus(false);
 
-    powerUse -= it->second->getCurrentPowerConsumption();
+    powerUse -= d->getCurrentPowerConsumption();
     return d;
 } 
 
@@ -329,13 +331,53 @@ void DeviceManager::parseInput(std::string command){
     
 }
 
-void DeviceManager::setTime(CustomTime newTime) {
-    currentTime = newTime;                  //Controllo tempi di start, end , e che non ci siano conflitti
-    checkOnHourChange();
+void DeviceManager::setTime(CustomTime newTime) {                 //Controllo tempi di start, end , e che non ci siano conflitti
+    auto asyncIt = asyncDevices.begin();
+    auto activeIt = activeDevices.begin();
+    while (asyncIt != asyncDevices.end() || activeIt != activeDevices.end())
+    {
+        std::cout << "ProvaGen" << std::endl;
+        if(asyncIt == asyncDevices.end()){      //Guardo solo gli attivi
+            if(activeIt->first <= newTime) {
+                std::cout << currentTime <<newTime << activeIt->first<<std::endl;
+                currentTime = activeIt->first;
+                removeDevice(activeIt);
+                print_infoAll("Dopo rimozione: ");
+                activeIt++;
+            }else{
+                activeIt = activeDevices.end();
+            }
+        } else if (activeIt == activeDevices.end()){ //Guardo solo gli asincroni
+            if(asyncIt->first <= newTime) {
+                std::cout << "ProvaAsyn" << std::endl;
+                currentTime = asyncIt->first;
+                moveDevice(asyncIt);
+                asyncIt++;
+            }else{
+                asyncIt = asyncDevices.end();
+            }
+        } else {        //guardo entrambi
+            std::cout << "ProvaEntrambi" << std::endl;
+            if(asyncIt->first <= activeIt->first && asyncIt->first <= newTime){
+                currentTime = asyncIt->first;
+                moveDevice(asyncIt);
+                asyncIt++;
+            }else if(activeIt->first <= asyncIt->first && activeIt->first <= newTime){
+                currentTime = activeIt->first;
+                removeDevice(activeIt);
+                activeIt++;
+            }else{
+                activeIt = activeDevices.end();
+                asyncIt = asyncDevices.end();
+            }
+        }
+    }
+    std::cout << "ProvaFinale" << std::endl;
+    currentTime = newTime;
 }
 
 bool DeviceManager::checkPowerConsumption(Device* d) {
-    double currentDeviceConsumption = currentDevice->getCurrentPowerConsumption();
+    double currentDeviceConsumption = d->getCurrentPowerConsumption();
     
     //usiamo il > perchè il consumo è pensato in negativo
     return (currentDeviceConsumption + powerUse > maxPower);
@@ -346,7 +388,6 @@ double DeviceManager::checkPowerConsumptionGeneral() {
     for(auto it = activeDevices.begin(); it != activeDevices.end(); ++it) {
         currentPower += it->second->getCurrentPowerConsumption();
     }
-
     return currentPower;
 }
 
