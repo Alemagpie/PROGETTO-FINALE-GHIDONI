@@ -209,16 +209,31 @@ void DeviceManager::parseInput(std::string command){
                         if(words[2] == "on"){                   //set ${DEVICE} on
                             auto iterAll = findDeviceByNameAll(words[1]);
                             auto iterActive = findDeviceByNameActive(words[1]);
-                            if(iterAll != deviceList.end() && iterActive == activeDevices.end() ){
+
+                            if (iterAll != deviceList.end() && *iterAll != nullptr) {
+                                if (iterActive == activeDevices.end()) {
+                                    (*iterAll)->updateStartTime(currentTime);
+                                    (*iterAll)->updateEndTime();
+                                    addDevice(*iterAll);
+                                    print_infoAll("Multimappa attivi: ");
+                                } else {
+                                    std::cout << "Device già attivo. Se si vuole modificare i suoi orari, spegnerlo e riprovare." << std::endl;
+                                }
+                            } else if (iterActive != activeDevices.end()) {
+                                std::cout << "Device già attivo. Se si vuole modificare i suoi orari, spegnerlo e riprovare." << std::endl;
+                            } else {
+                                std::cout << "Device non riconosciuto. Fare attenzione al nome riportato." << std::endl;
+                            }
+                            /*if(iterAll != deviceList.end() && iterActive == activeDevices.end() ){
                                 (*iterAll)->updateStartTime(currentTime);
                                 (*iterAll)->updateEndTime();
                                 addDevice(*iterAll);
                                 print_infoAll("Multimappa attivi: ");
                             }else if(iterActive != activeDevices.end()){
-                                std::cout << "Device gia attivo. Se si vuole modificare i suoi orari, spegnerlo e rirpovare."<< std::endl;
+                                std::cout << "Device gia' attivo. Se si vuole modificare i suoi orari, spegnerlo e rirpovare."<< std::endl;
                             } else{
                                 std::cout << "Device non riconosciuto. Fare attenzione al nome riportato." << std::endl;
-                            }
+                            }*/
                         }else if(words[2] == "off"){            //set ${DEVICE} off
                             auto iterAll = findDeviceByNameAll(words[1]);
                             auto iterActive = findDeviceByNameActive(words[1]);
@@ -334,24 +349,25 @@ double DeviceManager::checkPowerConsumptionGeneral() {
     for(auto it = activeDevices.begin(); it != activeDevices.end(); ++it) {
         currentPower += it->second->getCurrentPowerConsumption();
     }
+
+    return currentPower;
 }
 
 void DeviceManager::checkOnHourChange(){
     auto asyncIt = asyncDevices.begin();
     auto activeIt = activeDevices.begin();
 
-    while (asyncIt != asyncDevices.end() || activeIt != activeDevices.end())
+    while ((asyncIt != asyncDevices.end() || activeIt != activeDevices.end())
+    && (asyncIt->first <= currentTime || activeIt->first <= currentTime))
     {
-        if(asyncIt->first <= currentTime || activeIt->first <= currentTime) {
-                if(asyncIt->first <= activeIt->first && asyncIt->first <= currentTime) {
-                    moveDevice(asyncIt);
-                    asyncIt++;
-                }
+        if(asyncIt->first <= activeIt->first && asyncIt->first <= currentTime) {
+            moveDevice(asyncIt);
+            asyncIt++;
+        }
 
-                if(activeIt != activeDevices.end() && activeIt->first <= currentTime && activeIt->first <= asyncIt-> first) {
-                    removeDevice(activeIt);
-                    activeIt++;
-                }
+        if(activeIt != activeDevices.end() && activeIt->first <= currentTime && activeIt->first <= asyncIt-> first) {
+            removeDevice(activeIt);
+            activeIt++;
         }
     }
 }
