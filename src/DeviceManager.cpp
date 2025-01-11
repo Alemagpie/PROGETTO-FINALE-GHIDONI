@@ -10,7 +10,7 @@ void DeviceManager::addDevice(Device* dev){
     if(checkPowerConsumption(dev)) {
         activeDevices.insert(std::pair<CustomTime, Device*>(dev->getEndTime(), dev)); //aggiungi entry con (chiave end_time e valore puntatore a d) alla multimappa dei device attivi
         dev->setStatus(true);
-        std::cout << "[" << currentTime << "] Il dispositivo \"" << dev->getName() << "\" si è acceso" << std::endl;  
+        std::cout << "[" << currentTime << "] Il dispositivo \"" << dev->getName() << "\" si e' acceso" << std::endl;  
     } else {
         std::cout<<"Superata soglia di consumo. E' stato spento il dispositivo: "<<dev->getName()<<std::endl;
     }
@@ -32,8 +32,11 @@ void DeviceManager::addDeviceAsync(Device* dev, CustomTime Start, CustomTime End
 
 void DeviceManager::moveDevice(std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator it) {
     std::pair<CustomTime, Device*> deviceToMove = it->second;
+    print_infoAsync("Prova ");
     asyncDevices.erase(it);
-    activeDevices.insert(deviceToMove);
+    print_infoAsync("Prova ");
+    addDevice(deviceToMove.second);
+    print_infoAsync("Prova ");
 }
 
 //metodo per comando "set ${devicename} off"
@@ -42,7 +45,7 @@ Device* DeviceManager::removeDevice(std::multimap<CustomTime, Device*>::iterator
     activeDevices.erase(it);
     d->updatePowerUsed(currentTime);
     d->setStatus(false);
-    std::cout << "[" << currentTime << "] Il dispositivo \"" << d->getName() << "\" si è spento" << std::endl;
+    std::cout << "[" << currentTime << "] Il dispositivo \"" << d->getName() << "\" si e' spento" << std::endl;
 
     powerUse -= d->getCurrentPowerConsumption();
     return d;
@@ -261,8 +264,9 @@ void DeviceManager::parseInput(std::string command){
                                     int endMin = std::stoi(words[3].substr(words[3].find(":")+1));
                                     CustomTime timeEnd(endHour, endMin);
                                     addDeviceAsync(*iterAll, timeStart, timeEnd);
+                                }else{
+                                    addDeviceAsync(*iterAll, timeStart, (*iterAll)->getEndTime());
                                 }
-                                addDeviceAsync(*iterAll, timeStart, (*iterAll)->getEndTime());                                                       
                                 //print_infoAsync("Async attivi: ");
                             }else{
                                 std::cout << "Device non riconosciuto. Fare attenzione al nome riportato." << std::endl;
