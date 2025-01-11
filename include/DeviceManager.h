@@ -18,7 +18,6 @@ class DeviceManager {
     DeviceManager();
     void addDevice(Device* dev);  //aggiungi a multimappa degli attivi
     void addDeviceToList(Device& newDev);
-    void setDeviceStartTime();
     void addDeviceAsync(Device* dev, CustomTime Start, CustomTime End); //aggiungi a multimappa dei "pending"
     void moveDevice(std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator it);
     Device getDevice(CustomTime t);   //trova dispositivo in base a tempo
@@ -40,10 +39,8 @@ class DeviceManager {
     std::multimap<CustomTime, std::pair<CustomTime, Device*>> asyncDevices;  //multimappa dei dispositivi in attesa dell'attivazione (hanno come chiave il tempo di inizio, come valore il tempo di fine e il ptr al device)
     std::vector<Device*> deviceList; //vettore di ptr ai Device
     CustomTime currentTime;   
-    CustomTime currentDeviceEndTime;
 
     int deviceCount;    //lunghezza del vettore di Device
-    Device* currentDevice;  //puntatore al Device su cui si sta lavorando
     
     std::multimap<CustomTime, Device*>::iterator findDevice(Device& d);
     std::multimap<CustomTime, Device*>::iterator findDeviceByID(int ID);

@@ -1,10 +1,9 @@
 #include "../include/DeviceManager.h"
 
 DeviceManager::DeviceManager()
-    : deviceCount{0}, currentDevice{nullptr}, deviceList(), activeDevices(), asyncDevices()
+    : deviceCount{0}, deviceList(), activeDevices(), asyncDevices()
 {
     currentTime.setTime(0,0);
-    currentDeviceEndTime.setTime(0,0);
 }
 
 void DeviceManager::addDevice(Device* dev){
@@ -34,10 +33,6 @@ void DeviceManager::moveDevice(std::multimap<CustomTime, std::pair<CustomTime, D
     std::pair<CustomTime, Device*> deviceToMove = it->second;
     asyncDevices.erase(it);
     activeDevices.insert(deviceToMove);
-}
-
-void DeviceManager::setDeviceStartTime() {  //rimosso parametro "Device* d" perchè è più semplice lavorare con la variabile currentDevice, settandola in parseInput()
-    currentDevice->setTimer(currentTime, currentDeviceEndTime);
 }
 
 //metodo per comando "set ${devicename} off"
@@ -190,7 +185,7 @@ resetCommand resetToSwitch(std::string& command){
 
 
 void DeviceManager::parseInput(std::string command){
-    currentDeviceEndTime = currentTime;
+    std::cout<< currentTime << " L'orario attuale e' " << currentTime.getHour() << ":" << currentTime.getMinutes() << std::endl;
     //stream per fare il parsing del comando
     std::vector<std::string> words;
     SentenceIntoWords(words, command);
@@ -227,7 +222,9 @@ void DeviceManager::parseInput(std::string command){
                             /*if(iterAll != deviceList.end() && iterActive == activeDevices.end() ){
                                 (*iterAll)->updateStartTime(currentTime);
                                 (*iterAll)->updateEndTime();
+                                std::cout << "Prova" << std::endl;
                                 addDevice(*iterAll);
+                                std::cout << "Prova 2" << std::endl;
                                 print_infoAll("Multimappa attivi: ");
                             }else if(iterActive != activeDevices.end()){
                                 std::cout << "Device gia' attivo. Se si vuole modificare i suoi orari, spegnerlo e rirpovare."<< std::endl;
@@ -353,6 +350,7 @@ double DeviceManager::checkPowerConsumptionGeneral() {
     return currentPower;
 }
 
+/*
 void DeviceManager::checkOnHourChange(){
     auto asyncIt = asyncDevices.begin();
     auto activeIt = activeDevices.begin();
@@ -370,4 +368,42 @@ void DeviceManager::checkOnHourChange(){
             activeIt++;
         }
     }
+    currentTime = newTime;
 }
+*/
+
+/*
+void DeviceManager::setTime(CustomTime newTime) {                 //Controllo tempi di start, end , e che non ci siano conflitti
+    auto asyncIt = asyncDevices.begin();
+    auto activeIt = activeDevices.begin();
+    std::cout << "Prova" << std::endl;
+    while (asyncIt != asyncDevices.end() || activeIt != activeDevices.end())
+    {
+        if(asyncIt == asyncDevices.end()){      //Guardo solo gli attivi
+            if(activeIt != activeDevices.end() && activeIt->first <= currentTime && activeIt->first <= asyncIt-> first) {
+                currentTime = activeIt->first;
+                removeDevice(activeIt);
+                activeIt++;
+            }
+        } else if (activeIt == activeDevices.end()){ //Guardo solo gli asincroni
+
+        } else {        //guardo entrambi
+
+        }
+        if(asyncIt->first <= currentTime || activeIt->first <= currentTime) {
+                if(asyncIt->first <= activeIt->first && asyncIt->first <= currentTime) {
+                    currentTime = asyncIt->first;
+                    moveDevice(asyncIt);
+                    asyncIt++;
+                }
+
+                if(activeIt != activeDevices.end() && activeIt->first <= currentTime && activeIt->first <= asyncIt-> first) {
+                    currentTime = activeIt->first;
+                    removeDevice(activeIt);
+                    activeIt++;
+                }
+        }
+    }
+    currentTime = newTime;
+}
+*/

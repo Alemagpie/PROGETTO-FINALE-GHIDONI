@@ -1,0 +1,3 @@
+C:/Users/Riccardo/OneDrive/Desktop/Uni/2 anno/Laboratorio_Programmazione/Prog_intermedio/PROGETTO-FINALE-GHIDONI/buildRic/CMakeFiles/ProgettoFinale.dir
+C:/Users/Riccardo/OneDrive/Desktop/Uni/2 anno/Laboratorio_Programmazione/Prog_intermedio/PROGETTO-FINALE-GHIDONI/buildRic/CMakeFiles/edit_cache.dir
+C:/Users/Riccardo/OneDrive/Desktop/Uni/2 anno/Laboratorio_Programmazione/Prog_intermedio/PROGETTO-FINALE-GHIDONI/buildRic/CMakeFiles/rebuild_cache.dir

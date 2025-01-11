@@ -26,6 +26,7 @@ class CustomTime{
     private:
         unsigned int hour;
         unsigned int minutes;
+        void checkTime(int badHours,int badMinutes);
 };   
 
 //HELPER FUNCTION

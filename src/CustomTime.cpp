@@ -161,6 +161,11 @@ std::ostream& operator<<(std::ostream& os, CustomTime a)
     return os << "[" << a.getHour()<<":"<<a.getMinutes()<<"]";
 }
 
+void CustomTime::checkTime(int badHours,int  badMinutes){
+    if(badHours < 0 || badHours > 23 || badMinutes < 0 || badMinutes > 59){
+        throw std::invalid_argument("Orario non esistente. Inserire un orario valido.");
+    }
+}
 /*
 int getHoursDeltaTime(CustomTime& a, CustomTime& b) {
 
