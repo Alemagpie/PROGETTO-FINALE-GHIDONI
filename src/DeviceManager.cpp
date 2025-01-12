@@ -206,10 +206,13 @@ void DeviceManager::parseInput(std::string command){
             if(words.size() >= 3 && words.size() < 5){      //Controllo che ci sia il giusto numero di parole nel comando
                 try{
                     if(words[1] == "time"){ //set time xx:yy
+                        if(std::find(words[2].begin(), words[2].end(), ':') == words[2].end()) {throw std::invalid_argument("");}
                         int newHour = std::stoi(words[2].substr(0, words[2].find(":")));        //Trasformo da string a int con la funzione stoi
                         int newMin = std::stoi(words[2].substr(words[2].find(":")+1));
                         CustomTime newTime(newHour, newMin);
                         //std::cout<< newTime << std::endl;                       //TO DO: fare controllo dell'orario
+                        if(newTime > currentTime) {setTime(newTime);}
+                        else{ std::cout << "[" <<currentTime << "] Orario non disponibile. Inserire solo orari successivi a quello attuale." << std::endl;}
                         setTime(newTime);
                     }else{
                         if(words[2] == "on"){                   //set ${DEVICE} on
@@ -258,6 +261,7 @@ void DeviceManager::parseInput(std::string command){
                             auto iterActive = findDeviceByNameActive(words[1]);
                             auto iterAsync = findDeviceByNameAsync(words[1]);
                             if(iterAll != deviceList.end()){
+                                if(std::find(words[2].begin(), words[2].end(), ':') == words[2].end()) {throw std::invalid_argument("");}
                                 int startHour = std::stoi(words[2].substr(0, words[2].find(":")));        //Trasformo da string a int con la funzione stoi
                                 int startMin = std::stoi(words[2].substr(words[2].find(":")+1));
                                 CustomTime timeStart(startHour,startMin);
@@ -277,8 +281,9 @@ void DeviceManager::parseInput(std::string command){
                             }
                         }
                     }
-                }catch(std::exception e){
+                }catch(std::invalid_argument e){
                     std::cerr<<e.what() << std::endl;
+                    std::cout<< "Orario inserito non valido. Riprovare."<< std::endl;
                 }
             }else{
                 std::cout<< "Comando non riconosciuto. Riprovare." << std::endl;
@@ -315,7 +320,7 @@ void DeviceManager::parseInput(std::string command){
                 }
                 std::cout << "[" << currentTime << "] Attualmente il sistema ha consumato " << std::fixed << totalPowerUsed << std::setprecision(2) <<"kWh e la potenza massima accumulata fra i dispositivi accesi è: "<<totalPowerDevices<<". Nello specifico:"<< std::endl;
                 for(int i=0; i<deviceCount; i++){
-                    if(deviceList[i]->getCurrentPowerConsumption() < 0) {std::cout << "\t - Il dispositivo \'" << deviceList[i]->getName() << "\'ha una potenza di "<<deviceList[i]->getCurrentPowerConsumption()<<" e ha consumato " << deviceList[i]->getPowerUsed() << std::fixed << std::setprecision(2)<<" kWh"<<std::endl;}
+                    if(deviceList[i]->getCurrentPowerConsumption() < 0) {std::cout << "\t - Il dispositivo \'" << deviceList[i]->getName() << "\' ha una potenza di "<<deviceList[i]->getCurrentPowerConsumption()<<" e ha consumato " << deviceList[i]->getPowerUsed() << std::fixed << std::setprecision(2)<<" kWh"<<std::endl;}
                     else{std::cout << "\t - Il dispositivo \'" << deviceList[i]->getName() << "\' ha una potenza di "<<deviceList[i]->getCurrentPowerConsumption()<< " e ha prodotto " << std::fixed <<deviceList[i]->getPowerUsed() << std::setprecision(2) <<" kWh"<<std::endl;}
                     
                 }
@@ -339,6 +344,7 @@ void DeviceManager::parseInput(std::string command){
 
                     break;
                 case resetCommand::timersReset: //"reset timers"
+                    for(auto itAsync = asyncDevices.begin(); itAsync!=asyncDevices.end(); itAsync++){std::cout<< "["<< currentTime << "] Rimosso il timer dal dispositivo \'" << (*itAsync).second.second->getName() <<"\'" << std::endl;}
                     asyncDevices.clear();                                //Rimuovi timer
                     break;
                 case resetCommand::allReset:    //"reset all"
