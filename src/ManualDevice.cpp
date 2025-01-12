@@ -17,7 +17,7 @@ void ManualDevice:: setTimer(CustomTime& start_t, CustomTime end_t){
 }
 
 void ManualDevice::removeTimer(){
-    end_time.setTime(0,0);
+    end_time.setTime(23,59);
 }
 
 void ManualDevice::updateStartTime(CustomTime newStartTime){

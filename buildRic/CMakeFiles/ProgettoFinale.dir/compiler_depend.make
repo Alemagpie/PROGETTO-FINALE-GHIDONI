@@ -857,6 +857,7 @@ CMakeFiles/ProgettoFinale.dir/src/main.cpp.obj: C:/Users/Riccardo/OneDrive/Deskt
   C:/Users/Riccardo/OneDrive/Desktop/Uni/2\ anno/Laboratorio_Programmazione/Prog_intermedio/PROGETTO-FINALE-GHIDONI/include/Device.h \
   C:/Users/Riccardo/OneDrive/Desktop/Uni/2\ anno/Laboratorio_Programmazione/Prog_intermedio/PROGETTO-FINALE-GHIDONI/include/DeviceManager.h \
   C:/Users/Riccardo/OneDrive/Desktop/Uni/2\ anno/Laboratorio_Programmazione/Prog_intermedio/PROGETTO-FINALE-GHIDONI/include/ManualDevice.h \
+  C:/Users/Riccardo/OneDrive/Desktop/Uni/2\ anno/Laboratorio_Programmazione/Prog_intermedio/PROGETTO-FINALE-GHIDONI/include/OutputManager.h \
   C:/msys64/ucrt64/include/_mingw.h \
   C:/msys64/ucrt64/include/_mingw_mac.h \
   C:/msys64/ucrt64/include/_mingw_off_t.h \
@@ -1468,6 +1469,8 @@ C:/msys64/ucrt64/include/c++/13.2.0/x86_64-w64-mingw32/bits/messages_members.h:
 C:/msys64/ucrt64/include/c++/13.2.0/x86_64-w64-mingw32/bits/time_members.h:
 
 C:/Users/Riccardo/OneDrive/Desktop/Uni/2\ anno/Laboratorio_Programmazione/Prog_intermedio/PROGETTO-FINALE-GHIDONI/src/main.cpp:
+
+C:/Users/Riccardo/OneDrive/Desktop/Uni/2\ anno/Laboratorio_Programmazione/Prog_intermedio/PROGETTO-FINALE-GHIDONI/include/OutputManager.h:
 
 C:/msys64/ucrt64/include/c++/13.2.0/bits/fstream.tcc:
 

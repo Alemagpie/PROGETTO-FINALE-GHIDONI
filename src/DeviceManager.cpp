@@ -303,8 +303,10 @@ void DeviceManager::parseInput(std::string command){
                 if(iterAll == deviceList.end()) {std::cout<< "[" << currentTime << "] Comando non riconosciuto. Riprovare." << std::endl;}
                 else {
                     auto iterAsync = findDeviceByNameAsync(words[1]);
-                    iterAsync->second.second->removeTimer();                //DA CONTROLLARE QUANDO VIENE MESSO L'ADD
-                    asyncDevices.erase(iterAsync);
+                    (*iterAll)->removeTimer();  
+                    if(iterAsync != asyncDevices.end()){
+                        asyncDevices.erase(iterAsync);              //DA SISTEMARE FORSE
+                    }                         
                     std::cout<< "["<< currentTime << "] Rimosso il timer dal dispositivo \'" << (*iterAll)->getName() <<"\'" << std::endl;
                 }              
             } else {std::cout<< "[" << currentTime << "] Comando non riconosciuto. Riprovare." << std::endl;}
