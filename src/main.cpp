@@ -4,10 +4,26 @@
 #include "../include/CustomTime.h"
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
 int main() {
+    
+    //Creazione file di log
+    std:: string logFileName = "log.txt";
+    //Creo stream di output file
+    std:: ofstream logFile(logFileName);
+
+    if(!logFile.is_open()){
+        std::cout <<"Errore nell'apertura del file di log"<<endl;
+        return 1;
+    };
+    //salvo buffer associato a cout
+    std:: streambuf* coutBuffer = std:: cout.rdbuf();   //rdbuf restituisce un puntatore al buffer
+    //reindirizzo cout al buffer associato alla stream del file
+    std:: cout.rdbuf(logFile.rdbuf()); //ora cout scrive sul file e non sul terminale
+    std::cout<< "Esempio file di log : \n"<<endl;
 
     ManualDevice Impianto_fotovoltaico("Impianto_Fotovoltaico", 0, 1.5);
     ManualDevice Pompa_di_calore_termostato("Pompa_di_calore_termostato", 1, -2);
@@ -38,6 +54,9 @@ int main() {
         DevMan.parseInput(s);
     }
     
+    //ripristina buffer
+    std:: cout.rdbuf(coutBuffer);
+    logFile.close();
 
     /*
     vector<Device*> container(10);

@@ -36,11 +36,11 @@ void DeviceManager::addDeviceAsync(Device* dev, CustomTime Start, CustomTime End
 void DeviceManager::moveDevice(std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator it) {
     std::pair<CustomTime, Device*> deviceToMove = it->second;
     deviceToMove.second->updateEndTime(deviceToMove.first);
-    print_infoAsync("Prova ");
+    //print_infoAsync("Prova ");
     asyncDevices.erase(it);
-    print_infoAsync("Prova ");
+    //print_infoAsync("Prova ");
     addDevice(deviceToMove.second);
-    print_infoAsync("Prova ");
+    //print_infoAsync("Prova ");
 }
 
 //metodo per comando "set ${devicename} off"
@@ -265,7 +265,7 @@ void DeviceManager::parseInput(std::string command){
                                 int startMin = std::stoi(words[2].substr(words[2].find(":")+1));
                                 CustomTime timeStart(startHour,startMin);
                                 if(words.size()==4){                                              //Se c'è il parametro END_TIME
-                                     int endHour = std::stoi(words[3].substr(0, words[3].find(":")));
+                                    int endHour = std::stoi(words[3].substr(0, words[3].find(":")));
                                     int endMin = std::stoi(words[3].substr(words[3].find(":")+1));
                                     CustomTime timeEnd(endHour, endMin);
                                     addDeviceAsync(*iterAll, timeStart, timeEnd);
@@ -310,21 +310,24 @@ void DeviceManager::parseInput(std::string command){
             }
             if(words.size() == 1){  //"show "
                 double totalPowerUsed=0;
-                double totalPowerProduced= maxPower*currentTime;
+                //double totalPowerProduced= maxPower*currentTime;
+                double totalPowerDevices = checkPowerConsumptionGeneral();
                 for(int i=0; i<deviceCount; i++){
                     if(deviceList[i]->getPowerUsed() < 0) {totalPowerUsed += deviceList[i]->getPowerUsed();}
-                    else {totalPowerProduced += deviceList[i]->getPowerUsed();}
+                    //else {totalPowerProduced += deviceList[i]->getPowerUsed();}
                 }
-                std::cout << "[" << currentTime << "] Attualmente il sistema ha prodotto " << totalPowerProduced << "kWh e ha consumato " << totalPowerUsed << "kWh. Nello specifico:"<< std::endl;
+                std::cout << "[" << currentTime << "] Attualmente il sistema ha consumato " << totalPowerUsed << "kWh e la potenza massima accumulata fra i dispositivi accesi è: "<<totalPowerDevices<<". Nello specifico:"<< std::endl;
                 for(int i=0; i<deviceCount; i++){
-                    if(deviceList[i]->getCurrentPowerConsumption() < 0) {std::cout << "\t - Il dispositivo \'" << deviceList[i]->getName() << "\' ha consumato " << deviceList[i]->getPowerUsed() << " kWh"<<std::endl;}
-                    else{std::cout << "\t - Il dispositivo \'" << deviceList[i]->getName() << "\' ha prodotto " << deviceList[i]->getPowerUsed() << " kWh"<<std::endl;}
+                    if(deviceList[i]->getCurrentPowerConsumption() < 0) {std::cout << "\t - Il dispositivo \'" << deviceList[i]->getName() << "\'ha una potenza di "<<deviceList[i]->getCurrentPowerConsumption()<<" e ha consumato " << deviceList[i]->getPowerUsed() << " kWh"<<std::endl;}
+                    else{std::cout << "\t - Il dispositivo \'" << deviceList[i]->getName() << "\' ha una potenza di "<<deviceList[i]->getCurrentPowerConsumption()<< " e ha prodotto " << deviceList[i]->getPowerUsed() << " kWh"<<std::endl;}
                     
                 }
             } else if (words.size() == 2){    //"show ${devicename}"
                 auto iter = findDeviceByNameAll(words[1]);
                 if(iter == deviceList.end()) {std::cout<<"Device non riconosciuto. Riprovare." << std::endl;}
-                else {std::cout<< "Il dispositivo \'" << (*iter)->getName()<< "\' ha attualmente consumato "<< (*iter)->getPowerUsed()<< " kWh" << std::endl;}              
+                else {
+                    std::cout<<"Il dispositivo ha una potenza di "<<(*iter)->getCurrentPowerConsumption();} 
+                    std::cout<< "Il dispositivo \'" << (*iter)->getName()<< "\' ha attualmente consumato "<< (*iter)->getPowerUsed()<< " kWh" << std::endl;              
             } else {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
             break;
         
