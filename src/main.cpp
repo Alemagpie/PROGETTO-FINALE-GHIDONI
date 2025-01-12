@@ -4,27 +4,17 @@
 #include "../include/CustomTime.h"
 #include <iostream>
 #include <vector>
-#include <fstream>
+#include <fstream>  //file stream
+#include <sstream>  //string stream
 
 using namespace std;
 
 int main() {
-    /*
-    //Creazione file di log
-    std:: string logFileName = "log.txt";
-    //Creo stream di output file
-    std:: ofstream logFile(logFileName);
 
-    if(!logFile.is_open()){
-        std::cout <<"Errore nell'apertura del file di log"<<endl;
-        return 1;
-    };
-    //salvo buffer associato a cout
-    std:: streambuf* coutBuffer = std:: cout.rdbuf();   //rdbuf restituisce un puntatore al buffer
-    //reindirizzo cout al buffer associato alla stream del file
-    std:: cout.rdbuf(logFile.rdbuf()); //ora cout scrive sul file e non sul terminale
-    std::cout<< "Esempio file di log : \n"<<endl;
-    */
+    //creo stream di output -> un oggetto ostringstream possiede una funzione che ritorna una stringa di tutto il contenuto della stream
+    ostringstream streamOutput;
+    //memorizzo buffer del cout con un puntatore
+    streambuf* bufferConsole = cout.rdbuf();    //NOTA: rdbuf() restituisce il puntatore al buffer dello stream di cout
 
     ManualDevice Impianto_fotovoltaico("Impianto_fotovoltaico", 0, 1.5);
     ManualDevice Pompa_di_calore_termostato("Pompa_di_calore_termostato", 1, -2);
@@ -49,15 +39,25 @@ int main() {
     DevMan.addDeviceToList(Asciugatrice);
     DevMan.addDeviceToList(Televisore);
 
-
-    
+    //gestione dei comandi
     for (string s; getline(cin, s);){
         DevMan.parseInput(s);
     }
-    /*
-    //ripristina buffer
-    std:: cout.rdbuf(coutBuffer);
+    
+    //creazione file di log
+    ofstream logFile ("logEsempio.txt");
+
+    if(!logFile.is_open()){
+        cout<<"Errore apertura file";
+        return 1; //segnalo errore
+    }
+    else{
+        //copio contenuto finale della console sul file di log
+        logFile << streamOutput.str();  //restituisco una stringa del contenuto della console
+    }
+
+    //chiudo stream
     logFile.close();
-    */
+
     return 0;
 }
