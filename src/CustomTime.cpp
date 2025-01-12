@@ -125,7 +125,7 @@ CustomTime operator- (CustomTime&  time , int  min) {
 }
 
 double operator* (double value,CustomTime time) { 
-    return (value*(time.getHour() + (time.getMinutes()/60)));
+    return (value*(time.getHour() + (time.getMinutes()/static_cast<double>(60))));
 }
 
 bool operator==(CustomTime& a, CustomTime& b) {

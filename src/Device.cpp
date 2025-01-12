@@ -51,6 +51,7 @@ void Device:: setStatus(bool value){
 
 void Device::updatePowerUsed(CustomTime& currTime){
     powerUsed += powerConsumption*(currTime - start_time);
+    start_time = currTime;
 }
 
 void Device::reset(){

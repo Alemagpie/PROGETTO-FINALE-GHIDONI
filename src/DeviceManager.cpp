@@ -8,9 +8,11 @@ DeviceManager::DeviceManager()
 
 void DeviceManager::addDevice(Device* dev){
     if(checkPowerConsumption(dev)) {
+        dev->updateStartTime(currentTime);
         activeDevices.insert(std::pair<CustomTime, Device*>(dev->getEndTime(), dev)); //aggiungi entry con (chiave end_time e valore puntatore a d) alla multimappa dei device attivi
         dev->setStatus(true);
-        std::cout << "[" << currentTime << "] Il dispositivo \"" << dev->getName() << "\" si e' acceso" << std::endl;  
+        powerUse += dev->getCurrentPowerConsumption();
+        std::cout << "[" << currentTime << "] Il dispositivo \'" << dev->getName() << "\' si e' acceso" << std::endl;  
     } else {
         std::cout<<"Superata soglia di consumo. E' stato spento il dispositivo: "<<dev->getName()<<std::endl;
     }
@@ -32,6 +34,7 @@ void DeviceManager::addDeviceAsync(Device* dev, CustomTime Start, CustomTime End
 
 void DeviceManager::moveDevice(std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator it) {
     std::pair<CustomTime, Device*> deviceToMove = it->second;
+    deviceToMove.second->updateEndTime(deviceToMove.first);
     print_infoAsync("Prova ");
     asyncDevices.erase(it);
     print_infoAsync("Prova ");
@@ -45,7 +48,7 @@ Device* DeviceManager::removeDevice(std::multimap<CustomTime, Device*>::iterator
     activeDevices.erase(it);
     d->updatePowerUsed(currentTime);
     d->setStatus(false);
-    std::cout << "[" << currentTime << "] Il dispositivo \"" << d->getName() << "\" si e' spento" << std::endl;
+    std::cout << "[" << currentTime << "] Il dispositivo \'" << d->getName() << "\' si e' spento" << std::endl;
 
     powerUse -= d->getCurrentPowerConsumption();
     return d;
@@ -264,8 +267,10 @@ void DeviceManager::parseInput(std::string command){
                                     int endMin = std::stoi(words[3].substr(words[3].find(":")+1));
                                     CustomTime timeEnd(endHour, endMin);
                                     addDeviceAsync(*iterAll, timeStart, timeEnd);
+                                    std::cout<< "["<< currentTime << "] Impostato un timer per il dispositivo \'" << (*iterAll)->getName() <<"\' dalle "<< timeStart << " alle " << timeEnd <<std::endl;
                                 }else{
                                     addDeviceAsync(*iterAll, timeStart, (*iterAll)->getEndTime());
+                                    std::cout<< "["<< currentTime << "] Impostato un timer per il dispositivo \'" << (*iterAll)->getName() <<"\' dalle "<< timeStart  <<std::endl;
                                 }
                                 //print_infoAsync("Async attivi: ");
                             }else{
@@ -290,6 +295,7 @@ void DeviceManager::parseInput(std::string command){
                     auto iterAsync = findDeviceByNameAsync(words[1]);
                     iterAsync->second.second->removeTimer();                //DA CONTROLLARE QUANDO VIENE MESSO L'ADD
                     asyncDevices.erase(iterAsync);
+                    std::cout<< "["<< currentTime << "] Rimosso il timer dal dispositivo \'" << (*iterAll)->getName() <<"\'" << std::endl;
                 }              
             } else {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
             break;
@@ -310,7 +316,7 @@ void DeviceManager::parseInput(std::string command){
             } else if (words.size() == 2){    //"show ${devicename}"
                 auto iter = findDeviceByNameAll(words[1]);
                 if(iter == deviceList.end()) {std::cout<<"Device non riconosciuto. Riprovare." << std::endl;}
-                else {std::cout<< **iter << std::endl;}              
+                else {std::cout<< "Il dispositivo \'" << (*iter)->getName()<< "\' ha attualmente consumato "<< (*iter)->getPowerUsed()<< " kWh" << std::endl;}              
             } else {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
             break;
         
@@ -318,21 +324,19 @@ void DeviceManager::parseInput(std::string command){
         case firstCommand::reset:
             switch(resetToSwitch(words[1])){
                 case resetCommand::timeReset:   //"reset time"
-                    activeDevices.clear();                              //TO DO: Aggiornare PowerUsed and Status, anche per altri reset.
+                    activeDevices.clear();                              //TO DO: Aggiornare PowerUsed and Status, anche per altri reset. CHECK
                     setTime(CustomTime(0,0));
                     for(int i=0; i<deviceCount; i++){deviceList[i]->reset();}
 
                     break;
                 case resetCommand::timersReset: //"reset timers"
-                    //Rimuovi timer
-                    asyncDevices.clear();
+                    asyncDevices.clear();                                //Rimuovi timer
                     break;
                 case resetCommand::allReset:    //"reset all"
-                    //Spegni dispositivi attivi
-                    activeDevices.clear();
-                    //Rimuovi timer
-                    asyncDevices.clear();
-                    currentTime.setTime(0,0);
+                    activeDevices.clear();                          //Spegni dispositivi attivi
+                    asyncDevices.clear();                              //Rimuovi timer
+                    setTime(CustomTime(0,0));
+                    for(int i=0; i<deviceCount; i++){deviceList[i]->reset();}
                     break;
                 default:
                     std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;
@@ -396,7 +400,7 @@ bool DeviceManager::checkPowerConsumption(Device* d) {
     double currentDeviceConsumption = d->getCurrentPowerConsumption();
     
     //usiamo il > perchè il consumo è pensato in negativo
-    return (currentDeviceConsumption + powerUse > maxPower);
+    return (currentDeviceConsumption + powerUse + maxPower >= 0);
 }
 
 double DeviceManager::checkPowerConsumptionGeneral() {
