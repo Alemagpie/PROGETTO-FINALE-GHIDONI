@@ -49,6 +49,7 @@ class DeviceManager {
     std::vector<Device*>::iterator findDeviceByNameAll(std::string& s);
     void print_infoAll(std::string_view rem);
     void print_infoAsync(std::string_view rem);
+    //void calculatePowerRec(double PowerUsed, double PowerProduced, int counter);
 
 };
 

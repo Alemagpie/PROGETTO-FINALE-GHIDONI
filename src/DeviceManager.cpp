@@ -310,11 +310,17 @@ void DeviceManager::parseInput(std::string command){
             }
             if(words.size() == 1){  //"show "
                 double totalPowerUsed=0;
+                double totalPowerProduced= maxPower*currentTime;
                 for(int i=0; i<deviceCount; i++){
-                    std::cout << *deviceList[i] << std::endl;
-                    totalPowerUsed += deviceList[i]->getPowerUsed();
+                    if(deviceList[i]->getPowerUsed() < 0) {totalPowerUsed += deviceList[i]->getPowerUsed();}
+                    else {totalPowerProduced += deviceList[i]->getPowerUsed();}
                 }
-                std::cout << "Consumo energetico totale del sistema dalle 00:00 : " << totalPowerUsed << "kWh" << std::endl;
+                std::cout << "[" << currentTime << "] Attualmente il sistema ha prodotto " << totalPowerProduced << "kWh e ha consumato " << totalPowerUsed << "kWh. Nello specifico:"<< std::endl;
+                for(int i=0; i<deviceCount; i++){
+                    if(deviceList[i]->getCurrentPowerConsumption() < 0) {std::cout << "\t - Il dispositivo \'" << deviceList[i]->getName() << "\' ha consumato " << deviceList[i]->getPowerUsed() << " kWh"<<std::endl;}
+                    else{std::cout << "\t - Il dispositivo \'" << deviceList[i]->getName() << "\' ha prodotto " << deviceList[i]->getPowerUsed() << " kWh"<<std::endl;}
+                    
+                }
             } else if (words.size() == 2){    //"show ${devicename}"
                 auto iter = findDeviceByNameAll(words[1]);
                 if(iter == deviceList.end()) {std::cout<<"Device non riconosciuto. Riprovare." << std::endl;}
@@ -480,4 +486,10 @@ void DeviceManager::setTime(CustomTime newTime) {                 //Controllo te
     }
     currentTime = newTime;
 }
+*/
+/*
+void DeviceManager::calculatePowerRec(double PowerUsed, double PowerProduced, int counter){
+    if()
+}
+
 */
