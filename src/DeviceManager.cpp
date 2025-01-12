@@ -1,9 +1,10 @@
 #include "../include/DeviceManager.h"
 
 DeviceManager::DeviceManager()
-    : deviceCount{0}, deviceList(), activeDevices(), asyncDevices()
+    : deviceCount{0}, deviceList(), activeDevices(), asyncDevices(), powerUse{0}
 {
     currentTime.setTime(0,0);
+    std::cout<<"Device Manager accesso"<<std::endl;
 }
 
 void DeviceManager::addDevice(Device* dev){
@@ -204,7 +205,7 @@ void DeviceManager::parseInput(std::string command){
         case firstCommand::set:
             if(words.size() >= 3 && words.size() < 5){      //Controllo che ci sia il giusto numero di parole nel comando
                 try{
-                    if(words[1] == "time"){
+                    if(words[1] == "time"){ //set time xx:yy
                         int newHour = std::stoi(words[2].substr(0, words[2].find(":")));        //Trasformo da string a int con la funzione stoi
                         int newMin = std::stoi(words[2].substr(words[2].find(":")+1));
                         CustomTime newTime(newHour, newMin);
@@ -248,6 +249,7 @@ void DeviceManager::parseInput(std::string command){
                                 iterActive->second->updatePowerUsed(currentTime);
                                 iterActive->second->stopDevice();
                                 activeDevices.erase(iterActive);
+                                //removeDevice(iterActive);
                                 //print_infoAll("Multimappa attivi: ");
                             }else if(iterActive == activeDevices.end()){
                                 std::cout << "Device non attivo. Prima di spegnere il dispositivo, e' necessario attivarlo."<< std::endl;
@@ -358,37 +360,48 @@ void DeviceManager::setTime(CustomTime newTime) {                 //Controllo te
         //std::cout << "ProvaGen" << std::endl;
         if(asyncIt == asyncDevices.end()){      //Guardo solo gli attivi
             if(activeIt->first <= newTime) {
-                std::cout << currentTime <<newTime << activeIt->first<<std::endl;
+                //std::cout << currentTime <<newTime << activeIt->first<<std::endl;
                 currentTime = activeIt->first;
-                removeDevice(activeIt);
-                //print_infoAll("Dopo rimozione: ");
+
+                auto activeItRemove = activeIt;
                 activeIt++;
-            }else{
+                removeDevice(activeItRemove);
+            } else{
                 activeIt = activeDevices.end();
             }
-        } else if (activeIt == activeDevices.end()){ //Guardo solo gli asincroni
-            if(asyncIt->first <= newTime) {
-                //std::cout << "ProvaAsyn" << std::endl;
-                currentTime = asyncIt->first;
-                moveDevice(asyncIt);
-                asyncIt++;
-            }else{
-                asyncIt = asyncDevices.end();
-            }
+        } else {
+            if (activeIt == activeDevices.end()){ //Guardo solo gli asincroni
+                if(asyncIt->first <= newTime) {
+                    //std::cout << "ProvaAsyn" << std::endl;
+                    currentTime = asyncIt->first;
+
+                    auto asyncItRemove = asyncIt;
+                    asyncIt++;
+                    moveDevice(asyncItRemove);
+                } else{
+                    asyncIt = asyncDevices.end();
+                }
         } else {        //guardo entrambi
+            std::cout<<"Rimozione da entrambi"<<std::endl;
             //std::cout << "ProvaEntrambi" << std::endl;
             if(asyncIt->first <= activeIt->first && asyncIt->first <= newTime){
                 currentTime = asyncIt->first;
-                moveDevice(asyncIt);
+
+                auto asyncItRemove = asyncIt;
                 asyncIt++;
-            }else if(activeIt->first <= asyncIt->first && activeIt->first <= newTime){
-                currentTime = activeIt->first;
-                removeDevice(activeIt);
+                moveDevice(asyncItRemove);
+            } else {
+                if(activeIt->first <= asyncIt->first && activeIt->first <= newTime){
+                
+                auto activeItRemove = activeIt;
                 activeIt++;
-            }else{
-                activeIt = activeDevices.end();
-                asyncIt = asyncDevices.end();
+                removeDevice(activeItRemove);
+                } else{
+                    activeIt = activeDevices.end();
+                    asyncIt = asyncDevices.end();
+                }
             }
+        }
         }
     }
     //std::cout << "ProvaFinale" << std::endl;

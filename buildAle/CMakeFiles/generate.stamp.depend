@@ -1,0 +1,25 @@
+# CMake generation dependency list for this directory.
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/CMakeCInformation.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/CMakeCXXInformation.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/CMakeCommonLanguageInclude.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/CMakeGenericSystem.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/CMakeInitializeConfigs.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/CMakeLanguageInformation.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/CMakeRCInformation.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/CMakeSystemSpecificInformation.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/CMakeSystemSpecificInitialize.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/Compiler/MSVC-C.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/Compiler/MSVC-CXX.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/Compiler/MSVC.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/Platform/Windows-Initialize.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/Platform/Windows-MSVC-C.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/Platform/Windows-MSVC-CXX.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/Platform/Windows-MSVC.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/Platform/Windows.cmake
+A:/C++/OpenGL/CMake/share/cmake-3.30/Modules/Platform/WindowsPaths.cmake
+A:/C++/UNIPD/PROGETTO-FINALE-GHIDONI/CMakeLists.txt
+A:/C++/UNIPD/PROGETTO-FINALE-GHIDONI/buildAle/CMakeFiles/3.30.5/CMakeCCompiler.cmake
+A:/C++/UNIPD/PROGETTO-FINALE-GHIDONI/buildAle/CMakeFiles/3.30.5/CMakeCXXCompiler.cmake
+A:/C++/UNIPD/PROGETTO-FINALE-GHIDONI/buildAle/CMakeFiles/3.30.5/CMakeRCCompiler.cmake
+A:/C++/UNIPD/PROGETTO-FINALE-GHIDONI/buildAle/CMakeFiles/3.30.5/CMakeSystem.cmake
