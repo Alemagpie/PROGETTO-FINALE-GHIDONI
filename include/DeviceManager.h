@@ -23,7 +23,7 @@ class DeviceManager {
     void addDeviceAsync(Device* dev, CustomTime Start, CustomTime End); //aggiungi a multimappa dei "pending"
     void moveDevice(std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator it);
     //Device getDevice(CustomTime t);   //trova dispositivo in base a tempo
-    Device* removeDevice(std::multimap<CustomTime, Device*>::iterator it); //rimuovi dispositivo in base al nome, fa il return del dispositivo
+    void removeDevice(std::multimap<CustomTime, Device*>::iterator it); //rimuovi dispositivo in base al nome, fa il return del dispositivo
     //Device* removeDevicesByTime(CustomTime t); //rimuovi uno o più dispositivi con orario uguale o passato rispetto a quello corrente, fa il return del primo dispositivo
 
     bool checkPowerConsumption(Device* d);
@@ -40,13 +40,14 @@ class DeviceManager {
     std::multimap<CustomTime, Device*> activeDevices; //multimappa dei dispositivi attivi
     std::multimap<CustomTime, std::pair<CustomTime, Device*>> asyncDevices;  //multimappa dei dispositivi in attesa dell'attivazione (hanno come chiave il tempo di inizio, come valore il tempo di fine e il ptr al device)
     std::vector<Device*> deviceList; //vettore di ptr ai Device
+    std::vector<Device*> deviceInsertOrder;
     CustomTime currentTime;   
 
     int deviceCount;    //lunghezza del vettore di Device
     
     std::multimap<CustomTime, Device*>::iterator findDevice(Device& d);
     std::multimap<CustomTime, Device*>::iterator findDeviceByID(int ID);
-    std::multimap<CustomTime, Device*>::iterator findDeviceByNameActive(std::string& s);
+    std::multimap<CustomTime, Device*>::iterator findDeviceByNameActive(std::string& s ) ;
     std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator findDeviceByNameAsync(std::string& s);
     std::vector<Device*>::iterator findDeviceByNameAll(std::string& s);
     void print_infoAll(std::string_view rem);

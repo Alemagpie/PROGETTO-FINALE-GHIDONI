@@ -1,7 +1,7 @@
 #include "../include/DeviceManager.h"
 
 DeviceManager::DeviceManager()
-    : deviceCount{0}, deviceList(), activeDevices(), asyncDevices(), powerUse{0}
+    : deviceCount{0}, deviceList(), activeDevices(), asyncDevices(), powerUse{0}, deviceInsertOrder()
 {
     currentTime.setTime(0,0);
     std::cout<<"Device Manager accesso"<<std::endl;
@@ -11,6 +11,7 @@ void DeviceManager::addDevice(Device* dev){
     if(checkPowerConsumption(dev)) {
         dev->updateStartTime(currentTime);
         activeDevices.insert(std::pair<CustomTime, Device*>(dev->getEndTime(), dev)); //aggiungi entry con (chiave end_time e valore puntatore a d) alla multimappa dei device attivi
+        deviceInsertOrder.push_back(dev);
         dev->setStatus(true);
         powerUse += dev->getCurrentPowerConsumption();
         std::cout << "[" << currentTime << "] Il dispositivo \'" << dev->getName() << "\' si e' acceso" << std::endl;  
@@ -35,24 +36,30 @@ void DeviceManager::addDeviceAsync(Device* dev, CustomTime Start, CustomTime End
 
 void DeviceManager::moveDevice(std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator it) {
     std::pair<CustomTime, Device*> deviceToMove = it->second;
-    deviceToMove.second->updateEndTime(deviceToMove.first);
-    //print_infoAsync("Prova ");
     asyncDevices.erase(it);
-    //print_infoAsync("Prova ");
-    addDevice(deviceToMove.second);
-    //print_infoAsync("Prova ");
+    if(!(deviceToMove.second->getStatus())){
+        deviceToMove.second->updateEndTime(deviceToMove.first);
+        addDevice(deviceToMove.second);
+    }else{
+        std::cout<< "[" << currentTime << "] Il device e' gia' attivo." << std::endl;
+    }
+    deviceToMove.second->updateEndTime(deviceToMove.first);
 }
 
 //metodo per comando "set ${devicename} off"
-Device* DeviceManager::removeDevice(std::multimap<CustomTime, Device*>::iterator it) {
+void DeviceManager::removeDevice(std::multimap<CustomTime, Device*>::iterator it) {
     Device* d = it->second;
     activeDevices.erase(it);
     d->updatePowerUsed(currentTime);
     d->setStatus(false);
     std::cout << "[" << currentTime << "] Il dispositivo \'" << d->getName() << "\' si e' spento" << std::endl;
+    deviceInsertOrder.erase(std::find(deviceInsertOrder.begin(), deviceInsertOrder.end(), d));
 
     powerUse -= d->getCurrentPowerConsumption();
-    return d;
+    if(powerUse<(maxPower * (-1))) {
+        std::string removeLast = deviceInsertOrder.back()->getName();
+        removeDevice(findDeviceByNameActive(removeLast));
+        }
 } 
 
 
@@ -88,7 +95,7 @@ std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByID(int I
     */
 }
 
-std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByNameActive(std::string& s) {
+std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByNameActive(std::string& s ) {
     return std::find_if(activeDevices.begin(), activeDevices.end(),
         [&s](const std::pair<CustomTime, Device*>& element) -> bool {
             return element.second->getName() == s;
@@ -213,7 +220,6 @@ void DeviceManager::parseInput(std::string command){
                         //std::cout<< newTime << std::endl;                       //TO DO: fare controllo dell'orario
                         if(newTime > currentTime) {setTime(newTime);}
                         else{ std::cout << "[" <<currentTime << "] Orario non disponibile. Inserire solo orari successivi a quello attuale." << std::endl;}
-                        setTime(newTime);
                     }else{
                         if(words[2] == "on"){                   //set ${DEVICE} on
                             auto iterAll = findDeviceByNameAll(words[1]);
