@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <iomanip>
 
 //albero dei dispositivi
 class DeviceManager {

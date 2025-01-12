@@ -15,7 +15,7 @@ void DeviceManager::addDevice(Device* dev){
         powerUse += dev->getCurrentPowerConsumption();
         std::cout << "[" << currentTime << "] Il dispositivo \'" << dev->getName() << "\' si e' acceso" << std::endl;  
     } else {
-        std::cout<<"Superata soglia di consumo. E' stato spento il dispositivo: "<<dev->getName()<<std::endl;
+        std::cout<< "[" << currentTime << "] Superata soglia di consumo. E' stato spento il dispositivo: "<<dev->getName()<<std::endl;
     }
     
 }
@@ -29,7 +29,7 @@ void DeviceManager::addDeviceAsync(Device* dev, CustomTime Start, CustomTime End
     if(Start > currentTime) {
     asyncDevices.insert(std::pair<CustomTime, std::pair<CustomTime, Device*>>(Start, std::pair<CustomTime, Device*>(End, dev))); 
     } else {
-        std::cout<<"Orario di inizio non valido";
+        std::cout<< "[" << currentTime << "] Orario di inizio non valido";
     }
 }
 
@@ -196,7 +196,7 @@ resetCommand resetToSwitch(std::string& command){
 
 
 void DeviceManager::parseInput(std::string command){
-    std::cout<< "["<< currentTime << "] L'orario attuale e' " << currentTime << std::endl;
+    std::cout<< "["<< currentTime << "] L'orario attuale e' " << currentTime << std::endl;      
     //stream per fare il parsing del comando
     std::vector<std::string> words;
     SentenceIntoWords(words, command);
@@ -223,12 +223,12 @@ void DeviceManager::parseInput(std::string command){
                                     addDevice(*iterAll);
                                     //print_infoAll("Multimappa attivi: ");
                                 } else {
-                                    std::cout << "Device già attivo. Se si vuole modificare i suoi orari, spegnerlo e riprovare." << std::endl;
+                                    std::cout << "[" << currentTime << "] Device già attivo. Se si vuole modificare i suoi orari, spegnerlo e riprovare." << std::endl;
                                 }
                             } else if (iterActive != activeDevices.end()) {
-                                std::cout << "Device già attivo. Se si vuole modificare i suoi orari, spegnerlo e riprovare." << std::endl;
+                                std::cout << "[" << currentTime << "] Device già attivo. Se si vuole modificare i suoi orari, spegnerlo e riprovare." << std::endl;
                             } else {
-                                std::cout << "Device non riconosciuto. Fare attenzione al nome riportato." << std::endl;
+                                std::cout << "[" << currentTime << "] Device non riconosciuto. Fare attenzione al nome riportato." << std::endl;
                             }
                             /*if(iterAll != deviceList.end() && iterActive == activeDevices.end() ){
                                 (*iterAll)->updateStartTime(currentTime);
@@ -246,15 +246,12 @@ void DeviceManager::parseInput(std::string command){
                             auto iterAll = findDeviceByNameAll(words[1]);
                             auto iterActive = findDeviceByNameActive(words[1]);
                             if(iterAll != deviceList.end() && iterActive != activeDevices.end() ){  
-                                iterActive->second->updatePowerUsed(currentTime);
-                                iterActive->second->stopDevice();
-                                activeDevices.erase(iterActive);
-                                //removeDevice(iterActive);
+                                removeDevice(iterActive);
                                 //print_infoAll("Multimappa attivi: ");
                             }else if(iterActive == activeDevices.end()){
-                                std::cout << "Device non attivo. Prima di spegnere il dispositivo, e' necessario attivarlo."<< std::endl;
+                                std::cout << "[" << currentTime << "] Device non attivo. Prima di spegnere il dispositivo, e' necessario attivarlo."<< std::endl;
                             } else{
-                                std::cout << "Device non riconosciuto. Fare attenzione al nome riportato." << std::endl;
+                                std::cout << "[" << currentTime << "]Device non riconosciuto. Fare attenzione al nome riportato." << std::endl;
                             }
                         }else{                                  //set ${DEVICE} ${START_TIME} ${END_TIME}
                             auto iterAll = findDeviceByNameAll(words[1]);
@@ -292,14 +289,14 @@ void DeviceManager::parseInput(std::string command){
         case firstCommand::rm:
         if (words.size() == 2){    //"rm ${DEVICE}"      Rimuovere i timer associati ad un dispositivo.
                 auto iterAll = findDeviceByNameAll(words[1]);
-                if(iterAll == deviceList.end()) {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
+                if(iterAll == deviceList.end()) {std::cout<< "[" << currentTime << "] Comando non riconosciuto. Riprovare." << std::endl;}
                 else {
                     auto iterAsync = findDeviceByNameAsync(words[1]);
                     iterAsync->second.second->removeTimer();                //DA CONTROLLARE QUANDO VIENE MESSO L'ADD
                     asyncDevices.erase(iterAsync);
                     std::cout<< "["<< currentTime << "] Rimosso il timer dal dispositivo \'" << (*iterAll)->getName() <<"\'" << std::endl;
                 }              
-            } else {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
+            } else {std::cout<< "[" << currentTime << "] Comando non riconosciuto. Riprovare." << std::endl;}
             break;
 
 
@@ -316,18 +313,19 @@ void DeviceManager::parseInput(std::string command){
                     if(deviceList[i]->getPowerUsed() < 0) {totalPowerUsed += deviceList[i]->getPowerUsed();}
                     //else {totalPowerProduced += deviceList[i]->getPowerUsed();}
                 }
-                std::cout << "[" << currentTime << "] Attualmente il sistema ha consumato " << totalPowerUsed << "kWh e la potenza massima accumulata fra i dispositivi accesi è: "<<totalPowerDevices<<". Nello specifico:"<< std::endl;
+                std::cout << "[" << currentTime << "] Attualmente il sistema ha consumato " << std::fixed << totalPowerUsed << std::setprecision(2) <<"kWh e la potenza massima accumulata fra i dispositivi accesi è: "<<totalPowerDevices<<". Nello specifico:"<< std::endl;
                 for(int i=0; i<deviceCount; i++){
-                    if(deviceList[i]->getCurrentPowerConsumption() < 0) {std::cout << "\t - Il dispositivo \'" << deviceList[i]->getName() << "\'ha una potenza di "<<deviceList[i]->getCurrentPowerConsumption()<<" e ha consumato " << deviceList[i]->getPowerUsed() << " kWh"<<std::endl;}
-                    else{std::cout << "\t - Il dispositivo \'" << deviceList[i]->getName() << "\' ha una potenza di "<<deviceList[i]->getCurrentPowerConsumption()<< " e ha prodotto " << deviceList[i]->getPowerUsed() << " kWh"<<std::endl;}
+                    if(deviceList[i]->getCurrentPowerConsumption() < 0) {std::cout << "\t - Il dispositivo \'" << deviceList[i]->getName() << "\'ha una potenza di "<<deviceList[i]->getCurrentPowerConsumption()<<" e ha consumato " << deviceList[i]->getPowerUsed() << std::fixed << std::setprecision(2)<<" kWh"<<std::endl;}
+                    else{std::cout << "\t - Il dispositivo \'" << deviceList[i]->getName() << "\' ha una potenza di "<<deviceList[i]->getCurrentPowerConsumption()<< " e ha prodotto " << std::fixed <<deviceList[i]->getPowerUsed() << std::setprecision(2) <<" kWh"<<std::endl;}
                     
                 }
             } else if (words.size() == 2){    //"show ${devicename}"
                 auto iter = findDeviceByNameAll(words[1]);
                 if(iter == deviceList.end()) {std::cout<<"Device non riconosciuto. Riprovare." << std::endl;}
                 else {
-                    std::cout<<"Il dispositivo ha una potenza di "<<(*iter)->getCurrentPowerConsumption();} 
-                    std::cout<< "Il dispositivo \'" << (*iter)->getName()<< "\' ha attualmente consumato "<< (*iter)->getPowerUsed()<< " kWh" << std::endl;              
+                    std::cout<<"Il dispositivo ha una potenza di "<<(*iter)->getCurrentPowerConsumption() << (**iter);} 
+                    if((*iter)->getCurrentPowerConsumption() < 0) {std::cout << "\t - Il dispositivo \'" << (*iter)->getName() << "\'ha una potenza di "<<(*iter)->getCurrentPowerConsumption()<<" e ha consumato " << (*iter)->getPowerUsed() << std::fixed << std::setprecision(2)<<" kWh"<<std::endl;}
+                    else{std::cout << "\t - Il dispositivo \'" << (*iter)->getName() << "\' ha una potenza di "<<(*iter)->getCurrentPowerConsumption()<< " e ha prodotto " << std::fixed <<(*iter)->getPowerUsed() << std::setprecision(2) <<" kWh"<<std::endl;}              
             } else {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
             break;
         
@@ -350,13 +348,13 @@ void DeviceManager::parseInput(std::string command){
                     for(int i=0; i<deviceCount; i++){deviceList[i]->reset();}
                     break;
                 default:
-                    std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;
+                    std::cout<< "[" << currentTime << "] Comando non riconosciuto. Riprovare." << std::endl;
                     break;
                 }
             break;
 
         default:
-            std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;
+            std::cout<< "[" << currentTime << "] Comando non riconosciuto. Riprovare." << std::endl;
     }
     
 }
