@@ -2,19 +2,31 @@
 #include "../include/ManualDevice.h"
 #include "../include/DeviceManager.h"
 #include "../include/CustomTime.h"
+#include "../include/OutputManager.h"
 #include <iostream>
 #include <vector>
 #include <fstream>  //file stream
-#include <sstream>  //string stream
+//#include <sstream>  //string stream
 
 using namespace std;
 
 int main() {
 
     //creo stream di output -> un oggetto ostringstream possiede una funzione che ritorna una stringa di tutto il contenuto della stream
-    ostringstream streamOutput;
+    //ostringstream streamOutput;
     //memorizzo buffer del cout con un puntatore
-    streambuf* bufferConsole = cout.rdbuf();    //NOTA: rdbuf() restituisce il puntatore al buffer dello stream di cout
+    //streambuf* bufferConsole = cout.rdbuf();    //NOTA: rdbuf() restituisce il puntatore al buffer dello stream di cout
+
+    //creazione file di log
+    ofstream logFile ("logEsempio.txt");
+
+    if(!logFile.is_open()){
+        cout<<"Errore apertura file";
+        return 1; //segnalo errore
+    }
+
+    //creo oggetto OutputManager per la gestione dell'output
+    OutputManager out(std::cout, logFile);
 
     ManualDevice Impianto_fotovoltaico("Impianto_fotovoltaico", 0, 1.5);
     ManualDevice Pompa_di_calore_termostato("Pompa_di_calore_termostato", 1, -2);
@@ -43,7 +55,7 @@ int main() {
     for (string s; getline(cin, s);){
         DevMan.parseInput(s);
     }
-    
+    /*
     //creazione file di log
     ofstream logFile ("logEsempio.txt");
 
@@ -58,6 +70,7 @@ int main() {
 
     //chiudo stream
     logFile.close();
+    */
 
     return 0;
 }
