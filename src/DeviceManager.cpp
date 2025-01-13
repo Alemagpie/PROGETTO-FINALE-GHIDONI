@@ -1,5 +1,19 @@
 #include "../include/DeviceManager.h"
 
+#include <iterator>
+#include <utility> //per std::pair
+#include <map>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <iomanip>
+
+#include "ManualDevice.h"
+#include "AutomaticDevice.h"
+#include "CustomTime.h"
+#include "../include/OutputManager.h"
+
 DeviceManager::DeviceManager(OutputManager& outPut)
     : deviceCount{0}, deviceList(), activeDevices(), asyncDevices(), powerUse{0}, deviceInsertOrder(), fineGiornata(false), out{outPut}
 {
@@ -7,14 +21,12 @@ DeviceManager::DeviceManager(OutputManager& outPut)
     out<<"Device Manager accesso"<<"\n";
 }
 
-bool DeviceManager::getFineGiornata() { return fineGiornata; }
-
 void DeviceManager::addDevice(Device* dev){
     if(checkPowerConsumption(dev)) {
         dev->updateStartTime(currentTime);
         activeDevices.insert(std::pair<CustomTime, Device*>(dev->getEndTime(), dev)); //aggiungi entry con (chiave end_time e valore puntatore a d) alla multimappa dei device attivi
         deviceInsertOrder.push_back(dev);
-        dev->setStatus(true);
+        dev->startDevice();
         powerUse += dev->getCurrentPowerConsumption();
         out << "[" << currentTime << "] Il dispositivo \'" << dev->getName() << "\' si e' acceso" <<"\n";  
     } else {
@@ -53,7 +65,7 @@ void DeviceManager::removeDevice(std::multimap<CustomTime, Device*>::iterator it
     Device* d = it->second;
     activeDevices.erase(it);
     d->updatePowerUsed(currentTime);
-    d->setStatus(false);
+    d->stopDevice();
     out << "[" << currentTime << "] Il dispositivo \'" << d->getName() << "\' si e' spento" <<"\n";
     deviceInsertOrder.erase(std::find(deviceInsertOrder.begin(), deviceInsertOrder.end(), d));
 

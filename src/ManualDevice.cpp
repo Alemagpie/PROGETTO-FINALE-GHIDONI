@@ -1,6 +1,9 @@
 //DAVIDE MEROTTO
 
 #include "../include/ManualDevice.h"
+
+#include <string>
+
 #include "../include/CustomTime.h"
 
 //Implementazione classe ManualDevices
@@ -15,19 +18,3 @@ void ManualDevice:: setTimer(CustomTime& start_t, CustomTime end_t){
     start_time = start_t;
     end_time = end_t;
 }
-
-void ManualDevice::removeTimer(){
-    end_time.setTime(23,59);
-}
-
-void ManualDevice::updateStartTime(CustomTime newStartTime){
-    start_time = newStartTime;
-}
-
-void ManualDevice::updateEndTime(CustomTime newEndTime){
-    end_time = newEndTime;
-}
-
-char ManualDevice::getType(){
-    return 'M';
-} 

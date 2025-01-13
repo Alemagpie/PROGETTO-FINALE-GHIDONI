@@ -1,6 +1,9 @@
 //DAVIDE MEROTTO
 
 #include "../include/AutomaticDevice.h"
+
+#include <string>
+
 #include "../include/CustomTime.h"
 
 AutomaticDevice::AutomaticDevice(std::string nome, const int ID, double power, CustomTime duration) 
@@ -15,19 +18,3 @@ void AutomaticDevice:: setTimer(CustomTime& start_t , CustomTime end_t){
     start_time = start_t;
     end_time = start_t + time_duration;
 }
-
-void AutomaticDevice::removeTimer(){
-    return;
-}
-
-void AutomaticDevice::updateStartTime(CustomTime newStartTime){
-    start_time = newStartTime;
-}
-
-void AutomaticDevice::updateEndTime(CustomTime newEndTime){
-    end_time = start_time + time_duration;
-}
-
-char AutomaticDevice::getType(){
-    return 'A';
-} 

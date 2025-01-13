@@ -1,18 +1,12 @@
 #include "../include/CustomTime.h"
 
+#include <iostream>
+
 CustomTime::CustomTime() : hour{0}, minutes{0} {}
 
 CustomTime::CustomTime(unsigned int ora, unsigned int minuti) : hour{ora}, minutes{minuti} 
 {
     checkTime(ora, minuti);
-}
-
-unsigned int CustomTime::getHour() const{
-    return hour;
-}
-
-unsigned int CustomTime::getMinutes() const{
-    return minutes;
 }
 
 void CustomTime::setTime(unsigned int const ora, unsigned int const minuti) {
@@ -21,24 +15,12 @@ void CustomTime::setTime(unsigned int const ora, unsigned int const minuti) {
     checkTime(ora, minuti);
 }
 
-void CustomTime::resetTime() {
-    hour = minutes = 0;
-}
-
 CustomTime& CustomTime::operator= (CustomTime a) {
     hour = a.getHour();
     minutes = a.getMinutes();
 
     return *this;
 }
-/*
-CustomTime& CustomTime::operator= (CustomTime a){
-    hour = a.getHour();
-    minutes = a.getMinutes();
-
-    return *this;
-}
-*/
 
 CustomTime operator+ (CustomTime&  time1, CustomTime&  time2){
 
@@ -128,18 +110,6 @@ CustomTime operator- (CustomTime&  time , int  min) {
     return return_time;
 }
 
-double operator* (double value,CustomTime time) { 
-    return (value*(time.getHour() + (time.getMinutes()/static_cast<double>(60))));
-}
-
-bool operator==(CustomTime& a, CustomTime& b) {
-    return (a.getHour() == b.getHour() && a.getMinutes() == b.getMinutes());
-}
-
-bool operator== (CustomTime a, CustomTime b) {
-    return (a.getHour() == b.getHour() && a.getMinutes() == b.getMinutes());
-}
-
 bool operator>(const CustomTime&  a,const CustomTime&  b) {
     if(a.getHour() > b.getHour() ) {return true;}
     if(a.getHour() == b.getHour() && a.getMinutes() > b.getMinutes()) {return true;}
@@ -177,11 +147,3 @@ void CustomTime::checkTime(int badHours,int  badMinutes){
         throw std::invalid_argument("");
     }
 }
-/*
-int getHoursDeltaTime(CustomTime& a, CustomTime& b) {
-
-}
-
-int getMinutesDeltaTime(CustomTime& a, CustomTime& b) {
-
-}*/

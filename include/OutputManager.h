@@ -1,5 +1,5 @@
-#ifndef OUT_H
-#define OUT_H
+#ifndef PROGETTOFINALE_SRC_OUTPUTMANAGER_H
+#define PROGETTOFINALE_SRC_OUTPUTMANAGER_H
 
 #include <iostream>
 #include <ostream>
@@ -12,26 +12,16 @@ class OutputManager{
 
     //costruttore e sovrascrittura operatore << (caso const e non const)
     public: 
-        OutputManager(std:: ostream &o1, std:: ostream &o2)
+        inline OutputManager(std:: ostream &o1, std:: ostream &o2)
             : output1{o1}, output2{o2}{};
 
         template <typename T>
-        OutputManager& operator << (const T &valueToPrint){
-            output1 << valueToPrint;
-            output2 << valueToPrint;
-            //libera il buffer e scrivi su file zz
-            output2.flush();
-            return *this;
-        }
+        OutputManager& operator << (const T &valueToPrint);
 
         template <typename T>
-        OutputManager& operator << (T& valueToPrint){
-            output1 << valueToPrint;
-            output2 << valueToPrint;
-            //libera il buffer e scrivi sul file
-            output2.flush();
-            return *this;
-        }
+        OutputManager& operator << (T& valueToPrint);
 };
+
+#include "../src/OutputManager.hpp"
 
 #endif

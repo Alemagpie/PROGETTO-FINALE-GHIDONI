@@ -1,11 +1,13 @@
+
+#include <iostream>
+#include <vector>
+#include <fstream>  //file stream
+
 #include "../include/AutomaticDevice.h"
 #include "../include/ManualDevice.h"
 #include "../include/DeviceManager.h"
 #include "../include/CustomTime.h"
 #include "../include/OutputManager.h"
-#include <iostream>
-#include <vector>
-#include <fstream>  //file stream
 
 using namespace std;
 

@@ -1,0 +1,25 @@
+Device Manager accesso
+[00:00] L'orario attuale e' 00:00
+[00:00] Attualmente il sistema ha consumato 0.000000kWh e la potenza massima accumulata fra i dispositivi accesi è: 0.00. Nello specifico:
+	 - Il dispositivo 'Impianto_fotovoltaico' ha una potenza di 1.50 e ha prodotto 0.00 kWh
+	 - Il dispositivo 'Pompa_di_calore_termostato' ha una potenza di -2.00 e ha consumato 0.00 kWh
+	 - Il dispositivo 'Scaldabagno' ha una potenza di -1.00 e ha consumato 0.00 kWh
+	 - Il dispositivo 'Frigorifero' ha una potenza di -0.40 e ha consumato 0.00 kWh
+	 - Il dispositivo 'Lavatrice' ha una potenza di -2.00 e ha consumato 0.00 kWh
+	 - Il dispositivo 'Lavastoviglie' ha una potenza di -1.50 e ha consumato 0.00 kWh
+	 - Il dispositivo 'Tapparelle_elettriche' ha una potenza di -0.30 e ha consumato 0.00 kWh
+	 - Il dispositivo 'Forno_a_microonde' ha una potenza di -0.80 e ha consumato 0.00 kWh
+	 - Il dispositivo 'Asciugatrice' ha una potenza di -0.50 e ha consumato 0.00 kWh
+	 - Il dispositivo 'Televisore' ha una potenza di -0.20 e ha consumato 0.00 kWh
+[00:00] L'orario attuale e' 00:00
+[02:00] L'orario attuale e' 02:00
+[02:00] L'orario attuale e' 02:00
+[02:00] Impostato un timer per il dispositivo 'Scaldabagno' dalle 03:00 alle 04:00
+[02:00] L'orario attuale e' 02:00
+[03:00] Il dispositivo 'Scaldabagno' si e' acceso
+[05:00] L'orario attuale e' 05:00
+[05:00] L'orario attuale e' 05:00
+[04:00] Il dispositivo 'Scaldabagno' si e' spento
+[23:59] L'orario attuale e' 23:59
+[23:59] L'orario attuale e' 23:59
+[23:59] Giornata terminata. Device Manager spento.

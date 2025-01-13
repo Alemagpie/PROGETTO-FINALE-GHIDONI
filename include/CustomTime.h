@@ -1,10 +1,9 @@
 //DAVIDE MEROTTO
 
-#ifndef TIME_H
-#define TIME_H
+#ifndef PROGETTOFINALE_SRC_CUSTOMTIME_H
+#define PROGETTOFINALE_SRC_CUSTOMTIME_H
 
 #include <iostream>
-#include <cmath>
 
 //CLASSE TIME
 class CustomTime{
@@ -13,10 +12,10 @@ class CustomTime{
     public:
         CustomTime();
         CustomTime(unsigned int ora, unsigned int minuti);
-        unsigned int getHour() const;
-        unsigned int getMinutes() const;
+        inline unsigned int getHour() const {return hour;}
+        inline unsigned int getMinutes() const {return minutes;}
         void setTime(unsigned int ora, unsigned int minuti);
-        void resetTime();
+        inline void resetTime() {hour = minutes = 0;}
 
         CustomTime& operator= (CustomTime a);
         //Idk, mi da errori compilando
@@ -37,10 +36,10 @@ CustomTime operator+ (CustomTime&  time, int  min);
 CustomTime operator- (CustomTime&  finish_time, CustomTime&  start_time);
 CustomTime operator- (CustomTime&  time, int  min);
 
-double operator* (double value,CustomTime time);
+inline double operator* (double value,CustomTime time) {return (value*(time.getHour() + (time.getMinutes()/static_cast<double>(60))));}
 
-bool operator== (CustomTime& a, CustomTime& b);
-bool operator== (CustomTime a, CustomTime b);
+inline bool operator== (CustomTime& a, CustomTime& b) { return (a.getHour() == b.getHour() && a.getMinutes() == b.getMinutes());}
+inline bool operator== (CustomTime a, CustomTime b){return (a.getHour() == b.getHour() && a.getMinutes() == b.getMinutes());}
 
 bool operator<(const CustomTime&  a ,const CustomTime&  b );
 bool operator<=(const CustomTime&  a ,const CustomTime&  b );

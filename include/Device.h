@@ -1,9 +1,10 @@
 //DAVIDE MEROTTO
 
-#ifndef DEV_H
-#define DEV_H
+#ifndef PROGETTOFINALE_SRC_DEVICE_H
+#define PROGETTOFINALE_SRC_DEVICE_H
 
 #include <string>
+
 #include "CustomTime.h"
 
 //CLASSE BASE 
@@ -14,16 +15,15 @@ class Device{
         Device(const Device&) = delete;
         Device& operator= (const Device&) = delete;
 
-        void stopDevice();
-        void startDevice();
-        std::string getName() const;
-        int getID() const;
-        bool getStatus() const;
-        CustomTime getStartTime() const;
-        CustomTime getEndTime() const;
-        const double getCurrentPowerConsumption();
-        const double getPowerUsed();
-        void setStatus(bool value);
+        inline void stopDevice()    {status=false;}
+        inline void startDevice()   {status=true;}
+        inline std::string getName() const  {return name;}
+        inline int getID() const    {return id;}
+        inline bool getStatus() const   {return status;}
+        inline CustomTime getStartTime() const  {return start_time;}
+        inline CustomTime getEndTime() const    {return end_time;}
+        inline const double getCurrentPowerConsumption()    {return powerConsumption;}
+        inline const double getPowerUsed()  {return powerUsed;}
         void updatePowerUsed(CustomTime& currTime);
         void reset();
 
@@ -48,7 +48,7 @@ class Device{
         Device(std::string nome, const int ID, double power);
 };
 
-bool operator==(const Device& a, const Device& b);
+inline bool operator==(const Device& a, const Device& b)    {return (a.getName() == b.getName() && a.getID() == b.getID());}
 
 std::ostream& operator<<(std::ostream& os, Device& dev);
 

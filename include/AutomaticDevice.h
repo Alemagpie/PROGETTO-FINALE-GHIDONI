@@ -1,10 +1,13 @@
 //DAVIDE MEROTTO
 
-#ifndef AUTO_DEV_H
-#define AUTO_DEV_H
+#ifndef PROGETTOFINALE_SRC_AUTOMATICDEVICE_H
+#define PROGETTOFINALE_SRC_AUTOMATICDEVICE_H
 
 #include "Device.h"
+
 #include <string>
+
+#include "CustomTime.h"
 
 //SOTTOCLASSE
 class AutomaticDevice : public Device{
@@ -13,10 +16,10 @@ class AutomaticDevice : public Device{
     public:
         AutomaticDevice(std::string nome, const int ID, double power, CustomTime duration);
         void setTimer(CustomTime& start_t , CustomTime end_t) override;
-        virtual void removeTimer() override;
-        void updateEndTime(CustomTime newEndTime = CustomTime(23,59)) override;
-        void updateStartTime(CustomTime newStartTime) override;
-        char getType() override;
+        inline virtual void removeTimer() override {return;}
+        inline void updateEndTime(CustomTime newEndTime = CustomTime(23,59)) override {end_time  = start_time + time_duration;}
+        inline void updateStartTime(CustomTime newStartTime) override {start_time = newStartTime;}
+        inline char getType() override {return 'A';}
 
     private:
         CustomTime time_duration;

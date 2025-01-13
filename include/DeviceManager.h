@@ -1,18 +1,19 @@
-#ifndef DEV_MANAGER_H
-#define DEV_MANAGER_H
+#ifndef PROGETTOFINALE_SRC_DEVICEMANAGER_H
+#define PROGETTOFINALE_SRC_DEVICEMANAGER_H
 
 #include <iterator>
 #include <utility> //per std::pair
 #include <map>
-#include "ManualDevice.h"
-#include "AutomaticDevice.h"
-#include "CustomTime.h"
-#include "../include/OutputManager.h"
 #include <iostream>
 #include <vector>
 #include <string>
 #include <algorithm>
 #include <iomanip>
+
+#include "ManualDevice.h"
+#include "AutomaticDevice.h"
+#include "CustomTime.h"
+#include "../include/OutputManager.h"
 
 //albero dei dispositivi
 class DeviceManager {
@@ -34,7 +35,7 @@ class DeviceManager {
 
     void parseInput(std::string command);   //valuta input
 
-    bool getFineGiornata();
+    inline bool getFineGiornata() { return fineGiornata; }
 
     private:
     OutputManager& out;
