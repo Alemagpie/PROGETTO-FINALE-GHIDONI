@@ -1,4 +1,2 @@
 Device Manager acceso
 [00:00] L'orario attuale e' 00:00
-[00:00] Comando non riconosciuto. Riprovare.
-[00:00] L'orario attuale e' 00:00
