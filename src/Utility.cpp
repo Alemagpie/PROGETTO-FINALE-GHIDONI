@@ -1,4 +1,4 @@
-#include "../include/Utility.h";
+#include "../include/Utility.h"
 
 std::multimap<CustomTime, Device*>::iterator findDevice(std::multimap<CustomTime, Device*>& activeDevices, Device& d) {
     return std::find_if(activeDevices.begin(), activeDevices.end(),

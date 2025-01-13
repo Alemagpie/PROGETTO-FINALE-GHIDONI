@@ -248,6 +248,30 @@ src/ManualDevice.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProgettoFinale.dir\build.make CMakeFiles/ProgettoFinale.dir/src/ManualDevice.cpp.s
 .PHONY : src/ManualDevice.cpp.s
 
+src/Utility.obj: src/Utility.cpp.obj
+.PHONY : src/Utility.obj
+
+# target to build an object file
+src/Utility.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProgettoFinale.dir\build.make CMakeFiles/ProgettoFinale.dir/src/Utility.cpp.obj
+.PHONY : src/Utility.cpp.obj
+
+src/Utility.i: src/Utility.cpp.i
+.PHONY : src/Utility.i
+
+# target to preprocess a source file
+src/Utility.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProgettoFinale.dir\build.make CMakeFiles/ProgettoFinale.dir/src/Utility.cpp.i
+.PHONY : src/Utility.cpp.i
+
+src/Utility.s: src/Utility.cpp.s
+.PHONY : src/Utility.s
+
+# target to generate assembly for a file
+src/Utility.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProgettoFinale.dir\build.make CMakeFiles/ProgettoFinale.dir/src/Utility.cpp.s
+.PHONY : src/Utility.cpp.s
+
 src/main.obj: src/main.cpp.obj
 .PHONY : src/main.obj
 
@@ -296,6 +320,9 @@ help:
 	@echo ... src/ManualDevice.obj
 	@echo ... src/ManualDevice.i
 	@echo ... src/ManualDevice.s
+	@echo ... src/Utility.obj
+	@echo ... src/Utility.i
+	@echo ... src/Utility.s
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s

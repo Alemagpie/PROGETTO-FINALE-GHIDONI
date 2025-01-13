@@ -1,4 +1,4 @@
-#include "../include/OutputManager.h"
+#include "OutputManager.h"
 
 template <typename T>
 OutputManager& OutputManager::operator << (const T &valueToPrint){

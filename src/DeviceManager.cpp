@@ -28,7 +28,7 @@ void DeviceManager::addDevice(Device* dev){
         deviceInsertOrder.push_back(dev);
         dev->startDevice();
         powerUse += dev->getCurrentPowerConsumption();
-        out << "[" << currentTime << "] Il dispositivo \'" << dev->getName() << "\' si e' acceso" <<"\n";  
+        out << "[" << currentTime << "] Il dispositivo \'" << dev->getName() << "\' si e' acceso" <<"\n";
     } else {
         out<< "[" << currentTime << "] Superata soglia di consumo. E' stato spento il dispositivo: "<<dev->getName()<<"\n";
     }
@@ -57,7 +57,6 @@ void DeviceManager::moveDevice(std::multimap<CustomTime, std::pair<CustomTime, D
     }else{
         out<< "[" << currentTime << "] Il device e' gia' attivo." <<"\n";
     }
-    deviceToMove.second->updateEndTime(deviceToMove.first);
 }
 
 //metodo per comando "set ${devicename} off"
@@ -332,6 +331,7 @@ void DeviceManager::setTime(CustomTime newTime) {                 //Controllo te
                     auto asyncItRemove = asyncIt;
                     asyncIt++;
                     moveDevice(asyncItRemove);
+                    activeIt = activeDevices.begin();
                 } else{
                     asyncIt = asyncDevices.end();
                 }
@@ -342,6 +342,7 @@ void DeviceManager::setTime(CustomTime newTime) {                 //Controllo te
                 auto asyncItRemove = asyncIt;
                 asyncIt++;
                 moveDevice(asyncItRemove);
+                activeIt = activeDevices.begin();
             } else {
                 if(activeIt->first <= asyncIt->first && activeIt->first <= newTime){
                     currentTime = activeIt->first;
@@ -358,6 +359,7 @@ void DeviceManager::setTime(CustomTime newTime) {                 //Controllo te
         }
     }
     currentTime = newTime;
+    if(currentTime == CustomTime(23,59)){return;}
     out<< "["<< currentTime << "] L'orario attuale e' " << currentTime <<"\n";
 }
 

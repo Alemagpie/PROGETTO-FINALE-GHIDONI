@@ -22,7 +22,6 @@ set(SOURCES
  src/DeviceManager.cpp
  src/CustomTime.cpp
  src/Utility.cpp
- src/OutputManager.hpp
 )
 
 # Add the executable target

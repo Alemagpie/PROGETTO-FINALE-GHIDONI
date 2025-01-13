@@ -22,6 +22,6 @@ class OutputManager{
         OutputManager& operator << (T& valueToPrint);
 };
 
-#include "../src/OutputManager.hpp"
+#include "OutputManager.hpp"
 
 #endif

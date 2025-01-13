@@ -9,6 +9,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/ProgettoFinale.dir/src/DeviceManager.cpp.obj.d"
   "CMakeFiles/ProgettoFinale.dir/src/ManualDevice.cpp.obj"
   "CMakeFiles/ProgettoFinale.dir/src/ManualDevice.cpp.obj.d"
+  "CMakeFiles/ProgettoFinale.dir/src/Utility.cpp.obj"
+  "CMakeFiles/ProgettoFinale.dir/src/Utility.cpp.obj.d"
   "CMakeFiles/ProgettoFinale.dir/src/main.cpp.obj"
   "CMakeFiles/ProgettoFinale.dir/src/main.cpp.obj.d"
   "ProgettoFinale.exe"
