@@ -19,6 +19,8 @@ set(SOURCES
  src/AutomaticDevice.cpp
  src/ManualDevice.cpp
  src/Device.cpp 
+ src/Console.cpp
+ src/Utility.cpp
  src/DeviceManager.cpp
  src/CustomTime.cpp
 )

@@ -13,6 +13,12 @@
     <ClCompile Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\src\Device.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\src\Console.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\src\Utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\src\DeviceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
