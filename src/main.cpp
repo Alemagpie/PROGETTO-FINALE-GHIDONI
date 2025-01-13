@@ -3,6 +3,7 @@
 #include "../include/DeviceManager.h"
 #include "../include/CustomTime.h"
 #include "../include/OutputManager.h"
+#include "../include/Console.h"
 #include <iostream>
 #include <vector>
 #include <fstream>  //file stream
@@ -34,6 +35,7 @@ int main() {
     AutomaticDevice Televisore("Televisore", 9, -0.2, CustomTime(1,0));
 
     DeviceManager DevMan(out);
+    Console c(DevMan);
 
     DevMan.addDeviceToList(Impianto_fotovoltaico);
     DevMan.addDeviceToList(Pompa_di_calore_termostato);
@@ -50,7 +52,7 @@ int main() {
     while(!DevMan.getFineGiornata()){
         string s; 
         getline(cin, s);
-        DevMan.parseInput(s);
+        c.parseInput(s);
     }
 
     return 0;

@@ -7,7 +7,8 @@
 #include "ManualDevice.h"
 #include "AutomaticDevice.h"
 #include "CustomTime.h"
-#include "../include/OutputManager.h"
+#include "OutputManager.h"
+#include "Utility.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -32,12 +33,18 @@ class DeviceManager {
 
     void setTime(CustomTime newTime);    //cambia orario
 
-    void parseInput(std::string command);   //valuta input
-
+    void setFineGiornata(bool s);
     bool getFineGiornata();
+    CustomTime getCurrentTime();
+
+    std::multimap<CustomTime, Device*>& _init_returnActive();
+    std::multimap<CustomTime, std::pair<CustomTime, Device*>>& _init_returnAsync();
+    std::vector<Device*>& _init_returnList();
+    std::vector<Device*>& _init_returnInserOrder();
+
+    OutputManager& out;
 
     private:
-    OutputManager& out;
     double maxPower = 3.5; //in kW
     double powerUse;
     bool fineGiornata;
@@ -48,12 +55,7 @@ class DeviceManager {
     CustomTime currentTime;   
 
     int deviceCount;    //lunghezza del vettore di Device
-    
-    std::multimap<CustomTime, Device*>::iterator findDevice(Device& d);
-    std::multimap<CustomTime, Device*>::iterator findDeviceByID(int ID);
-    std::multimap<CustomTime, Device*>::iterator findDeviceByNameActive(std::string const & s ) ;
-    std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator findDeviceByNameAsync(std::string const & s);
-    std::vector<Device*>::iterator findDeviceByNameAll(std::string const & s);
+
     void print_infoAll(std::string_view rem);
     void print_infoAsync(std::string_view rem);
     //void calculatePowerRec(double PowerUsed, double PowerProduced, int counter);
