@@ -1,0 +1,6 @@
+Device Manager accesso
+[00:00] L'orario attuale e' 00:00
+[12:00] L'orario attuale e' 12:00
+[12:00] L'orario attuale e' 12:00
+[12:00] Il dispositivo 'Lavatrice' si e' acceso
+[

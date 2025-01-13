@@ -137,24 +137,23 @@
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MinimalRebuild></MinimalRebuild>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary></RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <SupportJustMyCode></SupportJustMyCode>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
@@ -338,6 +337,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\src\Device.cpp" />
     <ClCompile Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\src\DeviceManager.cpp" />
     <ClCompile Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\src\CustomTime.cpp" />
+    <ClCompile Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\src\Utility.cpp" />
+    <ClInclude Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\src\OutputManager.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\buildAle\ZERO_CHECK.vcxproj">

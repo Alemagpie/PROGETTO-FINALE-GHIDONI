@@ -19,11 +19,22 @@
     <ClCompile Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\src\CustomTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\src\Utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\src\OutputManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="A:\C++\UNIPD\PROGETTO-FINALE-GHIDONI\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{7262DE8D-3B49-3E91-8CC5-1A65CE73CBC7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{318B13E6-3D12-3F13-AC1A-C9089509039A}</UniqueIdentifier>
     </Filter>
