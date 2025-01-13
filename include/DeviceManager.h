@@ -12,7 +12,6 @@
 #include <string>
 #include <algorithm>
 #include <iomanip>
-//#include <stdexcept>
 
 //albero dei dispositivi
 class DeviceManager {

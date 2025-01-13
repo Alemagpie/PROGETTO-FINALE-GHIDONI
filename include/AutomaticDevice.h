@@ -16,6 +16,7 @@ class AutomaticDevice : public Device{
         virtual void removeTimer() override;
         void updateEndTime(CustomTime newEndTime = CustomTime(23,59)) override;
         void updateStartTime(CustomTime newStartTime) override;
+        char getType() override;
 
     private:
         CustomTime time_duration;

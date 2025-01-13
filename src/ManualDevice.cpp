@@ -27,3 +27,7 @@ void ManualDevice::updateStartTime(CustomTime newStartTime){
 void ManualDevice::updateEndTime(CustomTime newEndTime){
     end_time = newEndTime;
 }
+
+char ManualDevice::getType(){
+    return 'M';
+} 

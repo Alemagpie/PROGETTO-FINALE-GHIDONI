@@ -7,6 +7,8 @@ project(ProgettoFinale)
 #C++ minimum version require
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_FLAGS_RELEASE "-O2")
+set(CMAKE_C_FLAGS_RELEASE "-O2")
 
 #Include directory
 include_directories(include)

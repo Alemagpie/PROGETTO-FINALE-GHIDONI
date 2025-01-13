@@ -16,6 +16,7 @@ class ManualDevice : public Device{
         virtual void removeTimer() override;
         void updateStartTime(CustomTime newStartTime) override;
         void updateEndTime(CustomTime newEndTime = CustomTime(23,59)) override;
+        char getType() override;
 };
 
 #endif

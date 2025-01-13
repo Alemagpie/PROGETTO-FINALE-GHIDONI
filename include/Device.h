@@ -32,6 +32,7 @@ class Device{
         virtual void updateEndTime(CustomTime newEndTime = CustomTime(23,59)) =0;
         virtual void setTimer(CustomTime& start_t, CustomTime end_t ) = 0;     
         virtual void removeTimer() =0;
+        virtual char getType() =0;
         
     //Data membri
     protected:

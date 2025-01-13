@@ -27,3 +27,7 @@ void AutomaticDevice::updateStartTime(CustomTime newStartTime){
 void AutomaticDevice::updateEndTime(CustomTime newEndTime){
     end_time = start_time + time_duration;
 }
+
+char AutomaticDevice::getType(){
+    return 'A';
+} 
