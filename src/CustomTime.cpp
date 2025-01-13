@@ -2,7 +2,10 @@
 
 CustomTime::CustomTime() : hour{0}, minutes{0} {}
 
-CustomTime::CustomTime(unsigned int ora, unsigned int minuti) : hour{ora}, minutes{minuti} {}
+CustomTime::CustomTime(unsigned int ora, unsigned int minuti) : hour{ora}, minutes{minuti} 
+{
+    checkTime(ora, minuti);
+}
 
 unsigned int CustomTime::getHour() const{
     return hour;
@@ -15,6 +18,7 @@ unsigned int CustomTime::getMinutes() const{
 void CustomTime::setTime(unsigned int const ora, unsigned int const minuti) {
     hour = ora;
     minutes = minuti;
+    checkTime(ora, minuti);
 }
 
 void CustomTime::resetTime() {
@@ -132,6 +136,10 @@ bool operator==(CustomTime& a, CustomTime& b) {
     return (a.getHour() == b.getHour() && a.getMinutes() == b.getMinutes());
 }
 
+bool operator== (CustomTime a, CustomTime b) {
+    return (a.getHour() == b.getHour() && a.getMinutes() == b.getMinutes());
+}
+
 bool operator>(const CustomTime&  a,const CustomTime&  b) {
     if(a.getHour() > b.getHour() ) {return true;}
     if(a.getHour() == b.getHour() && a.getMinutes() > b.getMinutes()) {return true;}
@@ -166,7 +174,7 @@ std::ostream& operator<<(std::ostream& os, CustomTime a)
 
 void CustomTime::checkTime(int badHours,int  badMinutes){
     if(badHours < 0 || badHours > 23 || badMinutes < 0 || badMinutes > 59){
-        throw std::invalid_argument("Orario non esistente. Inserire un orario valido.");
+        throw std::invalid_argument("");
     }
 }
 /*

@@ -40,6 +40,7 @@ CustomTime operator- (CustomTime&  time, int  min);
 double operator* (double value,CustomTime time);
 
 bool operator== (CustomTime& a, CustomTime& b);
+bool operator== (CustomTime a, CustomTime b);
 
 bool operator<(const CustomTime&  a ,const CustomTime&  b );
 bool operator<=(const CustomTime&  a ,const CustomTime&  b );

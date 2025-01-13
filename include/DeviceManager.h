@@ -34,9 +34,12 @@ class DeviceManager {
 
     void parseInput(std::string command);   //valuta input
 
+    bool getFineGiornata();
+
     private:
     double maxPower = 3.5; //in kW
     double powerUse;
+    bool fineGiornata;
     std::multimap<CustomTime, Device*> activeDevices; //multimappa dei dispositivi attivi
     std::multimap<CustomTime, std::pair<CustomTime, Device*>> asyncDevices;  //multimappa dei dispositivi in attesa dell'attivazione (hanno come chiave il tempo di inizio, come valore il tempo di fine e il ptr al device)
     std::vector<Device*> deviceList; //vettore di ptr ai Device
@@ -47,9 +50,9 @@ class DeviceManager {
     
     std::multimap<CustomTime, Device*>::iterator findDevice(Device& d);
     std::multimap<CustomTime, Device*>::iterator findDeviceByID(int ID);
-    std::multimap<CustomTime, Device*>::iterator findDeviceByNameActive(std::string& s ) ;
-    std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator findDeviceByNameAsync(std::string& s);
-    std::vector<Device*>::iterator findDeviceByNameAll(std::string& s);
+    std::multimap<CustomTime, Device*>::iterator findDeviceByNameActive(std::string const & s ) ;
+    std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator findDeviceByNameAsync(std::string const & s);
+    std::vector<Device*>::iterator findDeviceByNameAll(std::string const & s);
     void print_infoAll(std::string_view rem);
     void print_infoAsync(std::string_view rem);
     //void calculatePowerRec(double PowerUsed, double PowerProduced, int counter);

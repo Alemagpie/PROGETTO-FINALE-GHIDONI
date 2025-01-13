@@ -40,6 +40,7 @@ int main() {
     AutomaticDevice Televisore("Televisore", 9, -0.2, CustomTime(1,0));
 
     DeviceManager DevMan;
+
     DevMan.addDeviceToList(Impianto_fotovoltaico);
     DevMan.addDeviceToList(Pompa_di_calore_termostato);
     DevMan.addDeviceToList(Scaldabagno);
@@ -52,9 +53,16 @@ int main() {
     DevMan.addDeviceToList(Televisore);
 
     //gestione dei comandi
+    while(!DevMan.getFineGiornata()){
+        string s; 
+        getline(cin, s);
+        DevMan.parseInput(s);
+    }
+    /*
     for (string s; getline(cin, s);){
         DevMan.parseInput(s);
     }
+    */
     /*
     //creazione file di log
     ofstream logFile ("logEsempio.txt");
