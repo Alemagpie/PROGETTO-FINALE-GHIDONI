@@ -7,6 +7,7 @@
 #include "ManualDevice.h"
 #include "AutomaticDevice.h"
 #include "CustomTime.h"
+#include "../include/OutputManager.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -16,7 +17,7 @@
 //albero dei dispositivi
 class DeviceManager {
     public:
-    DeviceManager();
+    DeviceManager(OutputManager& outPut);
     void addDevice(Device* dev);  //aggiungi a multimappa degli attivi
     void addDeviceToList(Device& newDev);
     void addDeviceAsync(Device* dev, CustomTime Start, CustomTime End); //aggiungi a multimappa dei "pending"
@@ -36,6 +37,7 @@ class DeviceManager {
     bool getFineGiornata();
 
     private:
+    OutputManager& out;
     double maxPower = 3.5; //in kW
     double powerUse;
     bool fineGiornata;
