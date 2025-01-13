@@ -21,6 +21,7 @@ set(SOURCES
  src/Device.cpp 
  src/DeviceManager.cpp
  src/CustomTime.cpp
+ src/Utility.cpp
  src/OutputManager.hpp
 )
 

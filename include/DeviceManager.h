@@ -13,7 +13,8 @@
 #include "ManualDevice.h"
 #include "AutomaticDevice.h"
 #include "CustomTime.h"
-#include "../include/OutputManager.h"
+#include "OutputManager.h"
+#include "Utility.h"
 
 //albero dei dispositivi
 class DeviceManager {
@@ -50,11 +51,6 @@ class DeviceManager {
 
     int deviceCount;    //lunghezza del vettore di Device
     
-    std::multimap<CustomTime, Device*>::iterator findDevice(Device& d);
-    std::multimap<CustomTime, Device*>::iterator findDeviceByID(int ID);
-    std::multimap<CustomTime, Device*>::iterator findDeviceByNameActive(std::string const & s ) ;
-    std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator findDeviceByNameAsync(std::string const & s);
-    std::vector<Device*>::iterator findDeviceByNameAll(std::string const & s);
     void print_infoAll(std::string_view rem);
     void print_infoAsync(std::string_view rem);
     //void calculatePowerRec(double PowerUsed, double PowerProduced, int counter);
