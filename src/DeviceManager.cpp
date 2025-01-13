@@ -9,9 +9,9 @@
 #include <algorithm>
 #include <iomanip>
 
-#include "ManualDevice.h"
-#include "AutomaticDevice.h"
-#include "CustomTime.h"
+#include "../include/ManualDevice.h"
+#include "../include/AutomaticDevice.h"
+#include "../include/CustomTime.h"
 #include "../include/OutputManager.h"
 
 DeviceManager::DeviceManager(OutputManager& outPut)

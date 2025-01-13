@@ -14,16 +14,4 @@ DISPOSITIVI: tipo (CP o M) = enum, consumo = double, start_time e finish_time = 
 
 
 
-1. !!! Il comando verrà parsato in stringhe e useremo else if per i comandi. Questo perchè non è così semplice trasformare una stringa in un enum, quindi tanto vale fare gli if direttamente
-
-2. Status del Device può essere implementato semplicemente inserendoli nelle multimap, senza dover avere un paramentro per questo
-
-3. Probabilmente all'inizio del main dovremo aggiungere tutti i tipi di Device. La mia proposta è di salvarli in una cosa (o altra struttura dati), e di tenerli la, così che possiamo 
-    accedere a tutti e poter controllare il loro nome per in caso inserirli. Quando dobbiamo aggiungere un Device, lo togliamo dalla coda e lo mettiamo nella struttura dati. Se 
-    facciamo la cosa async, la lasciamo nella coda ma lo inseriamo solo nella multimappa degli async, e quando tocca a lui essere inserito allora lo togliamo dalla coda e lo mettiamo
-    nell'altra multimappa.
-
-4. Non sarebbe più semplice usare una PQ? Perchè il fatto di avere più valori di tempo per degli oggetti rende la rimozione più complicata.
-    XXX non è possibile fare un travel per tutta la PQ; quindi forse meglio fare un heap
-
-5. Penso sia meglio inserire un parametro per caratterizzare i dispositivi manuali da quelli automatici, tipo un carattere M o A.
+1. IDK Se usare namespace, fatemi sapere anche voi
