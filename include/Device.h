@@ -36,6 +36,10 @@ class Device{
         
     //Data membri
     protected:
+
+        //non permetto la creazione di oggetti di tipo Device (la classe è comunque astratta )
+        Device(std::string nome, const int ID, double power);
+
         CustomTime start_time;
         CustomTime end_time;
         std::string name;
@@ -44,8 +48,7 @@ class Device{
         double powerUsed;  
         bool status;
 
-        //non permetto la creazione di oggetti di tipo Device (la classe è comunque astratta )
-        Device(std::string nome, const int ID, double power);
+        
 };
 
 inline bool operator==(const Device& a, const Device& b)    {return (a.getName() == b.getName() && a.getID() == b.getID());}

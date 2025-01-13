@@ -15,6 +15,7 @@ class ManualDevice : public Device{
     //Costruttore e funzioni membro
     public:
         ManualDevice(std::string nome, const int ID, double power);
+        
         void setTimer(CustomTime& start_t, CustomTime end_t) override;
         inline virtual void removeTimer() override  {end_time.setTime(23,59);}
         inline void updateStartTime(CustomTime newStartTime) override   {start_time = newStartTime;}

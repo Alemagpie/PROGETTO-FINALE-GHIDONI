@@ -1,3 +1,5 @@
+//DAVIDE MEROTTO
+
 #ifndef PROGETTOFINALE_SRC_OUTPUTMANAGER_H
 #define PROGETTOFINALE_SRC_OUTPUTMANAGER_H
 
@@ -6,9 +8,6 @@
 
 //classe per la gestione degli output : cout e File
 class OutputManager{
-
-    private:
-        std::ostream &output1 , &output2;
 
     //costruttore e sovrascrittura operatore << (caso const e non const)
     public: 
@@ -20,6 +19,10 @@ class OutputManager{
 
         template <typename T>
         OutputManager& operator << (T& valueToPrint);
+
+    private:
+        std::ostream &output1 , &output2;
+
 };
 
 #include "OutputManager.hpp"

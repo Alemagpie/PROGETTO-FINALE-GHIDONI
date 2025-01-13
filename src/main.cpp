@@ -1,7 +1,8 @@
+//ALESSIO FAGNANI
 
 #include <iostream>
 #include <vector>
-#include <fstream>  //file stream
+#include <fstream>
 
 #include "../include/AutomaticDevice.h"
 #include "../include/ManualDevice.h"

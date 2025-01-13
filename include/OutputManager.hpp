@@ -1,3 +1,5 @@
+//DAVIDE MEROTTO
+
 #include "OutputManager.h"
 
 template <typename T>

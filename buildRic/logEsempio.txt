@@ -1,18 +1,25 @@
 Device Manager accesso
 [00:00] L'orario attuale e' 00:00
-[00:00] Impostato un timer per il dispositivo 'Scaldabagno' dalle 05:40 alle 06:50
+[00:00] Impostato un timer per il dispositivo 'Scaldabagno' dalle 00:30 alle 04:30
 [00:00] L'orario attuale e' 00:00
-[05:40] Il dispositivo 'Scaldabagno' si e' acceso
-[06:50] Il dispositivo 'Scaldabagno' si e' spento
-[07:00] L'orario attuale e' 07:00
-[07:00] L'orario attuale e' 07:00
-[07:00] Attualmente il sistema ha consumato -1.166667kWh e la potenza massima accumulata fra i dispositivi accesi è: 0.00. Nello specifico:
+[00:00] Il dispositivo 'Lavastoviglie' si e' acceso
+[00:00] L'orario attuale e' 00:00
+[00:00] Impostato un timer per il dispositivo 'Lavatrice' dalle 05:00
+[00:00] L'orario attuale e' 00:00
+[00:30] Il dispositivo 'Scaldabagno' si e' acceso
+[03:15] Il dispositivo 'Lavastoviglie' si e' spento
+[04:30] Il dispositivo 'Scaldabagno' si e' spento
+[05:00] Il dispositivo 'Lavatrice' si e' acceso
+[06:50] Il dispositivo 'Lavatrice' si e' spento
+[10:00] L'orario attuale e' 10:00
+[10:00] L'orario attuale e' 10:00
+[10:00] Attualmente il sistema ha consumato -12.541667kWh e la potenza massima accumulata fra i dispositivi accesi è: 0.00. Nello specifico:
 	 - Il dispositivo 'Impianto_fotovoltaico' ha una potenza di 1.50 e ha prodotto 0.00 kWh
 	 - Il dispositivo 'Pompa_di_calore_termostato' ha una potenza di -2.00 e ha consumato 0.00 kWh
-	 - Il dispositivo 'Scaldabagno' ha una potenza di -1.00 e ha consumato -1.17 kWh
+	 - Il dispositivo 'Scaldabagno' ha una potenza di -1.00 e ha consumato 4.00 kWh
 	 - Il dispositivo 'Frigorifero' ha una potenza di -0.40 e ha consumato 0.00 kWh
-	 - Il dispositivo 'Lavatrice' ha una potenza di -2.00 e ha consumato 0.00 kWh
-	 - Il dispositivo 'Lavastoviglie' ha una potenza di -1.50 e ha consumato 0.00 kWh
+	 - Il dispositivo 'Lavatrice' ha una potenza di -2.00 e ha consumato 3.67 kWh
+	 - Il dispositivo 'Lavastoviglie' ha una potenza di -1.50 e ha consumato 4.88 kWh
 	 - Il dispositivo 'Tapparelle_elettriche' ha una potenza di -0.30 e ha consumato 0.00 kWh
 	 - Il dispositivo 'Forno_a_microonde' ha una potenza di -0.80 e ha consumato 0.00 kWh
 	 - Il dispositivo 'Asciugatrice' ha una potenza di -0.50 e ha consumato 0.00 kWh

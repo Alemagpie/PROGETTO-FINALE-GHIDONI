@@ -1,3 +1,5 @@
+//ALESSIO FAGNANI
+
 #ifndef UTILITY_H
 #define UTILITY_H
 
@@ -11,6 +13,7 @@
 #include <string>
 #include <algorithm>
 
+namespace Utility{
     //trova device nella multimappa degli attivi
     std::multimap<CustomTime, Device*>::iterator findDevice(std::multimap<CustomTime, Device*>& activeDevices, Device& d);
     //trova device nella multimappa degli attivi tramite ID
@@ -21,5 +24,6 @@
     std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator findDeviceByNameAsync(std::multimap<CustomTime, std::pair<CustomTime, Device*>>& asyncDevices, std::string const & s);
     //trova device nel vettore di tutti i device
     std::vector<Device*>::iterator findDeviceByNameAll(std::vector<Device*>& deviceList, std::string const & s);
+} //namespace Utility
 
 #endif

@@ -15,6 +15,7 @@ class AutomaticDevice : public Device{
     //Costruttore e funzioni membro
     public:
         AutomaticDevice(std::string nome, const int ID, double power, CustomTime duration);
+
         void setTimer(CustomTime& start_t , CustomTime end_t) override;
         inline virtual void removeTimer() override {return;}
         inline void updateEndTime(CustomTime newEndTime = CustomTime(23,59)) override {end_time  = start_time + time_duration;}
