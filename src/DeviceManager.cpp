@@ -70,15 +70,6 @@ std::multimap<CustomTime, Device*>::iterator DeviceManager::findDevice(Device& d
         [&d](const std::pair<CustomTime, Device*>& element) -> bool {
             return *(element.second) == d;
         });
-
-    /*
-    for(auto it = activeDevices.begin(); it != activeDevices.end(); ++it) {
-        if(it->second == &d) {    //it->first restituisce il CustomTime, it->second restituisce Device*
-            return it;
-        }
-    }
-    return activeDevices.end();
-    */
 }
 
 std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByID(int ID) {
@@ -86,15 +77,6 @@ std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByID(int I
         [&ID](const std::pair<CustomTime, Device*>& element) -> bool {
             return element.second->getID() == ID;
         });
-    
-    /*
-    for(auto it = activeDevices.begin(); it != activeDevices.end(); ++it) {
-        if(it->second->getID() == ID) {    //it->first restituisce il CustomTime, it->second restituisce Device*
-            return it;
-        }
-    }
-    return activeDevices.end();
-    */
 }
 
 std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByNameActive(std::string const & s ) {
@@ -102,16 +84,6 @@ std::multimap<CustomTime, Device*>::iterator DeviceManager::findDeviceByNameActi
         [&s](const std::pair<CustomTime, Device*>& element) -> bool {
             return element.second->getName() == s;
         });
-    
-    /*
-    //std::multimap<CustomTime, Device*>::iterator it;
-    for(auto it = activeDevices.begin(); it != activeDevices.end(); ++it) {
-        if(it->second->getName() == s) {    //it->first restituisce il CustomTime, it->second restituisce Device*
-            return it;
-        }
-    }
-    return activeDevices.end();
-    */
 }
 
 std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator DeviceManager::findDeviceByNameAsync(std::string const & s) {
@@ -119,16 +91,6 @@ std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator DeviceManage
         [&s](const std::pair<CustomTime, std::pair<CustomTime, Device*>>& element) -> bool {
             return element.second.second->getName() == s;
         });
-
-    /*
-    //std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator it;
-    for(auto it = asyncDevices.begin(); it != asyncDevices.end(); ++it) {
-        if(it->second.second->getName() == s) {    //it->first restituisce il CustomTime, it->second restituisce Device*
-            return it;
-        }
-    }
-    return asyncDevices.end();
-    */
 }
 
 std::vector<Device*>::iterator DeviceManager::findDeviceByNameAll(std::string const & s) {
@@ -136,16 +98,6 @@ std::vector<Device*>::iterator DeviceManager::findDeviceByNameAll(std::string co
         [&s](Device* d) -> bool {
             return d->getName() == s;
         });
-
-    /*
-    //std::vector<Device*>::iterator it;
-    for(auto it = deviceList.begin(); it != deviceList.end(); ++it) {
-        if((*it)->getName() == s) {  
-            return it;
-        }
-    }
-    return deviceList.end();
-    */
 }
 
 void SentenceIntoWords(std::vector<std::string>& ret, std::string sentence){
@@ -219,7 +171,6 @@ void DeviceManager::parseInput(std::string command){
                         int newHour = std::stoi(words[2].substr(0, words[2].find(":")));        //Trasformo da string a int con la funzione stoi
                         int newMin = std::stoi(words[2].substr(words[2].find(":")+1));
                         CustomTime newTime(newHour, newMin);
-                        //std::cout<< newTime << std::endl;                       //TO DO: fare controllo dell'orario
                         if(newTime > currentTime) {setTime(newTime);}
                         else{ std::cout << "[" <<currentTime << "] Orario non disponibile. Inserire solo orari successivi a quello attuale." << std::endl;}
                     }else{
@@ -232,7 +183,6 @@ void DeviceManager::parseInput(std::string command){
                                     (*iterAll)->updateStartTime(currentTime);
                                     (*iterAll)->updateEndTime();
                                     addDevice(*iterAll);
-                                    //print_infoAll("Multimappa attivi: ");
                                 } else {
                                     std::cout << "[" << currentTime << "] Device già attivo. Se si vuole modificare i suoi orari, spegnerlo e riprovare." << std::endl;
                                 }
@@ -241,18 +191,6 @@ void DeviceManager::parseInput(std::string command){
                             } else {
                                 std::cout << "[" << currentTime << "] Device non riconosciuto. Fare attenzione al nome riportato." << std::endl;
                             }
-                            /*if(iterAll != deviceList.end() && iterActive == activeDevices.end() ){
-                                (*iterAll)->updateStartTime(currentTime);
-                                (*iterAll)->updateEndTime();
-                                std::cout << "Prova" << std::endl;
-                                addDevice(*iterAll);
-                                std::cout << "Prova 2" << std::endl;
-                                print_infoAll("Multimappa attivi: ");
-                            }else if(iterActive != activeDevices.end()){
-                                std::cout << "Device gia' attivo. Se si vuole modificare i suoi orari, spegnerlo e rirpovare."<< std::endl;
-                            } else{
-                                std::cout << "Device non riconosciuto. Fare attenzione al nome riportato." << std::endl;
-                            }*/
                         }else if(words[2] == "off"){            //set ${DEVICE} off
                             auto iterAll = findDeviceByNameAll(words[1]);
                             auto iterActive = findDeviceByNameActive(words[1]);
@@ -330,11 +268,9 @@ void DeviceManager::parseInput(std::string command){
             }
             if(words.size() == 1){  //"show "
                 double totalPowerUsed=0;
-                //double totalPowerProduced= maxPower*currentTime;
                 double totalPowerDevices = checkPowerConsumptionGeneral();
                 for(int i=0; i<deviceCount; i++){
                     if(deviceList[i]->getPowerUsed() < 0) {totalPowerUsed += deviceList[i]->getPowerUsed();}
-                    //else {totalPowerProduced += deviceList[i]->getPowerUsed();}
                 }
                 std::cout << "[" << currentTime << "] Attualmente il sistema ha consumato " << std::fixed << totalPowerUsed << std::setprecision(2) <<"kWh e la potenza massima accumulata fra i dispositivi accesi è: "<<totalPowerDevices<<". Nello specifico:"<< std::endl;
                 for(int i=0; i<deviceCount; i++){
@@ -346,9 +282,9 @@ void DeviceManager::parseInput(std::string command){
                 auto iter = findDeviceByNameAll(words[1]);
                 if(iter == deviceList.end()) {std::cout<<"Device non riconosciuto. Riprovare." << std::endl;}
                 else {
-                    std::cout<<"Il dispositivo ha una potenza di "<<(*iter)->getCurrentPowerConsumption() << (**iter);} 
                     if((*iter)->getCurrentPowerConsumption() < 0) {std::cout << "\t - Il dispositivo \'" << (*iter)->getName() << "\'ha una potenza di "<<(*iter)->getCurrentPowerConsumption()<<" e ha consumato " << (*iter)->getPowerUsed()<< std::fixed << std::setprecision(2)<<" kWh"<<std::endl;}
                     else{std::cout << "\t - Il dispositivo \'" << (*iter)->getName() << "\' ha una potenza di "<<(*iter)->getCurrentPowerConsumption()<< " e ha prodotto " << std::fixed <<(*iter)->getPowerUsed() << std::setprecision(2) <<" kWh"<<std::endl;}              
+                }
             } else {std::cout<<"Comando non riconosciuto. Riprovare." << std::endl;}
             break;
         
@@ -402,10 +338,8 @@ void DeviceManager::setTime(CustomTime newTime) {                 //Controllo te
     auto asyncIt = asyncDevices.begin();
     auto activeIt = activeDevices.begin();
     while (asyncIt != asyncDevices.end() || activeIt != activeDevices.end()){
-        //std::cout << "ProvaGen" << std::endl;
         if(asyncIt == asyncDevices.end()){      //Guardo solo gli attivi
             if(activeIt->first <= newTime) {
-                //std::cout << currentTime <<newTime << activeIt->first<<std::endl;
                 currentTime = activeIt->first;
                 if(currentTime == CustomTime(23,59)){return;}
                 auto activeItRemove = activeIt;
@@ -417,7 +351,6 @@ void DeviceManager::setTime(CustomTime newTime) {                 //Controllo te
         } else {
             if (activeIt == activeDevices.end()){ //Guardo solo gli asincroni
                 if(asyncIt->first <= newTime) {
-                    //std::cout << "ProvaAsyn" << std::endl;
                     currentTime = asyncIt->first;
                     if(currentTime == CustomTime(23,59)){return;}
                     auto asyncItRemove = asyncIt;
@@ -427,8 +360,6 @@ void DeviceManager::setTime(CustomTime newTime) {                 //Controllo te
                     asyncIt = asyncDevices.end();
                 }
         } else {        //guardo entrambi
-            std::cout<<"Rimozione da entrambi"<<std::endl;
-            //std::cout << "ProvaEntrambi" << std::endl;
             if(asyncIt->first <= activeIt->first && asyncIt->first <= newTime){
                 currentTime = asyncIt->first;
                 if(currentTime == CustomTime(23,59)){return;}
@@ -450,7 +381,6 @@ void DeviceManager::setTime(CustomTime newTime) {                 //Controllo te
         }
         }
     }
-    //std::cout << "ProvaFinale" << std::endl;
     currentTime = newTime;
     std::cout<< "["<< currentTime << "] L'orario attuale e' " << currentTime << std::endl;
 }
@@ -469,67 +399,3 @@ double DeviceManager::checkPowerConsumptionGeneral() {
     }
     return currentPower;
 }
-
-/*
-void DeviceManager::checkOnHourChange(){
-    auto asyncIt = asyncDevices.begin();
-    auto activeIt = activeDevices.begin();
-
-    while ((asyncIt != asyncDevices.end() || activeIt != activeDevices.end())
-    && (asyncIt->first <= currentTime || activeIt->first <= currentTime))
-    {
-        if(asyncIt->first <= activeIt->first && asyncIt->first <= currentTime) {
-            moveDevice(asyncIt);
-            asyncIt++;
-        }
-
-        if(activeIt != activeDevices.end() && activeIt->first <= currentTime && activeIt->first <= asyncIt-> first) {
-            removeDevice(activeIt);
-            activeIt++;
-        }
-    }
-    currentTime = newTime;
-}
-*/
-
-/*
-void DeviceManager::setTime(CustomTime newTime) {                 //Controllo tempi di start, end , e che non ci siano conflitti
-    auto asyncIt = asyncDevices.begin();
-    auto activeIt = activeDevices.begin();
-    std::cout << "Prova" << std::endl;
-    while (asyncIt != asyncDevices.end() || activeIt != activeDevices.end())
-    {
-        if(asyncIt == asyncDevices.end()){      //Guardo solo gli attivi
-            if(activeIt != activeDevices.end() && activeIt->first <= currentTime && activeIt->first <= asyncIt-> first) {
-                currentTime = activeIt->first;
-                removeDevice(activeIt);
-                activeIt++;
-            }
-        } else if (activeIt == activeDevices.end()){ //Guardo solo gli asincroni
-
-        } else {        //guardo entrambi
-
-        }
-        if(asyncIt->first <= currentTime || activeIt->first <= currentTime) {
-                if(asyncIt->first <= activeIt->first && asyncIt->first <= currentTime) {
-                    currentTime = asyncIt->first;
-                    moveDevice(asyncIt);
-                    asyncIt++;
-                }
-
-                if(activeIt != activeDevices.end() && activeIt->first <= currentTime && activeIt->first <= asyncIt-> first) {
-                    currentTime = activeIt->first;
-                    removeDevice(activeIt);
-                    activeIt++;
-                }
-        }
-    }
-    currentTime = newTime;
-}
-*/
-/*
-void DeviceManager::calculatePowerRec(double PowerUsed, double PowerProduced, int counter){
-    if()
-}
-
-*/
