@@ -1,0 +1,74 @@
+Device Manager accesso
+[00:00] L'orario attuale e' 00:00
+[07:00] L'orario attuale e' 07:00
+[07:00] L'orario attuale e' 07:00
+[07:00] Attualmente il sistema ha prodotto 0.000000 kWh e ha consumato 0.00 kWh. Nello specifico: 
+	- Il dispositivo 'Impianto_fotovoltaico' ha prodotto 0.00 kWh
+	- Il dispositivo 'Pompa_di_calore_termostato' ha consumato 0.00 kWh
+	- Il dispositivo 'Scaldabagno' ha consumato 0.00 kWh
+	- Il dispositivo 'Frigorifero' ha consumato 0.00 kWh
+	- Il dispositivo 'Lavatrice' ha consumato 0.00 kWh
+	- Il dispositivo 'Lavastoviglie' ha consumato 0.00 kWh
+	- Il dispositivo 'Tapparelle_elettriche' ha consumato 0.00 kWh
+	- Il dispositivo 'Forno_a_microonde' ha consumato 0.00 kWh
+	- Il dispositivo 'Asciugatrice' ha consumato 0.00 kWh
+	- Il dispositivo 'Televisore' ha consumato 0.00 kWh
+[07:00] L'orario attuale e' 07:00
+[07:00] Il dispositivo 'Impianto_fotovoltaico' si e' acceso
+[07:00] L'orario attuale e' 07:00
+[10:00] L'orario attuale e' 10:00
+[10:00] L'orario attuale e' 10:00
+[10:00] Il dispositivo 'Lavatrice' si e' acceso
+[10:00] L'orario attuale e' 10:00
+[11:50] Il dispositivo 'Lavatrice' si e' spento
+[12:00] L'orario attuale e' 12:00
+[12:00] L'orario attuale e' 12:00
+[12:00] Il dispositivo 'Forno_a_microonde' si e' acceso
+[12:00] L'orario attuale e' 12:00
+[12:02] Il dispositivo 'Forno_a_microonde' si e' spento
+[12:30] L'orario attuale e' 12:30
+[12:30] L'orario attuale e' 12:30
+[12:30] Attualmente il sistema ha prodotto 8.25 kWh e ha consumato -3.69 kWh. Nello specifico: 
+	- Il dispositivo 'Impianto_fotovoltaico' ha prodotto 8.25 kWh
+	- Il dispositivo 'Pompa_di_calore_termostato' ha consumato 0.00 kWh
+	- Il dispositivo 'Scaldabagno' ha consumato 0.00 kWh
+	- Il dispositivo 'Frigorifero' ha consumato 0.00 kWh
+	- Il dispositivo 'Lavatrice' ha consumato 3.67 kWh
+	- Il dispositivo 'Lavastoviglie' ha consumato 0.00 kWh
+	- Il dispositivo 'Tapparelle_elettriche' ha consumato 0.00 kWh
+	- Il dispositivo 'Forno_a_microonde' ha consumato 0.03 kWh
+	- Il dispositivo 'Asciugatrice' ha consumato 0.00 kWh
+	- Il dispositivo 'Televisore' ha consumato 0.00 kWh
+[12:30] L'orario attuale e' 12:30
+[12:30] Il dispositivo 'Impianto_fotovoltaico' ha attualmente prodotto 8.25 kWh
+[12:30] L'orario attuale e' 12:30
+[13:00] L'orario attuale e' 13:00
+[13:00] L'orario attuale e' 13:00
+[13:00] Impostato un timer per il dispositivo 'Lavastoviglie' dalle 13:30
+[13:00] L'orario attuale e' 13:00
+[13:30] Il dispositivo 'Lavastoviglie' si e' acceso
+[16:45] Il dispositivo 'Lavastoviglie' si e' spento
+[20:00] L'orario attuale e' 20:00
+[20:00] L'orario attuale e' 20:00
+[20:00] Impostato un timer per il dispositivo 'Televisore' dalle 20:05
+[20:00] L'orario attuale e' 20:00
+[20:00] Rimosso il timer dal dispositivo 'Televisore'
+[20:00] L'orario attuale e' 20:00
+[23:00] L'orario attuale e' 23:00
+[23:00] L'orario attuale e' 23:00
+[23:00] Attualmente il sistema ha prodotto 25.50 kWh e ha consumato -8.57 kWh. Nello specifico: 
+	- Il dispositivo 'Impianto_fotovoltaico' ha prodotto 25.50 kWh
+	- Il dispositivo 'Pompa_di_calore_termostato' ha consumato 0.00 kWh
+	- Il dispositivo 'Scaldabagno' ha consumato 0.00 kWh
+	- Il dispositivo 'Frigorifero' ha consumato 0.00 kWh
+	- Il dispositivo 'Lavatrice' ha consumato 3.67 kWh
+	- Il dispositivo 'Lavastoviglie' ha consumato 4.88 kWh
+	- Il dispositivo 'Tapparelle_elettriche' ha consumato 0.00 kWh
+	- Il dispositivo 'Forno_a_microonde' ha consumato 0.03 kWh
+	- Il dispositivo 'Asciugatrice' ha consumato 0.00 kWh
+	- Il dispositivo 'Televisore' ha consumato 0.00 kWh
+[23:00] L'orario attuale e' 23:00
+[23:00] Il dispositivo 'Impianto_fotovoltaico' si e' spento
+[23:00] L'orario attuale e' 23:00
+[23:59] L'orario attuale e' 23:59
+[23:59] Giornata terminata. Device Manager spento.
