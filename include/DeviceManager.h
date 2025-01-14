@@ -1,4 +1,4 @@
-//ALESSIO FAGNANI
+//ALESSIO FAGNANI (DESIGN DELL'INTERFACCIA)
 
 #ifndef PROGETTOFINALE_SRC_DEVICEMANAGER_H
 #define PROGETTOFINALE_SRC_DEVICEMANAGER_H
@@ -22,6 +22,7 @@
 //Classe che permette
 class DeviceManager {
     public:
+        //Costruttore parametrizzato
         DeviceManager(OutputManager& outPut);
 
         //Inserisce un puntatore ad un device nella multimappa che contiene i device attivi,
@@ -100,6 +101,4 @@ void SentenceIntoWords( std::vector<std::string>& ret, std::string sentence);
 //Prende come input una stringa che rappresenta un orario, e restituisce l'orario
 //corrispondente. Se il formato dell'orario è errato, lancia l'eccezione invalid_argument
 CustomTime StringIntoCTime(std::string orario);
-
-
 #endif

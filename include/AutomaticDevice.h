@@ -9,7 +9,7 @@
 
 #include "CustomTime.h"
 
-//SOTTOCLASSE
+//Sottoclasse -> dispositivi di tipo automatici
 class AutomaticDevice : public Device{
 
     //Costruttore e funzioni membro
@@ -17,6 +17,7 @@ class AutomaticDevice : public Device{
         AutomaticDevice(std::string nome, const int ID, double power, CustomTime duration);
 
         void SetTimer(const CustomTime& start_t , CustomTime end_t) override;
+        //Non alterare stop time -> se il dispositivo è accesso allora lo stop time è determinato dalla durata dell'accensione
         inline virtual void RemoveTimer() override {return;}
         inline void UpdateEndTime(CustomTime newEndTime) override {end_time_  = start_time_ + time_duration_;}
         inline void UpdateEndTime() override {UpdateEndTime(CustomTime(23,59));}

@@ -14,17 +14,19 @@ using namespace std;
 
 int main() {
 
-    //creazione file di log
+    //Creazione file di log
     ofstream logFile("logEsempio.txt");
 
     if(!logFile.is_open()){
+        //Segnalo errore
         cout<<"Errore apertura file";
-        return 1; //segnalo errore
+        return 1; 
     }
 
-    //creo oggetto OutputManager per la gestione dell'output
+    //Creo oggetto OutputManager per la gestione dell'output
     OutputManager out(cout, logFile);
 
+    //Creo tutti i device nello stack
     ManualDevice Impianto_fotovoltaico("Impianto_fotovoltaico", 0, 1.5);
     ManualDevice Pompa_di_calore_termostato("Pompa_di_calore_termostato", 1, -2);
     ManualDevice Scaldabagno("Scaldabagno", 2, -1);
@@ -36,8 +38,10 @@ int main() {
     AutomaticDevice Asciugatrice("Asciugatrice", 8, -0.5, CustomTime(1,0));
     AutomaticDevice Televisore("Televisore", 9, -0.2, CustomTime(1,0));
 
+    //Gestore di tutti i dispositivi
     DeviceManager DevMan(out);
 
+    //Aggiungo tutti i dispositivi nel vettore del DeviceManager
     DevMan.AddDeviceToList(Impianto_fotovoltaico);
     DevMan.AddDeviceToList(Pompa_di_calore_termostato);
     DevMan.AddDeviceToList(Scaldabagno);
@@ -49,7 +53,7 @@ int main() {
     DevMan.AddDeviceToList(Asciugatrice);
     DevMan.AddDeviceToList(Televisore);
 
-    //gestione dei comandi
+    //Input del comando
     while(!DevMan.GetFineGiornata()){
         string s; 
         getline(cin, s);
