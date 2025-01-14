@@ -24,7 +24,7 @@ CustomTime& CustomTime::operator= (CustomTime a) {
     return *this;
 }
 
-CustomTime operator+ (CustomTime&  time1, CustomTime&  time2){
+CustomTime operator+ (const CustomTime&  time1,const CustomTime&  time2){
 
     unsigned int finalHour = time1.GetHour() + time2.GetHour();
     unsigned int finalMinute = time1.GetMinutes() + time2.GetMinutes();
@@ -46,7 +46,7 @@ CustomTime operator+ (CustomTime&  time1, CustomTime&  time2){
     return return_time;
 }
 
-CustomTime operator+ (CustomTime&  time, int  min) {
+CustomTime operator+ (const CustomTime&  time, int  min) {
     if(min<0) {return (time - (min * -1));}
 
     unsigned int finalHour = time.GetHour();
@@ -70,7 +70,7 @@ CustomTime operator+ (CustomTime&  time, int  min) {
     return return_time;
 }
 
-CustomTime operator- (CustomTime&  finish_time, CustomTime&   start_time) { 
+CustomTime operator- (const CustomTime&  finish_time,const CustomTime&   start_time) { 
     int newHour = finish_time.GetHour() - start_time.GetHour();
     int newMinute = finish_time.GetMinutes() - start_time.GetMinutes();
 
@@ -89,7 +89,7 @@ CustomTime operator- (CustomTime&  finish_time, CustomTime&   start_time) {
     return newTime;
 }
 
-CustomTime operator- (CustomTime&  time , int  min) {
+CustomTime operator- (const CustomTime&  time , int  min) {
     if(min<0) {return(time + (min * -1));}
 
     int finalHour = time.GetHour();

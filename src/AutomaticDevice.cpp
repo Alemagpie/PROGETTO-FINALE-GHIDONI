@@ -13,7 +13,7 @@ AutomaticDevice::AutomaticDevice(std::string nome, const int ID, double power, C
     end_time_.SetTime(0,0);
 }
 
-void AutomaticDevice:: SetTimer(CustomTime& start_t , CustomTime end_t){
+void AutomaticDevice:: SetTimer(const CustomTime& start_t , CustomTime end_t){
     //end_t non considerata -> tempo finale dipende solo da quello iniziale e dalla durata di accensione
     start_time_ = start_t;
     end_time_ = start_t + time_duration_;

@@ -22,18 +22,19 @@ class Device{
         inline bool GetStatus() const   {return status_;}
         inline CustomTime GetStartTime() const  {return start_time_;}
         inline CustomTime GetEndTime() const    {return end_time_;}
-        inline const double GetCurrentPowerConsumption()    {return power_consumption_;}
-        inline const double GetPowerUsed()  {return power_used_;}
-        void UpdatePowerUsed(CustomTime& currentTime);
+        inline const double GetCurrentPowerConsumption() const   {return power_consumption_;}
+        inline const double GetPowerUsed() const  {return power_used_;}
+        virtual char GetType() const =0;
+        void UpdatePowerUsed(const CustomTime& currentTime);
         void Reset();
 
         //funzioni virtuali, rendono la classe astratta-> funzioni da sovrascrivere nelle sottoclassi
         virtual void UpdateStartTime(CustomTime newStartTime) =0;
         virtual void UpdateEndTime(CustomTime newEndTime ) =0;
         virtual void UpdateEndTime() =0;
-        virtual void SetTimer(CustomTime& start_t, CustomTime end_t ) = 0;     
+        virtual void SetTimer(const CustomTime& start_t, CustomTime end_t ) = 0;     
         virtual void RemoveTimer() =0;
-        virtual char GetType() =0;
+        
         
     //Data membri
     protected:

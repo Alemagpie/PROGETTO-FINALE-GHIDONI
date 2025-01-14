@@ -16,15 +16,15 @@
 
 namespace utility{
     //trova device nella multimappa degli attivi
-    std::multimap<CustomTime, Device*>::iterator FindDevice(std::multimap<CustomTime, Device*>& activeDevices, Device& d);
+    std::multimap<CustomTime, Device*>::iterator FindDevice(std::multimap<CustomTime, Device*>& activeDevices,const Device& d);
     //trova device nella multimappa degli attivi tramite ID
     std::multimap<CustomTime, Device*>::iterator FindDeviceByID(std::multimap<CustomTime, Device*>& activeDevices, int ID);
     //trova device nella multimappa degli attivi tramite nome
-    std::multimap<CustomTime, Device*>::iterator FindDeviceByNameActive(std::multimap<CustomTime, Device*>& activeDevices, std::string const & s ) ;
+    std::multimap<CustomTime, Device*>::iterator FindDeviceByNameActive(std::multimap<CustomTime, Device*>& activeDevices, const std::string const & s ) ;
     //trova device nella multimappa degli async tramite nome
-    std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator FindDeviceByNameAsync(std::multimap<CustomTime, std::pair<CustomTime, Device*>>& asyncDevices, std::string const & s);
+    std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator FindDeviceByNameAsync(std::multimap<CustomTime, std::pair<CustomTime, Device*>>& asyncDevices, const std::string  & s);
     //trova device nel vettore di tutti i device
-    std::vector<Device*>::iterator FindDeviceByNameAll(std::vector<Device*>& deviceList, std::string const & s);
+    std::vector<Device*>::iterator FindDeviceByNameAll(std::vector<Device*>& deviceList, const std::string & s);
 } //namespace Utility
 
 #endif

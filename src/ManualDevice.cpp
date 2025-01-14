@@ -14,7 +14,7 @@ ManualDevice:: ManualDevice(std::string nome, const int ID, double power)
     end_time_.SetTime(23,59);
 }
 
-void ManualDevice:: SetTimer(CustomTime& start_t, CustomTime end_t){
+void ManualDevice:: SetTimer(const CustomTime& start_t, CustomTime end_t){
     start_time_ = start_t;
     end_time_ = end_t;
 }

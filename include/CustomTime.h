@@ -29,12 +29,12 @@ class CustomTime{
 
 //HELPER FUNCTION
 
-CustomTime operator+ (CustomTime&  time1, CustomTime&  time2);
-CustomTime operator+ (CustomTime&  time, int  min);
-CustomTime operator- (CustomTime&  finish_time, CustomTime&  start_time);
-CustomTime operator- (CustomTime&  time, int  min);
+CustomTime operator+ (const CustomTime&  time1,const CustomTime&  time2);
+CustomTime operator+ (const CustomTime&  time, int  min);
+CustomTime operator- (const CustomTime&  finish_time,const CustomTime&  start_time);
+CustomTime operator- (const CustomTime&  time, int  min);
 inline double operator* (double value,CustomTime time) {return (value*(time.GetHour() + (time.GetMinutes()/static_cast<double>(60))));}
-inline bool operator== (CustomTime& a, CustomTime& b) { return (a.GetHour() == b.GetHour() && a.GetMinutes() == b.GetMinutes());}
+inline bool operator== ( CustomTime& a, CustomTime& b) { return (a.GetHour() == b.GetHour() && a.GetMinutes() == b.GetMinutes());}
 inline bool operator== (CustomTime a, CustomTime b){return (a.GetHour() == b.GetHour() && a.GetMinutes() == b.GetMinutes());}
 bool operator<(const CustomTime&  a ,const CustomTime&  b );
 bool operator<=(const CustomTime&  a ,const CustomTime&  b );

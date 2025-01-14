@@ -24,7 +24,7 @@ DeviceManager::DeviceManager(OutputManager& outPut)
     out_<<"Device Manager accesso"<<"\n";
 }
 
-void DeviceManager::AddDevice(Device* dev){
+void DeviceManager::AddDevice(Device* const dev){
     if(CheckPowerConsumption(dev)) {
         dev->UpdateStartTime(current_time_);
         dev->UpdateEndTime(dev->GetEndTime());      //In caso debba aggiornare dei device CP
@@ -39,7 +39,7 @@ void DeviceManager::AddDevice(Device* dev){
     
 }
 
-void DeviceManager::AddDeviceToList(Device& newDev) {
+void DeviceManager::AddDeviceToList( Device& newDev) {
     device_list_.push_back(&newDev);
     device_count_++;
 }
@@ -79,7 +79,7 @@ void DeviceManager::RemoveDevice(std::multimap<CustomTime, Device*>::iterator it
         }
 } 
 
-void SentenceIntoWords(std::vector<std::string>& ret, std::string sentence){
+void SentenceIntoWords( std::vector<std::string>& ret, std::string sentence){
     int initpos=0;
     for(int endpos=0; endpos<sentence.size(); endpos++){
         if(sentence[endpos] == ' '){
@@ -91,7 +91,7 @@ void SentenceIntoWords(std::vector<std::string>& ret, std::string sentence){
 }
 
 //DA MODIFICARE
-void DeviceManager::PrintInfoAll(std::string_view rem)
+void DeviceManager::PrintInfoAll(std::string_view rem) const
 {
     out_ << rem << "{ ";
     for (const auto& [key, value] : active_devices_)
@@ -100,7 +100,7 @@ void DeviceManager::PrintInfoAll(std::string_view rem)
     out_ << "Size=" << active_devices_.size() << '\n';
 }
 
-void DeviceManager::PrintInfoAsync(std::string_view rem)
+void DeviceManager::PrintInfoAsync(std::string_view rem) const
 {
     out_ << rem << "{ ";
     for (const auto& [key, value] : async_devices_)
@@ -347,14 +347,14 @@ void DeviceManager::SetTime(CustomTime newTime) {                 //Controllo te
     out_<< "["<< current_time_ << "] L'orario attuale e' " << current_time_ <<"\n";
 }
 
-bool DeviceManager::CheckPowerConsumption(Device* d) {
+bool DeviceManager::CheckPowerConsumption(Device* const d) const {
     double currentDeviceConsumption = d->GetCurrentPowerConsumption();
     
     //usiamo il > perchè il consumo è pensato in negativo
     return (currentDeviceConsumption + power_use_ + kMaxPower > 0);
 }
 
-double DeviceManager::CheckPowerConsumptionGeneral() {
+double DeviceManager::CheckPowerConsumptionGeneral() const {
     double currentPower = 0;
     for(auto it = active_devices_.begin(); it != active_devices_.end(); ++it) {
         currentPower += it->second->GetCurrentPowerConsumption();
@@ -366,6 +366,7 @@ void DeviceManager::ResetTime(){
     active_devices_.clear();                             
     SetTime(CustomTime(0,0));
     for(int i=0; i<device_count_; i++){device_list_[i]->Reset();}
+    power_use_ = 0;
 }
 
 void DeviceManager::ResetTimers(){

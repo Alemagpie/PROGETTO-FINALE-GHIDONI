@@ -9,7 +9,7 @@ Device::Device(std::string nome, const int ID, double power)
 
 //Implementazione classe Devices
 
-void Device::UpdatePowerUsed(CustomTime& CurrentTime){
+void Device::UpdatePowerUsed(const CustomTime& CurrentTime){
     power_used_ += power_consumption_*(CurrentTime - start_time_);
     start_time_ = CurrentTime;
 }

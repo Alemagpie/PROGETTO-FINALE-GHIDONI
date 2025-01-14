@@ -24,16 +24,16 @@ class DeviceManager {
     public:
         DeviceManager(OutputManager& outPut);
 
-        void AddDevice(Device* dev);  //aggiungi a multimappa degli attivi
-        void AddDeviceToList(Device& new_dev);
+        void AddDevice(Device* const dev);  //aggiungi a multimappa degli attivi
+        void AddDeviceToList( Device& new_dev);
         void AddDeviceAsync(Device* dev, CustomTime start, CustomTime end); //aggiungi a multimappa dei "pending"
         void MoveDevice(std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator it);
         void RemoveDevice(std::multimap<CustomTime, Device*>::iterator it); //rimuovi dispositivo in base al nome, fa il return del dispositivo
-        bool CheckPowerConsumption(Device* d);
-        double CheckPowerConsumptionGeneral();
+        bool CheckPowerConsumption(Device* const d) const;
+        double CheckPowerConsumptionGeneral() const;
         void SetTime(CustomTime new_time);    //cambia orario
         void ParseInput(std::string command);   //valuta input
-        inline bool GetFineGiornata() { return fine_giornata_; }
+        inline bool GetFineGiornata() const { return fine_giornata_; }
         void ResetTime();
         void ResetTimers();
 
@@ -50,12 +50,12 @@ class DeviceManager {
         CustomTime current_time_;   
         int device_count_;    //lunghezza del vettore di Device
     
-        void PrintInfoAll(std::string_view rem);
-        void PrintInfoAsync(std::string_view rem);
+        void PrintInfoAll(std::string_view rem) const;
+        void PrintInfoAsync(std::string_view rem) const;
 
 };
 
-void SentenceIntoWords(std::vector<std::string>& ret, std::string sentence);
+void SentenceIntoWords( std::vector<std::string>& ret, std::string sentence);
 CustomTime StringIntoCTime(std::string orario);
 
 
