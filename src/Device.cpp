@@ -3,23 +3,23 @@
 #include "../include/Device.h"
 
 Device::Device(std::string nome, const int ID, double power) 
-: name{nome}, id{ID}, powerConsumption{power}, status{false}, powerUsed{0} 
+: name_{nome}, id_{ID}, power_consumption_{power}, status_{false}, power_used_{0} 
 {
 }
 
 //Implementazione classe Devices
 
-void Device::updatePowerUsed(CustomTime& currTime){
-    powerUsed += powerConsumption*(currTime - start_time);
-    start_time = currTime;
+void Device::UpdatePowerUsed(CustomTime& CurrentTime){
+    power_used_ += power_consumption_*(CurrentTime - start_time_);
+    start_time_ = CurrentTime;
 }
 
-void Device::reset(){
-    powerUsed=0;
-    status = false;
+void Device::Reset(){
+    power_used_=0;
+    status_ = false;
 }
 
 std::ostream& operator<<(std::ostream& os, Device& dev){
-    if(dev.getStatus()) {return os << dev.getName() << " on " << dev.getPowerUsed() ;}
-    return os << dev.getName() << " off " << dev.getPowerUsed() ;
+    if(dev.GetStatus()) {return os << dev.GetName() << " on " << dev.GetPowerUsed() ;}
+    return os << dev.GetName() << " off " << dev.GetPowerUsed() ;
 }

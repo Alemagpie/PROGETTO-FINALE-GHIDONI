@@ -16,6 +16,5 @@ DISPOSITIVI: tipo (CP o M) = enum, consumo = double, start_time e finish_time = 
 
 1. IDK Se usare namespace, fatemi sapere anche voi
 
-2. TOLGO DEFAULT PARAMETER NELLA VIRTUAL FUNCTION IN DEVICE
-
 FARE NAMING; COMMENTI; poi constness e commenti
+

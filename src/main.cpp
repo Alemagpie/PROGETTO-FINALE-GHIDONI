@@ -38,22 +38,22 @@ int main() {
 
     DeviceManager DevMan(out);
 
-    DevMan.addDeviceToList(Impianto_fotovoltaico);
-    DevMan.addDeviceToList(Pompa_di_calore_termostato);
-    DevMan.addDeviceToList(Scaldabagno);
-    DevMan.addDeviceToList(Frigorifero);
-    DevMan.addDeviceToList(Lavatrice);
-    DevMan.addDeviceToList(Lavastoviglie);
-    DevMan.addDeviceToList(Tapparelle_elettriche);
-    DevMan.addDeviceToList(Forno_a_microonde);
-    DevMan.addDeviceToList(Asciugatrice);
-    DevMan.addDeviceToList(Televisore);
+    DevMan.AddDeviceToList(Impianto_fotovoltaico);
+    DevMan.AddDeviceToList(Pompa_di_calore_termostato);
+    DevMan.AddDeviceToList(Scaldabagno);
+    DevMan.AddDeviceToList(Frigorifero);
+    DevMan.AddDeviceToList(Lavatrice);
+    DevMan.AddDeviceToList(Lavastoviglie);
+    DevMan.AddDeviceToList(Tapparelle_elettriche);
+    DevMan.AddDeviceToList(Forno_a_microonde);
+    DevMan.AddDeviceToList(Asciugatrice);
+    DevMan.AddDeviceToList(Televisore);
 
     //gestione dei comandi
-    while(!DevMan.getFineGiornata()){
+    while(!DevMan.GetFineGiornata()){
         string s; 
         getline(cin, s);
-        DevMan.parseInput(s);
+        DevMan.ParseInput(s);
     }
 
     return 0;

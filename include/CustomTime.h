@@ -13,17 +13,17 @@ class CustomTime{
         CustomTime();
         CustomTime(unsigned int ora, unsigned int minuti);
 
-        inline unsigned int getHour() const {return hour;}
-        inline unsigned int getMinutes() const {return minutes;}
-        void setTime(unsigned int ora, unsigned int minuti);
-        inline void resetTime() {hour = minutes = 0;}
+        inline unsigned int GetHour() const {return hour_;}
+        inline unsigned int GetMinutes() const {return minutes_;}
+        void SetTime(unsigned int ora, unsigned int minuti);
+        inline void ResetTime() {hour_ = minutes_ = 0;}
         CustomTime& operator= (CustomTime a);
 
     private:
-        void checkTime(int badHours,int badMinutes);
+        void CheckTime(int bad_hours,int bad_minutes);
     
-        unsigned int hour;
-        unsigned int minutes;
+        unsigned int hour_;
+        unsigned int minutes_;
         
 };   
 
@@ -33,9 +33,9 @@ CustomTime operator+ (CustomTime&  time1, CustomTime&  time2);
 CustomTime operator+ (CustomTime&  time, int  min);
 CustomTime operator- (CustomTime&  finish_time, CustomTime&  start_time);
 CustomTime operator- (CustomTime&  time, int  min);
-inline double operator* (double value,CustomTime time) {return (value*(time.getHour() + (time.getMinutes()/static_cast<double>(60))));}
-inline bool operator== (CustomTime& a, CustomTime& b) { return (a.getHour() == b.getHour() && a.getMinutes() == b.getMinutes());}
-inline bool operator== (CustomTime a, CustomTime b){return (a.getHour() == b.getHour() && a.getMinutes() == b.getMinutes());}
+inline double operator* (double value,CustomTime time) {return (value*(time.GetHour() + (time.GetMinutes()/static_cast<double>(60))));}
+inline bool operator== (CustomTime& a, CustomTime& b) { return (a.GetHour() == b.GetHour() && a.GetMinutes() == b.GetMinutes());}
+inline bool operator== (CustomTime a, CustomTime b){return (a.GetHour() == b.GetHour() && a.GetMinutes() == b.GetMinutes());}
 bool operator<(const CustomTime&  a ,const CustomTime&  b );
 bool operator<=(const CustomTime&  a ,const CustomTime&  b );
 bool operator>(const CustomTime&  a ,const CustomTime&  b );

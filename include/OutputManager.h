@@ -12,7 +12,7 @@ class OutputManager{
     //costruttore e sovrascrittura operatore << (caso const e non const)
     public: 
         inline OutputManager(std:: ostream &o1, std:: ostream &o2)
-            : output1{o1}, output2{o2}{};
+            : output1_{o1}, output2_{o2}{};
 
         template <typename T>
         OutputManager& operator << (const T &valueToPrint);
@@ -21,7 +21,7 @@ class OutputManager{
         OutputManager& operator << (T& valueToPrint);
 
     private:
-        std::ostream &output1 , &output2;
+        std::ostream &output1_ , &output2_;
 
 };
 

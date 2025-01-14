@@ -4,30 +4,30 @@
 
 #include <iostream>
 
-CustomTime::CustomTime() : hour{0}, minutes{0} {}
+CustomTime::CustomTime() : hour_{0}, minutes_{0} {}
 
-CustomTime::CustomTime(unsigned int ora, unsigned int minuti) : hour{ora}, minutes{minuti} 
+CustomTime::CustomTime(unsigned int ora, unsigned int minuti) : hour_{ora}, minutes_{minuti} 
 {
-    checkTime(ora, minuti);
+    CheckTime(ora, minuti);
 }
 
-void CustomTime::setTime(unsigned int const ora, unsigned int const minuti) {
-    hour = ora;
-    minutes = minuti;
-    checkTime(ora, minuti);
+void CustomTime::SetTime(unsigned int const ora, unsigned int const minuti) {
+    hour_ = ora;
+    minutes_ = minuti;
+    CheckTime(ora, minuti);
 }
 
 CustomTime& CustomTime::operator= (CustomTime a) {
-    hour = a.getHour();
-    minutes = a.getMinutes();
+    hour_ = a.GetHour();
+    minutes_ = a.GetMinutes();
 
     return *this;
 }
 
 CustomTime operator+ (CustomTime&  time1, CustomTime&  time2){
 
-    unsigned int finalHour = time1.getHour() + time2.getHour();
-    unsigned int finalMinute = time1.getMinutes() + time2.getMinutes();
+    unsigned int finalHour = time1.GetHour() + time2.GetHour();
+    unsigned int finalMinute = time1.GetMinutes() + time2.GetMinutes();
 
     if(finalMinute>=60){
         finalMinute = finalMinute % 60;
@@ -40,7 +40,7 @@ CustomTime operator+ (CustomTime&  time1, CustomTime&  time2){
         finalMinute = 0;
     }
 
-    //creo oggetto time
+    //creo ogGetto time
     CustomTime return_time(finalHour,finalMinute);
 
     return return_time;
@@ -49,8 +49,8 @@ CustomTime operator+ (CustomTime&  time1, CustomTime&  time2){
 CustomTime operator+ (CustomTime&  time, int  min) {
     if(min<0) {return (time - (min * -1));}
 
-    unsigned int finalHour = time.getHour();
-    unsigned int finalMinute = time.getMinutes() + min;
+    unsigned int finalHour = time.GetHour();
+    unsigned int finalMinute = time.GetMinutes() + min;
 
     if(finalMinute>=60){
         int hoursToAdd = finalMinute / 60;
@@ -64,15 +64,15 @@ CustomTime operator+ (CustomTime&  time, int  min) {
         finalMinute = 0;
     }
 
-    //creo oggetto time
+    //creo ogGetto time
     CustomTime return_time(finalHour,finalMinute);
 
     return return_time;
 }
 
 CustomTime operator- (CustomTime&  finish_time, CustomTime&   start_time) { 
-    int newHour = finish_time.getHour() - start_time.getHour();
-    int newMinute = finish_time.getMinutes() - start_time.getMinutes();
+    int newHour = finish_time.GetHour() - start_time.GetHour();
+    int newMinute = finish_time.GetMinutes() - start_time.GetMinutes();
 
     if(newMinute <0) {
         int hoursToSubtract = abs(newMinute) / 60;
@@ -92,8 +92,8 @@ CustomTime operator- (CustomTime&  finish_time, CustomTime&   start_time) {
 CustomTime operator- (CustomTime&  time , int  min) {
     if(min<0) {return(time + (min * -1));}
 
-    int finalHour = time.getHour();
-    int finalMinute = time.getMinutes() - min;
+    int finalHour = time.GetHour();
+    int finalMinute = time.GetMinutes() - min;
 
     if(finalMinute < 0) {
         int hoursToSubtract = abs(finalMinute) / 60;
@@ -106,45 +106,45 @@ CustomTime operator- (CustomTime&  time , int  min) {
         }
     }
 
-    //creo oggetto time
+    //creo ogGetto time
     CustomTime return_time(finalHour,finalMinute);
 
     return return_time;
 }
 
 bool operator>(const CustomTime&  a,const CustomTime&  b) {
-    if(a.getHour() > b.getHour() ) {return true;}
-    if(a.getHour() == b.getHour() && a.getMinutes() > b.getMinutes()) {return true;}
+    if(a.GetHour() > b.GetHour() ) {return true;}
+    if(a.GetHour() == b.GetHour() && a.GetMinutes() > b.GetMinutes()) {return true;}
     return false;
 }
 
 bool operator>=(const CustomTime&  a,const CustomTime&  b) {
-    if(a.getHour() > b.getHour() ) {return true;}
-    if(a.getHour() == b.getHour() && a.getMinutes() >= b.getMinutes()) {return true;}
+    if(a.GetHour() > b.GetHour() ) {return true;}
+    if(a.GetHour() == b.GetHour() && a.GetMinutes() >= b.GetMinutes()) {return true;}
     return false;
 }
 
 bool operator<(const CustomTime&  a,const CustomTime&  b)  {
-    if(a.getHour() < b.getHour() ) {return true;}
-    if(a.getHour() == b.getHour() && a.getMinutes() < b.getMinutes()) {return true;}
+    if(a.GetHour() < b.GetHour() ) {return true;}
+    if(a.GetHour() == b.GetHour() && a.GetMinutes() < b.GetMinutes()) {return true;}
     return false;
 }
 
 bool operator<=(const CustomTime&  a,const CustomTime&  b) {
-    if(a.getHour() < b.getHour() ) {return true;}
-    if(a.getHour() == b.getHour() && a.getMinutes() <= b.getMinutes()) {return true;}
+    if(a.GetHour() < b.GetHour() ) {return true;}
+    if(a.GetHour() == b.GetHour() && a.GetMinutes() <= b.GetMinutes()) {return true;}
     return false;
 }
 
 std::ostream& operator<<(std::ostream& os, CustomTime a)
 {   
-    if(a.getHour()<10 && a.getMinutes()<10){return os << "0" << a.getHour()<<":0"<<a.getMinutes();}
-    else if(a.getHour()<10){return os << "0" << a.getHour()<<":"<<a.getMinutes();}
-    else if(a.getMinutes()<10){return os << a.getHour()<<":0"<<a.getMinutes();}
-    return os << a.getHour()<<":"<<a.getMinutes();
+    if(a.GetHour()<10 && a.GetMinutes()<10){return os << "0" << a.GetHour()<<":0"<<a.GetMinutes();}
+    else if(a.GetHour()<10){return os << "0" << a.GetHour()<<":"<<a.GetMinutes();}
+    else if(a.GetMinutes()<10){return os << a.GetHour()<<":0"<<a.GetMinutes();}
+    return os << a.GetHour()<<":"<<a.GetMinutes();
 }
 
-void CustomTime::checkTime(int badHours,int  badMinutes){
+void CustomTime::CheckTime(int badHours,int  badMinutes){
     if(badHours < 0 || badHours > 23 || badMinutes < 0 || badMinutes > 59){
         throw std::invalid_argument("");
     }

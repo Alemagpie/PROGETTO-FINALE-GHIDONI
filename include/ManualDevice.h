@@ -16,11 +16,12 @@ class ManualDevice : public Device{
     public:
         ManualDevice(std::string nome, const int ID, double power);
         
-        void setTimer(CustomTime& start_t, CustomTime end_t) override;
-        inline virtual void removeTimer() override  {end_time.setTime(23,59);}
-        inline void updateStartTime(CustomTime newStartTime) override   {start_time = newStartTime;}
-        inline void updateEndTime(CustomTime newEndTime = CustomTime(23,59)) override   {end_time = newEndTime;}
-        inline char getType() override {return 'M';}
+        void SetTimer(CustomTime& start_t, CustomTime end_t) override;
+        inline virtual void RemoveTimer() override  {end_time_.SetTime(23,59);}
+        inline void UpdateStartTime(CustomTime newStartTime) override   {start_time_ = newStartTime;}
+        inline void UpdateEndTime(CustomTime newEndTime) override   {end_time_ = newEndTime;}
+        inline void UpdateEndTime () override {end_time_ = CustomTime(23,59);}
+        inline char GetType() override {return 'M';}
 };
 
 #endif

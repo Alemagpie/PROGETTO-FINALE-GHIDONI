@@ -16,14 +16,15 @@ class AutomaticDevice : public Device{
     public:
         AutomaticDevice(std::string nome, const int ID, double power, CustomTime duration);
 
-        void setTimer(CustomTime& start_t , CustomTime end_t) override;
-        inline virtual void removeTimer() override {return;}
-        inline void updateEndTime(CustomTime newEndTime = CustomTime(23,59)) override {end_time  = start_time + time_duration;}
-        inline void updateStartTime(CustomTime newStartTime) override {start_time = newStartTime;}
-        inline char getType() override {return 'A';}
+        void SetTimer(CustomTime& start_t , CustomTime end_t) override;
+        inline virtual void RemoveTimer() override {return;}
+        inline void UpdateEndTime(CustomTime newEndTime) override {end_time_  = start_time_ + time_duration_;}
+        inline void UpdateEndTime() override {UpdateEndTime(CustomTime(23,59));}
+        inline void UpdateStartTime(CustomTime newStartTime) override {start_time_ = newStartTime;}
+        inline char GetType() override {return 'A';}
 
     private:
-        CustomTime time_duration;
+        CustomTime time_duration_;
 };
 
 #endif
