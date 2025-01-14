@@ -19,42 +19,86 @@
 #include "OutputManager.h"
 #include "Utility.h"
 
-//albero dei dispositivi
+//Classe che permette
 class DeviceManager {
     public:
         DeviceManager(OutputManager& outPut);
 
-        void AddDevice(Device* const dev);  //aggiungi a multimappa degli attivi
+        //Inserisce un puntatore ad un device nella multimappa che contiene i device attivi,
+        //con chiave il suo orario di spegnimento
+        void AddDevice(Device* const dev);
+        //Inserisce un puntatore ad un device nella lista che contiene tutti i device da gestire
         void AddDeviceToList( Device& new_dev);
-        void AddDeviceAsync(Device* dev, CustomTime start, CustomTime end); //aggiungi a multimappa dei "pending"
+        //Inserisce un std::pair<CustomTime, Device*> nella multimappa che contiene i device 
+        //con accensione posticipata, con chiave il suo orario di inizio
+        void AddDeviceAsync(Device* dev, CustomTime start, CustomTime end);
+        //Permette di rimuovere un device dalla multimappa dei device con accensione posticipata,
+        //e di inserirlo nella multimappa dei device accesi con il giusto orario di spegnimento
         void MoveDevice(std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator it);
-        void RemoveDevice(std::multimap<CustomTime, Device*>::iterator it); //rimuovi dispositivo in base al nome, fa il return del dispositivo
+        //Rimuove un device dalla multimappa dei device accesi, dato che e' giunto al tempo
+        //di spegnimento
+        void RemoveDevice(std::multimap<CustomTime, Device*>::iterator it); 
+        //Controlla se l'aggiunta di un eventuale device faccia superare il limite di potenza
+        //massima del sistema.
+        //Restituisce true se non la supera, false se la supera.
         bool CheckPowerConsumption(Device* const d) const;
-        void SetTime(CustomTime new_time);    //cambia orario
-        void ParseInput(std::string command);   //valuta input
+        //Funzione che simula il passare del tempo. Controlla se tra il tempo attuale e 
+        //il nuovo tempo alcuni dispositivi debbano accendersi o spegnersi, e in tal
+        //caso li accende/spegne.
+        void SetTime(CustomTime new_time);    
+        //Fa in modo che il comando inserito sotto forma di stringa corrisponda alla
+        //funzione richiesta
+        void ParseInput(std::string command); 
         inline bool GetFineGiornata() const { return fine_giornata_; }
+        //Imposta l'orario della gioranta alle 00:00 e spegne tutti i dispositivi,
+        //mantenendo comunque i timer già attivi
         void ResetTime();
-        void ResetTimers();
+        //Resetta tutti i timer dei dispositivi
+        void ResetTimer(std::vector<Device*>::iterator iterAll);
 
     private:
-        std::multimap<CustomTime, Device*> active_devices_; //multimappa dei dispositivi attivi
-        std::multimap<CustomTime, std::pair<CustomTime, Device*>> async_devices_;  //multimappa dei dispositivi in attesa dell'attivazione (hanno come chiave il tempo di inizio, come valore il tempo di fine e il ptr al device)
-        std::vector<Device*> device_list_; //vettore di ptr ai Device
+        //Multimappa che contiene std::pair con chiave l'orario di spegnimento,
+        //e con value il puntatore al suo dispositivo acceso relativo
+        std::multimap<CustomTime, Device*> active_devices_;
+        //Multimappa che contiene std::pair con chiave l'orario di accensione programmata,
+        //e con value la std::pair composta dall'orario di spegnimento desiderato (per i 
+        //dispositivi manuali, altrimenti quello di base per gli automatici) e dal puntatore 
+        //al device che si intende accendere 
+        std::multimap<CustomTime, std::pair<CustomTime, Device*>> async_devices_; 
+        //Vettore composto da tutti i puntatori ai dispositivi gestiti dalla classe 
+        std::vector<Device*> device_list_;
+        //Vettore che contiene i device attivi per ordine di accensione, necessario nel caso
+        //in cui venga superato il limite di potenza e si debba spegnere i dispositivi in ordine
+        //di accensione
         std::vector<Device*> device_insert_order_;
     
+        //Variabile che permette di stampare sia a schermo, sia su un file .txt grazie alla classe
+        //OutputManager
         OutputManager& out_;
-        const double kMaxPower = 3.5; //in kW
+        //Variabile che indica la massima potenza utilizzabile
+        const double kMaxPower = 3.5; 
+        //Tiene traccia di quanta potenza sia attualmente utilizzata dai dispositivi accesi
         double power_use_;
+        //Variabile booleana che indica se la giornata è finita (Ovvero quando si arriva alle 23:59)
+        //E' false quando non è finita, mentre è true quando è finita
         bool fine_giornata_;
-        CustomTime current_time_;   
-        int device_count_;    //lunghezza del vettore di Device
+        //Tempo del sistema
+        CustomTime current_time_;
+        //Numero di dispositivi da gestire.   
+        int device_count_;
     
+        //Funzione per debug: indica tutte le entry in active_devices_
         void PrintInfoAll(std::string_view rem) const;
+        //Funzione per debug: indica tutte le entry in async_devices_
         void PrintInfoAsync(std::string_view rem) const;
 
 };
-
+//Prende come input una stringa composta da parole e spazi e un vettore di stringhe,
+//e restituisce il vettore di stringhe riempito di entry delle parole separate dagli
+//spazi
 void SentenceIntoWords( std::vector<std::string>& ret, std::string sentence);
+//Prende come input una stringa che rappresenta un orario, e restituisce l'orario
+//corrispondente. Se il formato dell'orario è errato, lancia l'eccezione invalid_argument
 CustomTime StringIntoCTime(std::string orario);
 
 
