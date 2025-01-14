@@ -12,3 +12,4 @@ Note per la correzione:
 - Sono stati implementati i comandi richiesti dalla specifica. E' importante non aggiungere spazi non necessari o altri caratteri,
     in quanto non farebbero riconoscere al sistema il comando in maniera corretta.
 
+- Nel file di log non vengono riportati i comandi inseriti dall'utente. 
