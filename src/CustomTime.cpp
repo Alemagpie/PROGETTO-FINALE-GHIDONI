@@ -1,22 +1,25 @@
 //ALESSIO FAGNANI
 
 #include "../include/CustomTime.h"
-
 #include <iostream>
 
+//Costruttore di default che inizializaza a 00:00
 CustomTime::CustomTime() : hour_{0}, minutes_{0} {}
 
+//Costruttore parametrizzato
 CustomTime::CustomTime(unsigned int ora, unsigned int minuti) : hour_{ora}, minutes_{minuti} 
 {
     CheckTime(ora, minuti);
 }
 
+//Permette di cambiare l'ora ed i minuti
 void CustomTime::SetTime(unsigned int const ora, unsigned int const minuti) {
     hour_ = ora;
     minutes_ = minuti;
     CheckTime(ora, minuti);
 }
 
+//Operatore di copia
 CustomTime& CustomTime::operator= (CustomTime a) {
     hour_ = a.GetHour();
     minutes_ = a.GetMinutes();
@@ -24,6 +27,7 @@ CustomTime& CustomTime::operator= (CustomTime a) {
     return *this;
 }
 
+//Overloading dell'operatore per la somma tra due CustomTime
 CustomTime operator+ (const CustomTime&  time1,const CustomTime&  time2){
 
     unsigned int finalHour = time1.GetHour() + time2.GetHour();
@@ -46,6 +50,7 @@ CustomTime operator+ (const CustomTime&  time1,const CustomTime&  time2){
     return return_time;
 }
 
+//Overloading dell'operatore per sommare ad un CustomTime un int di minuti
 CustomTime operator+ (const CustomTime&  time, int  min) {
     if(min<0) {return (time - (min * -1));}
 
@@ -70,6 +75,7 @@ CustomTime operator+ (const CustomTime&  time, int  min) {
     return return_time;
 }
 
+//Overloading dell'operatore per la differenza tra due CustomTime
 CustomTime operator- (const CustomTime&  finish_time,const CustomTime&   start_time) { 
     int newHour = finish_time.GetHour() - start_time.GetHour();
     int newMinute = finish_time.GetMinutes() - start_time.GetMinutes();
@@ -89,6 +95,7 @@ CustomTime operator- (const CustomTime&  finish_time,const CustomTime&   start_t
     return newTime;
 }
 
+//Overloading dell'operatore per sottrarre ad un CustomTime un int di minuti
 CustomTime operator- (const CustomTime&  time , int  min) {
     if(min<0) {return(time + (min * -1));}
 
@@ -112,30 +119,35 @@ CustomTime operator- (const CustomTime&  time , int  min) {
     return return_time;
 }
 
+//Operatore di confronto
 bool operator>(const CustomTime&  a,const CustomTime&  b) {
     if(a.GetHour() > b.GetHour() ) {return true;}
     if(a.GetHour() == b.GetHour() && a.GetMinutes() > b.GetMinutes()) {return true;}
     return false;
 }
 
+//Operatore di confronto
 bool operator>=(const CustomTime&  a,const CustomTime&  b) {
     if(a.GetHour() > b.GetHour() ) {return true;}
     if(a.GetHour() == b.GetHour() && a.GetMinutes() >= b.GetMinutes()) {return true;}
     return false;
 }
 
+//Operatore di confronto
 bool operator<(const CustomTime&  a,const CustomTime&  b)  {
     if(a.GetHour() < b.GetHour() ) {return true;}
     if(a.GetHour() == b.GetHour() && a.GetMinutes() < b.GetMinutes()) {return true;}
     return false;
 }
 
+//Operatore di confronto
 bool operator<=(const CustomTime&  a,const CustomTime&  b) {
     if(a.GetHour() < b.GetHour() ) {return true;}
     if(a.GetHour() == b.GetHour() && a.GetMinutes() <= b.GetMinutes()) {return true;}
     return false;
 }
 
+//Operatore di output stream
 std::ostream& operator<<(std::ostream& os, CustomTime a)
 {   
     if(a.GetHour()<10 && a.GetMinutes()<10){return os << "0" << a.GetHour()<<":0"<<a.GetMinutes();}
@@ -144,6 +156,7 @@ std::ostream& operator<<(std::ostream& os, CustomTime a)
     return os << a.GetHour()<<":"<<a.GetMinutes();
 }
 
+//Controlla che l'ora ed i minuti passati in input siano validi
 void CustomTime::CheckTime(int badHours,int  badMinutes){
     if(badHours < 0 || badHours > 23 || badMinutes < 0 || badMinutes > 59){
         throw std::invalid_argument("");

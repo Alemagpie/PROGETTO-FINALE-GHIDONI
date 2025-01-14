@@ -25,6 +25,9 @@ namespace utility{
     std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator FindDeviceByNameAsync(std::multimap<CustomTime, std::pair<CustomTime, Device*>>& asyncDevices, const std::string  & s);
     //trova device nel vettore di tutti i device
     std::vector<Device*>::iterator FindDeviceByNameAll(std::vector<Device*>& deviceList, const std::string & s);
-} //namespace Utility
+
+    /*//Divide la stringa di input in un vettore di stringhe (parole)
+    void SentenceIntoWords( std::vector<std::string>& ret, std::string sentence);*/
+}
 
 #endif
