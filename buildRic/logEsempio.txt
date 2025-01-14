@@ -1,19 +1,10 @@
 Device Manager accesso
 [00:00] L'orario attuale e' 00:00
-Device non riconosciuto. Riprovare.
+[00:00] Impostato un timer per il dispositivo 'Scaldabagno' dalle 00:30 alle 04:30
 [00:00] L'orario attuale e' 00:00
-[00:00] Attualmente il sistema ha prodotto 0.000000 kWh e ha consumato 0.00 kWh. Nello specifico: 
-	- Il dispositivo 'Impianto_fotovoltaico' ha prodotto 0.00 kWh
-	- Il dispositivo 'Pompa_di_calore_termostato' ha consumato 0.00 kWh
-	- Il dispositivo 'Scaldabagno' ha consumato 0.00 kWh
-	- Il dispositivo 'Frigorifero' ha consumato 0.00 kWh
-	- Il dispositivo 'Lavatrice' ha consumato 0.00 kWh
-	- Il dispositivo 'Lavastoviglie' ha consumato 0.00 kWh
-	- Il dispositivo 'Tapparelle_elettriche' ha consumato 0.00 kWh
-	- Il dispositivo 'Forno_a_microonde' ha consumato 0.00 kWh
-	- Il dispositivo 'Asciugatrice' ha consumato 0.00 kWh
-	- Il dispositivo 'Televisore' ha consumato 0.00 kWh
-[00:00] L'orario attuale e' 00:00
-[00:00] Il dispositivo 'Impianto_fotovoltaico' ha attualmente prodotto 0.00 kWh
-[00:00] L'orario attuale e' 00:00
-[00:00] Il dispositivo 'Scaldabagno' ha attualmente consumato 0.00 kWh
+[00:30] Il dispositivo 'Scaldabagno' si e' acceso
+[03:00] L'orario attuale e' 03:00
+[03:00] L'orario attuale e' 03:00
+[03:00] Rimosso il timer dal dispositivo 'Scaldabagno'
+[03:00] L'orario attuale e' 03:00
+[05:00] L'orario attuale e' 05:00

@@ -17,7 +17,7 @@ class ManualDevice : public Device{
         ManualDevice(std::string nome, const int ID, double power);
         
         void SetTimer(const CustomTime& start_t, CustomTime end_t) override;
-        inline virtual void RemoveTimer() override  {end_time_.SetTime(23,59);}
+        inline virtual void RemoveTimer() override  {UpdateEndTime();}
         inline void UpdateStartTime(CustomTime newStartTime) override   {start_time_ = newStartTime;}
         inline void UpdateEndTime(CustomTime newEndTime) override   {end_time_ = newEndTime;}
         inline void UpdateEndTime () override {end_time_ = CustomTime(23,59);}

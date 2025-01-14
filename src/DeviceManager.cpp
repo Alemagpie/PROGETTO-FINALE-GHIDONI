@@ -231,7 +231,7 @@ void DeviceManager::ParseInput(std::string command){
                     }                         
                     out_<< "["<< current_time_ << "] Rimosso il timer dal dispositivo \'" << (*iterAll)->GetName() <<"\'" <<"\n";
                     if(iterActive != active_devices_.end()){
-                        if ((*iterActive).first == (*iterActive).second->GetEndTime()){
+                        if (!((*iterActive).first == (*iterActive).second->GetEndTime())){
                             active_devices_.erase(iterActive);
                             active_devices_.insert(std::pair<CustomTime, Device*>((*iterAll)->GetEndTime(), *iterAll));
                         }
