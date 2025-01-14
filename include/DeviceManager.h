@@ -30,7 +30,6 @@ class DeviceManager {
         void MoveDevice(std::multimap<CustomTime, std::pair<CustomTime, Device*>>::iterator it);
         void RemoveDevice(std::multimap<CustomTime, Device*>::iterator it); //rimuovi dispositivo in base al nome, fa il return del dispositivo
         bool CheckPowerConsumption(Device* const d) const;
-        double CheckPowerConsumptionGeneral() const;
         void SetTime(CustomTime new_time);    //cambia orario
         void ParseInput(std::string command);   //valuta input
         inline bool GetFineGiornata() const { return fine_giornata_; }

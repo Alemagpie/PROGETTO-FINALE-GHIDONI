@@ -248,22 +248,23 @@ void DeviceManager::ParseInput(std::string command){
             }
             if(words.size() == 1){  //"show "
                 double totalPowerUsed=0;
-                double totalPowerDevices = CheckPowerConsumptionGeneral();
+                double totalPowerProduced=0;
                 for(int i=0; i<device_count_; i++){
-                    if(device_list_[i]->GetPowerUsed() < 0) {totalPowerUsed += device_list_[i]->GetPowerUsed();}
+                    if(device_list_[i]->GetCurrentPowerConsumption() < 0) {totalPowerUsed += device_list_[i]->GetPowerUsed();}
+                    else{totalPowerProduced += device_list_[i]->GetPowerUsed();}
                 }
-                out_ << "[" << current_time_ << "] Attualmente il sistema ha consumato " << std::fixed << totalPowerUsed << std::setprecision(2) <<"kWh e la potenza massima accumulata fra i dispositivi accesi è: "<<totalPowerDevices<<". Nello specifico:"<<"\n";
+                out_ << "[" << current_time_ << "] Attualmente il sistema ha prodotto " << std::fixed << totalPowerProduced << std::setprecision(2) <<" kWh e ha consumato " << std::fixed << totalPowerUsed << std::setprecision(2) <<" kWh. Nello specifico: "<<"\n";
                 for(int i=0; i<device_count_; i++){
-                    if(device_list_[i]->GetCurrentPowerConsumption() < 0) {out_ << "\t - Il dispositivo \'" << device_list_[i]->GetName() << "\' ha una potenza di "<<device_list_[i]->GetCurrentPowerConsumption()<<" e ha consumato " << std::abs(device_list_[i]->GetPowerUsed()) << std::fixed << std::setprecision(2)<<" kWh"<<"\n";}
-                    else{out_ << "\t - Il dispositivo \'" << device_list_[i]->GetName() << "\' ha una potenza di "<<device_list_[i]->GetCurrentPowerConsumption()<< " e ha prodotto " << std::fixed <<device_list_[i]->GetPowerUsed() << std::setprecision(2) <<" kWh"<<"\n";}
+                    if(device_list_[i]->GetCurrentPowerConsumption() < 0) {out_ << "\t- Il dispositivo \'" << device_list_[i]->GetName() << "\' ha consumato " << std::abs(device_list_[i]->GetPowerUsed()) << std::fixed << std::setprecision(2)<<" kWh"<<"\n";}
+                    else{out_ << "\t- Il dispositivo \'" << device_list_[i]->GetName() << "\' ha prodotto " << std::fixed <<device_list_[i]->GetPowerUsed() << std::setprecision(2) <<" kWh"<<"\n";}
                     
                 }
             } else if (words.size() == 2){    //"show ${devicename}"
                 auto iter = utility::FindDeviceByNameAll(device_list_, words[1]);
                 if(iter == device_list_.end()) {out_<<"Device non riconosciuto. Riprovare." <<"\n";}
                 else {
-                    if((*iter)->GetCurrentPowerConsumption() < 0) {out_ << "\t - Il dispositivo \'" << (*iter)->GetName() << "\'ha una potenza di "<<(*iter)->GetCurrentPowerConsumption()<<" e ha consumato " << std::abs((*iter)->GetPowerUsed())<< std::fixed << std::setprecision(2)<<" kWh"<<"\n";}
-                    else{out_ << "\t - Il dispositivo \'" << (*iter)->GetName() << "\' ha una potenza di "<<(*iter)->GetCurrentPowerConsumption()<< " e ha prodotto " << std::fixed <<(*iter)->GetPowerUsed() << std::setprecision(2) <<" kWh"<<"\n";}              
+                    if((*iter)->GetCurrentPowerConsumption() < 0) {out_<< "[" << current_time_ << "] Il dispositivo \'" << (*iter)->GetName() << "\' ha attualmente consumato " << std::abs((*iter)->GetPowerUsed())<< std::fixed << std::setprecision(2)<<" kWh"<<"\n";}
+                    else{out_ << "[" << current_time_ << "] Il dispositivo \'" << (*iter)->GetName() << "\' ha attualmente prodotto " << std::fixed <<(*iter)->GetPowerUsed() << std::setprecision(2) <<" kWh"<<"\n";}              
                 }
             } else {out_<<"Comando non riconosciuto. Riprovare." <<"\n";}
             break;
@@ -352,14 +353,6 @@ bool DeviceManager::CheckPowerConsumption(Device* const d) const {
     
     //usiamo il > perchè il consumo è pensato in negativo
     return (currentDeviceConsumption + power_use_ + kMaxPower > 0);
-}
-
-double DeviceManager::CheckPowerConsumptionGeneral() const {
-    double currentPower = 0;
-    for(auto it = active_devices_.begin(); it != active_devices_.end(); ++it) {
-        currentPower += it->second->GetCurrentPowerConsumption();
-    }
-    return currentPower;
 }
 
 void DeviceManager::ResetTime(){

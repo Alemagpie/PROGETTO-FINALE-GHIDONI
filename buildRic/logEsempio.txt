@@ -1,16 +1,19 @@
 Device Manager accesso
 [00:00] L'orario attuale e' 00:00
-[03:00] L'orario attuale e' 03:00
-[03:00] L'orario attuale e' 03:00
-[03:00] Attualmente il sistema ha consumato 0.000000kWh e la potenza massima accumulata fra i dispositivi accesi è: 0.00. Nello specifico:
-	 - Il dispositivo 'Impianto_fotovoltaico' ha una potenza di 1.50 e ha prodotto 0.00 kWh
-	 - Il dispositivo 'Pompa_di_calore_termostato' ha una potenza di -2.00 e ha consumato 0.00 kWh
-	 - Il dispositivo 'Scaldabagno' ha una potenza di -1.00 e ha consumato 0.00 kWh
-	 - Il dispositivo 'Frigorifero' ha una potenza di -0.40 e ha consumato 0.00 kWh
-	 - Il dispositivo 'Lavatrice' ha una potenza di -2.00 e ha consumato 0.00 kWh
-	 - Il dispositivo 'Lavastoviglie' ha una potenza di -1.50 e ha consumato 0.00 kWh
-	 - Il dispositivo 'Tapparelle_elettriche' ha una potenza di -0.30 e ha consumato 0.00 kWh
-	 - Il dispositivo 'Forno_a_microonde' ha una potenza di -0.80 e ha consumato 0.00 kWh
-	 - Il dispositivo 'Asciugatrice' ha una potenza di -0.50 e ha consumato 0.00 kWh
-	 - Il dispositivo 'Televisore' ha una potenza di -0.20 e ha consumato 0.00 kWh
-[
+Device non riconosciuto. Riprovare.
+[00:00] L'orario attuale e' 00:00
+[00:00] Attualmente il sistema ha prodotto 0.000000 kWh e ha consumato 0.00 kWh. Nello specifico: 
+	- Il dispositivo 'Impianto_fotovoltaico' ha prodotto 0.00 kWh
+	- Il dispositivo 'Pompa_di_calore_termostato' ha consumato 0.00 kWh
+	- Il dispositivo 'Scaldabagno' ha consumato 0.00 kWh
+	- Il dispositivo 'Frigorifero' ha consumato 0.00 kWh
+	- Il dispositivo 'Lavatrice' ha consumato 0.00 kWh
+	- Il dispositivo 'Lavastoviglie' ha consumato 0.00 kWh
+	- Il dispositivo 'Tapparelle_elettriche' ha consumato 0.00 kWh
+	- Il dispositivo 'Forno_a_microonde' ha consumato 0.00 kWh
+	- Il dispositivo 'Asciugatrice' ha consumato 0.00 kWh
+	- Il dispositivo 'Televisore' ha consumato 0.00 kWh
+[00:00] L'orario attuale e' 00:00
+[00:00] Il dispositivo 'Impianto_fotovoltaico' ha attualmente prodotto 0.00 kWh
+[00:00] L'orario attuale e' 00:00
+[00:00] Il dispositivo 'Scaldabagno' ha attualmente consumato 0.00 kWh
