@@ -7,6 +7,7 @@
 #include "../include/CustomTime.h"
 
 //Implementazione classe ManualDevices
+
 ManualDevice:: ManualDevice(std::string nome, const int ID, double power)
     :  Device(nome, ID, power) {
     

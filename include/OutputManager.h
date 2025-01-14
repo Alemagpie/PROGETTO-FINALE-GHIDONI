@@ -5,13 +5,14 @@
 
 #include <iostream>
 #include <ostream>
+#include <fstream>
 
-//classe per la gestione degli output : cout e File
+//Classe per la gestione degli output : cout e file
 class OutputManager{
 
-    //costruttore e sovrascrittura operatore << (caso const e non const)
+    //Costruttore e sovrascrittura operatore << (casi argomento const e non const)
     public: 
-        inline OutputManager(std:: ostream &o1, std:: ostream &o2)
+        inline OutputManager(std:: ostream &o1, std:: ofstream &o2)
             : output1_{o1}, output2_{o2}{};
 
         template <typename T>
@@ -21,7 +22,8 @@ class OutputManager{
         OutputManager& operator << (T& valueToPrint);
 
     private:
-        std::ostream &output1_ , &output2_;
+        std::ostream &output1_ ;
+        std::ofstream &output2_;
 
 };
 
