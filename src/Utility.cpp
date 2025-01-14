@@ -13,6 +13,8 @@
 #include "../include/AutomaticDevice.h"
 #include "../include/CustomTime.h"
 
+//Nelle funzioni find di questo namespace usiamo lambda functions come predicati
+
 std::multimap<CustomTime, Device*>::iterator utility::FindDevice(std::multimap<CustomTime, Device*>& activeDevices,const Device& d) {
     return std::find_if(activeDevices.begin(), activeDevices.end(),
         [&d](const std::pair<CustomTime, Device*>& element) -> bool {
